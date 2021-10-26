@@ -30,4 +30,11 @@ class LeetcodeTestTests: XCTestCase {
         }
     }
 
+    func testNthUglyNumber() throws {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+            print("\(NthUglyNumber().nthUglyNumber(1699))")
+        }
+    }
 }

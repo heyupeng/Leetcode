@@ -16,6 +16,7 @@
 		B825BEB12727F556001238E6 /* LeetcodeTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BEB02727F556001238E6 /* LeetcodeTestTests.swift */; };
 		B825BEBB2727F556001238E6 /* LeetcodeTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BEBA2727F556001238E6 /* LeetcodeTestUITests.swift */; };
 		B825BEBD2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BEBC2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift */; };
+		B825BECB2727F5AF001238E6 /* NthUglyNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BECA2727F5AF001238E6 /* NthUglyNumber.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B825BEB62727F556001238E6 /* LeetcodeTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeetcodeTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B825BEBA2727F556001238E6 /* LeetcodeTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeetcodeTestUITests.swift; sourceTree = "<group>"; };
 		B825BEBC2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeetcodeTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B825BECA2727F5AF001238E6 /* NthUglyNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NthUglyNumber.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		B825BE982727F554001238E6 /* LeetcodeTest */ = {
 			isa = PBXGroup;
 			children = (
+				B825BEC92727F585001238E6 /* Sample */,
 				B825BE992727F554001238E6 /* AppDelegate.swift */,
 				B825BE9B2727F554001238E6 /* SceneDelegate.swift */,
 				B825BE9D2727F554001238E6 /* ViewController.swift */,
@@ -125,6 +128,14 @@
 				B825BEBC2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift */,
 			);
 			path = LeetcodeTestUITests;
+			sourceTree = "<group>";
+		};
+		B825BEC92727F585001238E6 /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				B825BECA2727F5AF001238E6 /* NthUglyNumber.swift */,
+			);
+			path = Sample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +271,7 @@
 			files = (
 				B825BE9E2727F554001238E6 /* ViewController.swift in Sources */,
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,
+				B825BECB2727F5AF001238E6 /* NthUglyNumber.swift in Sources */,
 				B825BE9C2727F554001238E6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
