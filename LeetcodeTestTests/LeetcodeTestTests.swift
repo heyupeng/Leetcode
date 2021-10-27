@@ -37,4 +37,20 @@ class LeetcodeTestTests: XCTestCase {
             print("\(NthUglyNumber().nthUglyNumber(1699))")
         }
     }
+    
+    func testSearch2DMatrix() throws {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+            print("\(Search2DMatrix().searchMatrix(Search2DMatrix.matrix1, Search2DMatrix.target1))")
+        }
+    }
+    
+    func testNextGreaterElement() throws {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+            print("\(NextGreaterElement().test1())")
+        }
+    }
 }
