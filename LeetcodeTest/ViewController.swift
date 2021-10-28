@@ -20,6 +20,17 @@ class ViewController: UIViewController {
         print("\(GenerateParentheses().generateParenthesis(3))")
         
         print("\(NextGreaterElement().test1())")
+        
+        print("=== 数据结构入门篇 ===")
+        print("=== Day 1 ===")
+        print("\(ContainsDuplicate().test1())")
+        
+        print("\(MaxSubArray().test1())")
+        
+        print("=== Day 2 ===")
+        print("\(TwoSum().test1())")
+        
+        print("\(MergeSortedArray().test1())")
     }
 
 

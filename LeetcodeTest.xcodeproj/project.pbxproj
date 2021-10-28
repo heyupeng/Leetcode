@@ -21,6 +21,8 @@
 		B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FB2729016700E40C11 /* ValidParentheses.swift */; };
 		B8BBD0FE2729057A00E40C11 /* GenerateParentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FD2729057A00E40C11 /* GenerateParentheses.swift */; };
 		B8BBD100272924C200E40C11 /* NextGreaterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */; };
+		B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */; };
+		B8BBD106272A8D8900E40C11 /* TwoSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD105272A8D8900E40C11 /* TwoSum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		B8BBD0FB2729016700E40C11 /* ValidParentheses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidParentheses.swift; sourceTree = "<group>"; };
 		B8BBD0FD2729057A00E40C11 /* GenerateParentheses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateParentheses.swift; sourceTree = "<group>"; };
 		B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGreaterElement.swift; sourceTree = "<group>"; };
+		B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsDuplicate.swift; sourceTree = "<group>"; };
+		B8BBD105272A8D8900E40C11 /* TwoSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoSum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				B825BEC92727F585001238E6 /* Sample */,
+				B8BBD10127293FDB00E40C11 /* LearningPlan */,
 				B825BE992727F554001238E6 /* AppDelegate.swift */,
 				B825BE9B2727F554001238E6 /* SceneDelegate.swift */,
 				B825BE9D2727F554001238E6 /* ViewController.swift */,
@@ -148,6 +153,23 @@
 				B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */,
 			);
 			path = Sample;
+			sourceTree = "<group>";
+		};
+		B8BBD10127293FDB00E40C11 /* LearningPlan */ = {
+			isa = PBXGroup;
+			children = (
+				B8BBD104272A8CFD00E40C11 /* 数据结构入门篇 */,
+			);
+			path = LearningPlan;
+			sourceTree = "<group>";
+		};
+		B8BBD104272A8CFD00E40C11 /* 数据结构入门篇 */ = {
+			isa = PBXGroup;
+			children = (
+				B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */,
+				B8BBD105272A8D8900E40C11 /* TwoSum.swift */,
+			);
+			path = "数据结构入门篇";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +303,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8BBD106272A8D8900E40C11 /* TwoSum.swift in Sources */,
+				B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */,
 				B825BE9E2727F554001238E6 /* ViewController.swift in Sources */,
 				B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */,
 				B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */,
