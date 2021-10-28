@@ -23,6 +23,7 @@
 		B8BBD100272924C200E40C11 /* NextGreaterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */; };
 		B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */; };
 		B8BBD106272A8D8900E40C11 /* TwoSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD105272A8D8900E40C11 /* TwoSum.swift */; };
+		B8BBD109272A91F900E40C11 /* BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD108272A91F900E40C11 /* BinarySearch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGreaterElement.swift; sourceTree = "<group>"; };
 		B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsDuplicate.swift; sourceTree = "<group>"; };
 		B8BBD105272A8D8900E40C11 /* TwoSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoSum.swift; sourceTree = "<group>"; };
+		B8BBD108272A91F900E40C11 /* BinarySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinarySearch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				B8BBD104272A8CFD00E40C11 /* 数据结构入门篇 */,
+				B8BBD107272A91A800E40C11 /* 算法篇 */,
 			);
 			path = LearningPlan;
 			sourceTree = "<group>";
@@ -170,6 +173,14 @@
 				B8BBD105272A8D8900E40C11 /* TwoSum.swift */,
 			);
 			path = "数据结构入门篇";
+			sourceTree = "<group>";
+		};
+		B8BBD107272A91A800E40C11 /* 算法篇 */ = {
+			isa = PBXGroup;
+			children = (
+				B8BBD108272A91F900E40C11 /* BinarySearch.swift */,
+			);
+			path = "算法篇";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,6 +317,7 @@
 				B8BBD106272A8D8900E40C11 /* TwoSum.swift in Sources */,
 				B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */,
 				B825BE9E2727F554001238E6 /* ViewController.swift in Sources */,
+				B8BBD109272A91F900E40C11 /* BinarySearch.swift in Sources */,
 				B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */,
 				B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */,
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,

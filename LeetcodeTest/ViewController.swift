@@ -31,8 +31,17 @@ class ViewController: UIViewController {
         print("\(TwoSum().test1())")
         
         print("\(MergeSortedArray().test1())")
+        
+        testAlgorithm()
     }
 
-
+    func testAlgorithm() {
+        print("=== 算法入门篇 ===")
+        print("\(BinarySearch().test1())")
+        
+        print("\(FirstBadVersion().test1())")
+        
+        print("\(SearchInsert().test1())")
+    }
 }
 
