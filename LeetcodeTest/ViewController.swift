@@ -33,6 +33,8 @@ class ViewController: UIViewController {
         print("\(MergeSortedArray().test1())")
         
         testAlgorithm()
+        
+        testDynamic()
     }
 
     func testAlgorithm() {
@@ -42,6 +44,18 @@ class ViewController: UIViewController {
         print("\(FirstBadVersion().test1())")
         
         print("\(SearchInsert().test1())")
+    }
+    
+    func testDynamic() {
+        print("=== 动态规划篇 ===")
+        print("\(Dynamic().tribonacci(3))")
+        
+        // Day 2
+        print("\(Dynamic().climbStairs(5))")
+        
+        let t_746_263 = Dynamic.TestParam746.t263
+        print("\(Dynamic().minCostClimbingStairs(t_746_263.cost)) == \(t_746_263.ans)")
+        
     }
 }
 

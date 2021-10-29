@@ -24,6 +24,7 @@
 		B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */; };
 		B8BBD106272A8D8900E40C11 /* TwoSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD105272A8D8900E40C11 /* TwoSum.swift */; };
 		B8BBD109272A91F900E40C11 /* BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD108272A91F900E40C11 /* BinarySearch.swift */; };
+		B8BBD10C272AB01C00E40C11 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD10B272AB01C00E40C11 /* Dynamic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsDuplicate.swift; sourceTree = "<group>"; };
 		B8BBD105272A8D8900E40C11 /* TwoSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoSum.swift; sourceTree = "<group>"; };
 		B8BBD108272A91F900E40C11 /* BinarySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinarySearch.swift; sourceTree = "<group>"; };
+		B8BBD10B272AB01C00E40C11 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			children = (
 				B8BBD104272A8CFD00E40C11 /* 数据结构入门篇 */,
 				B8BBD107272A91A800E40C11 /* 算法篇 */,
+				B8BBD10A272AAFD400E40C11 /* 动态规划 */,
 			);
 			path = LearningPlan;
 			sourceTree = "<group>";
@@ -181,6 +184,14 @@
 				B8BBD108272A91F900E40C11 /* BinarySearch.swift */,
 			);
 			path = "算法篇";
+			sourceTree = "<group>";
+		};
+		B8BBD10A272AAFD400E40C11 /* 动态规划 */ = {
+			isa = PBXGroup;
+			children = (
+				B8BBD10B272AB01C00E40C11 /* Dynamic.swift */,
+			);
+			path = "动态规划";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,6 +334,7 @@
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,
 				B825BECB2727F5AF001238E6 /* NthUglyNumber.swift in Sources */,
 				B825BE9C2727F554001238E6 /* SceneDelegate.swift in Sources */,
+				B8BBD10C272AB01C00E40C11 /* Dynamic.swift in Sources */,
 				B8BBD100272924C200E40C11 /* NextGreaterElement.swift in Sources */,
 				B8BBD0FE2729057A00E40C11 /* GenerateParentheses.swift in Sources */,
 			);
