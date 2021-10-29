@@ -101,3 +101,58 @@ class SearchInsert {
         return searchInsert(nums, target)
     }
 }
+
+// MARK: Day 2
+class Algorithm {
+    
+}
+
+extension Algorithm {
+    /// #977. 有序数组的平方
+    ///
+    /// 给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。
+    func sortedSquares(_ nums: [Int]) -> [Int] {
+        var res = Array(repeating: 0, count: nums.count)
+        
+        var lindex = 0, rindex = nums.count - 1
+        for i in 0...nums.count - 1 {
+            if abs(nums[lindex]) > abs(nums[rindex]) {
+                res[nums.count - 1 - i] = nums[lindex] * nums[lindex]
+                lindex += 1
+            } else {
+                res[nums.count - 1 - i] = nums[rindex] * nums[rindex]
+                rindex -= 1
+            }
+        }
+        return res
+    }
+}
+
+extension Algorithm {
+    /// #189. 旋转数组
+    ///
+    /// 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+    ///
+    /// 进阶：
+    ///
+    /// 尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个问题。
+    ///
+    /// 你可以使用空间复杂度为 O(1) 的 原地 算法解决这个问题吗？
+    func rotate(_ nums: inout [Int], _ k: Int) {
+        if k == 0 { return }
+        
+        let kk = k % nums.count
+        
+        // 1.
+        for _ in 0..<k {
+            let num = nums.removeLast()
+            nums.insert(num, at: 0)
+        }
+        
+        // 2. O(1)
+        let sub1 = nums[nums.count-kk..<nums.count]
+        let sub2 = nums[0..<nums.count-kk]
+        nums = Array(sub1 + sub2)
+    }
+}
+
