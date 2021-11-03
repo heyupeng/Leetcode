@@ -77,4 +77,66 @@ class LeetcodeTestTests: XCTestCase {
             print("\(BinarySearch().test1())")
         }
     }
+    
+    func testDataStructure() throws {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+            
+            // day 3
+            DataStructure().intersect([1,2,2,1], [2,2])
+            
+            // day 4
+            DataStructure().generate(5)
+             
+            DataStructure().matrixReshape([[1,2],[3,4]], 1, 4)
+            
+            dataStructureDay5()
+            
+            dataStructureDay6()
+         
+            dataStructureDay7()
+            
+            dataStructureDay8()
+        }
+    }
+    func dataStructureDay5() {
+        // day5
+        DataStructure().isValidSudoku(
+            [[".",".",".", ".","5",".", ".","1","."],
+             [".","4",".", "3",".",".", ".",".","."],
+             [".",".",".", ".",".","3", ".",".","1"],
+             ["8",".",".", ".",".",".", ".","2","."],
+             [".",".","2", ".","7",".", ".",".","."],
+             [".","1","5", ".",".",".", ".",".","."],
+             [".",".",".", ".",".","2", ".",".","."],
+             [".","2",".", "9",".",".", ".",".","."],
+             [".",".","4", ".",".",".", ".",".","."]])
+        
+        var m = [[1,1,1],[1,0,1],[1,1,1]]
+        DataStructure().setZeroes(&m)
+    }
+    
+    func dataStructureDay6() {
+        // day 6
+        DataStructure().firstUniqChar("loveleetcode")
+        
+        DataStructure().canConstruct("aa", "aab")
+    }
+    
+    func dataStructureDay7() {
+        // day 7
+        DataStructure().testHasCycle()
+        
+        DataStructure().testMergeTwoLists()
+        
+        DataStructure().testRemoveElements()
+    }
+    
+    func dataStructureDay8() {
+        // day 8
+        DataStructure().testReverseList()
+        
+        DataStructure().testDeleteDuplicates()
+    }
 }

@@ -34,9 +34,6 @@ class Dynamic: NSObject {
         
         return fn
     }
-}
-
-extension Dynamic {
     
     /// #1137. 第 N 个泰波那契数
     ///

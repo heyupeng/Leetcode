@@ -21,6 +21,14 @@ class ViewController: UIViewController {
         
         print("\(NextGreaterElement().test1())")
         
+        testDataStructure()
+        
+        testAlgorithm()
+        
+        testDynamic()
+    }
+    
+    func testDataStructure() {
         print("=== 数据结构入门篇 ===")
         print("=== Day 1 ===")
         print("\(ContainsDuplicate().test1())")
@@ -31,10 +39,6 @@ class ViewController: UIViewController {
         print("\(TwoSum().test1())")
         
         print("\(MergeSortedArray().test1())")
-        
-        testAlgorithm()
-        
-        testDynamic()
     }
 
     func testAlgorithm() {
