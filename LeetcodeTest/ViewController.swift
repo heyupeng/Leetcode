@@ -43,11 +43,11 @@ class ViewController: UIViewController {
 
     func testAlgorithm() {
         print("=== 算法入门篇 ===")
-        print("\(BinarySearch().test1())")
+        print("\(Algorithm().test704())")
         
-        print("\(FirstBadVersion().test1())")
+        print("\(Algorithm().test278())")
         
-        print("\(SearchInsert().test1())")
+        print("\(Algorithm().test35())")
         
         let t_3_3 = "pwwkew"
         let t_3_179 = "dvdf"

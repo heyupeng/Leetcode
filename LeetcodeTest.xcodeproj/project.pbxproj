@@ -23,7 +23,7 @@
 		B8BBD100272924C200E40C11 /* NextGreaterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */; };
 		B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */; };
 		B8BBD106272A8D8900E40C11 /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD105272A8D8900E40C11 /* DataStructure.swift */; };
-		B8BBD109272A91F900E40C11 /* BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD108272A91F900E40C11 /* BinarySearch.swift */; };
+		B8BBD109272A91F900E40C11 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD108272A91F900E40C11 /* Algorithm.swift */; };
 		B8BBD10C272AB01C00E40C11 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD10B272AB01C00E40C11 /* Dynamic.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +65,7 @@
 		B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGreaterElement.swift; sourceTree = "<group>"; };
 		B8BBD1022729404400E40C11 /* ContainsDuplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsDuplicate.swift; sourceTree = "<group>"; };
 		B8BBD105272A8D8900E40C11 /* DataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
-		B8BBD108272A91F900E40C11 /* BinarySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinarySearch.swift; sourceTree = "<group>"; };
+		B8BBD108272A91F900E40C11 /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
 		B8BBD10B272AB01C00E40C11 /* Dynamic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,7 +181,7 @@
 		B8BBD107272A91A800E40C11 /* 算法篇 */ = {
 			isa = PBXGroup;
 			children = (
-				B8BBD108272A91F900E40C11 /* BinarySearch.swift */,
+				B8BBD108272A91F900E40C11 /* Algorithm.swift */,
 			);
 			path = "算法篇";
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 				B8BBD106272A8D8900E40C11 /* DataStructure.swift in Sources */,
 				B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */,
 				B825BE9E2727F554001238E6 /* ViewController.swift in Sources */,
-				B8BBD109272A91F900E40C11 /* BinarySearch.swift in Sources */,
+				B8BBD109272A91F900E40C11 /* Algorithm.swift in Sources */,
 				B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */,
 				B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */,
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,

@@ -7,10 +7,18 @@
 
 import UIKit
 
-/// #704. 二分查找
-class BinarySearch: NSObject {
+class Algorithm {
+    
+}
 
+// MARK: Day 1 - 二分查找
+
+extension Algorithm {
+    
+    // MARK: #704. 二分查找
     /**
+     #704. 二分查找
+     
      给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
      */
     func search(_ nums: [Int], _ target: Int) -> Int {
@@ -31,14 +39,14 @@ class BinarySearch: NSObject {
         return -1
     }
     
-    func test1() -> Int {
+    func test704() -> Int {
         return search([-1,0,3,5,9,12],2)
     }
-}
-
-/// #278. 第一个错误的版本
-class FirstBadVersion {
+    
+    // MARK: #278. 第一个错误的版本
     /**
+     #278. 第一个错误的版本
+     
      第一个错误的版本
      
      你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。
@@ -66,14 +74,14 @@ class FirstBadVersion {
         return version >= 4
     }
     
-    func test1() -> Int {
+    func test278() -> Int {
         return firstBadVersion(5)
     }
-}
-
-/// #35. 搜索插入位置
-class SearchInsert {
+    
+    // MARK: #35. 搜索插入位置
     /**
+     #35. 搜索插入位置
+     
      给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
      
      请必须使用时间复杂度为 O(log n) 的算法。
@@ -96,18 +104,18 @@ class SearchInsert {
         
         return lindex
     }
-    func test1() -> Int {
+    
+    func test35() -> Int {
         let nums = [1,3,5,6], target = 2
         return searchInsert(nums, target)
     }
 }
 
 // MARK: Day 2
-class Algorithm {
-    
-}
 
 extension Algorithm {
+    
+    // MARK: #977. 有序数组的平方
     /// #977. 有序数组的平方
     ///
     /// 给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。
@@ -126,9 +134,8 @@ extension Algorithm {
         }
         return res
     }
-}
-
-extension Algorithm {
+    
+    // MARK: #189. 旋转数组
     /// #189. 旋转数组
     ///
     /// 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
@@ -159,6 +166,7 @@ extension Algorithm {
 //MARK: Day 3
 extension Algorithm {
     
+    // MARK: #283. 移动零
     /// #283. 移动零
     ///
     /// 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
@@ -195,7 +203,7 @@ extension Algorithm {
 //        }
     }
     
-    
+    // MARK: #167. 两数之和 II - 输入有序数组
     /// #167. 两数之和 II - 输入有序数组
     ///
     /// 给定一个已按照 非递减顺序排列  的整数数组 numbers ，请你从数组中找出两个数满足相加之和等于目标数 target 。
@@ -250,7 +258,7 @@ extension Algorithm {
         return [l + 1, r + 1]
     }
     
-    // MARK: Day 4 - 双指针
+// MARK: Day 4 - 双指针
     
     // MARK: #344. 反转字符串
     /// #344. 反转字符串
