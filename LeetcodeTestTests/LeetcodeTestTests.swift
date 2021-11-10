@@ -74,8 +74,18 @@ class LeetcodeTestTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
-            print("\(BinarySearch().test1())")
+//            print("\(BinarySearch().test1())")
+            self.testAlgorithmDay6()
         }
+    }
+    
+    func testAlgorithmDay6() {
+//        let words = Algorithm.t557_t12
+//        Algorithm().reverseWords(words)
+        
+        let s1 = "hello" // "ab" // "dszcltvvm(&akg!(cslq*!rilf!$akil%rsr%vlo)&lp&"
+        let s2 = "ooolleoooleh" // "eidbaooo" // Algorithm.t557_t12
+        Algorithm().checkInclusion(s1, s2)
     }
     
     func testDataStructure() throws {
