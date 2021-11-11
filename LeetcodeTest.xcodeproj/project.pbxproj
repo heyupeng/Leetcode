@@ -17,6 +17,7 @@
 		B825BEBB2727F556001238E6 /* LeetcodeTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BEBA2727F556001238E6 /* LeetcodeTestUITests.swift */; };
 		B825BEBD2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BEBC2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift */; };
 		B825BECB2727F5AF001238E6 /* NthUglyNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BECA2727F5AF001238E6 /* NthUglyNumber.swift */; };
+		B88B4ECB273BC36B007F8D63 /* AlgorithmII.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4ECA273BC36B007F8D63 /* AlgorithmII.swift */; };
 		B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0F92728E74200E40C11 /* Search2DMatrix.swift */; };
 		B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FB2729016700E40C11 /* ValidParentheses.swift */; };
 		B8BBD0FE2729057A00E40C11 /* GenerateParentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FD2729057A00E40C11 /* GenerateParentheses.swift */; };
@@ -59,6 +60,7 @@
 		B825BEBA2727F556001238E6 /* LeetcodeTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeetcodeTestUITests.swift; sourceTree = "<group>"; };
 		B825BEBC2727F556001238E6 /* LeetcodeTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeetcodeTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B825BECA2727F5AF001238E6 /* NthUglyNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NthUglyNumber.swift; sourceTree = "<group>"; };
+		B88B4ECA273BC36B007F8D63 /* AlgorithmII.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmII.swift; sourceTree = "<group>"; };
 		B8BBD0F92728E74200E40C11 /* Search2DMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search2DMatrix.swift; sourceTree = "<group>"; };
 		B8BBD0FB2729016700E40C11 /* ValidParentheses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidParentheses.swift; sourceTree = "<group>"; };
 		B8BBD0FD2729057A00E40C11 /* GenerateParentheses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateParentheses.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				B8BBD108272A91F900E40C11 /* Algorithm.swift */,
+				B88B4ECA273BC36B007F8D63 /* AlgorithmII.swift */,
 			);
 			path = "算法篇";
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				B8BBD109272A91F900E40C11 /* Algorithm.swift in Sources */,
 				B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */,
 				B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */,
+				B88B4ECB273BC36B007F8D63 /* AlgorithmII.swift in Sources */,
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,
 				B825BECB2727F5AF001238E6 /* NthUglyNumber.swift in Sources */,
 				B825BE9C2727F554001238E6 /* SceneDelegate.swift in Sources */,

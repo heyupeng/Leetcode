@@ -23,7 +23,9 @@ class ViewController: UIViewController {
         
         testDataStructure()
         
-        testAlgorithm()
+//        testAlgorithm()
+        
+        testAlgorithmII()
         
         testDynamic()
     }
@@ -158,6 +160,38 @@ class ViewController: UIViewController {
         
         let nums_136_0 = [4, 2, 1, 2, 1]
         Algorithm().singleNumber(nums_136_0)
+    }
+    
+    // MARK: AlgorithhmII
+    func testAlgorithmII() {
+        let algorithmII = AlgorithmII()
+        
+        // D1
+        let nums_34_0 = [1]
+        let target_34_0 = 1
+
+        algorithmII.searchRange(nums_34_0, target_34_0)
+        
+        let nums_33_0 = [4,5,6,7,0,1,2]
+        let target_33_0 = 0
+        
+        let nums_33_1 = [4,5,6,7,0,1,2]
+        let target_33_1 = 3
+        
+        algorithmII.searchInRotatedSortedArray(nums_33_1, target_33_1)
+                
+        let mat_74_1 = [[1],[3]]
+        let target_74_1 = 2
+        
+        algorithmII.searchMatrix(mat_74_1, target_74_1)
+        
+        // D2
+        let nums_153_0 = [3,4,5,1,2]
+        
+        algorithmII.findMin(nums_153_0)
+        
+        let nums_162_0 = [1,2,3,1]
+        algorithmII.findPeakElement(nums_162_0)
     }
     
     func testDynamic() {
