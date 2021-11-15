@@ -149,4 +149,17 @@ class LeetcodeTestTests: XCTestCase {
         
         DataStructure().testDeleteDuplicates()
     }
+    
+    func testDynamic() throws {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+            
+            for _ in 0..<1000 {
+                let nums_740_10 = [1,1,1,2,4,5,5,5,6]
+                Dynamic().deleteAndEarn(nums_740_10)
+            }
+            
+        }
+    }
 }
