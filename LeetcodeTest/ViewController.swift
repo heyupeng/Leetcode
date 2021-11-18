@@ -192,6 +192,34 @@ class ViewController: UIViewController {
         
         let nums_162_0 = [1,2,3,1]
         algorithmII.findPeakElement(nums_162_0)
+        
+        // D3
+        let nums_15_1 = [-1,0,1,2,-1,-4]
+        let nums_15_63 = [0,0,0]
+        let nums_15_65 = [0,0,0,0]
+        let q_15_t_315_nums = AlgorithmII.q_15_t_315_nums
+        algorithmII.threeSum(nums_15_63)
+        
+        // D4
+        let q_844_t_0_s = "xywrrmp"
+        let q_844_t_0_t = "xywrrmu#p"
+        algorithmII.backspaceCompare(q_844_t_0_s, q_844_t_0_t)
+        
+        let q_986_t_0_s0 = [[0,2],[5,10],[13,23],[24,25]]
+        let q_986_t_0_s1 = [[1,5],[8,12],[15,24],[25,26]]
+        algorithmII.intervalIntersection(q_986_t_0_s0, q_986_t_0_s1)
+        
+        let q_483_t_0_s = "cbaebabacd"
+        let q_483_t_0_p = "abc"
+        algorithmII.findAnagrams(q_483_t_0_s, q_483_t_0_p)
+        
+        let q_713_t_4_nums = [10,9,10,4,3,8,3,3,6,2,10,10,9,3]
+        let q_713_t_4_k = 19
+        algorithmII.numSubarrayProductLessThanK(q_713_t_4_nums, q_713_t_4_k)
+        
+        // D5
+        let q_547_t_0_isConnected = [[1,1,0],[1,1,0],[0,0,1]]
+        algorithmII.findCircleNum(q_547_t_0_isConnected)
     }
     
     func testDynamic() {
