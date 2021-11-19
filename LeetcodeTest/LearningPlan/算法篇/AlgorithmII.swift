@@ -1426,3 +1426,307 @@ extension AlgorithmII {
         return dfs(root, subRoot)
     }
 }
+
+
+// MARK: 第 8 天 - 广度优先搜索 / 深度优先搜索 (-- 2021-11-19)
+extension AlgorithmII {
+    
+    // MARK: #1091. 二进制矩阵中的最短路径
+    
+    /// #1091. 二进制矩阵中的最短路径
+    ///
+    /// 给你一个 n x n 的二进制矩阵 grid 中，返回矩阵中最短 畅通路径 的长度。如果不存在这样的路径，返回 -1 。
+    ///
+    /// 二进制矩阵中的 畅通路径 是一条从 左上角 单元格（即，(0, 0)）到 右下角 单元格（即，(n - 1, n - 1)）的路径，该路径同时满足下述要求：
+    ///
+    ///     路径途经的所有单元格都的值都是 0 。
+    ///     路径中所有相邻的单元格应当在 8 个方向之一 上连通（即，相邻两单元之间彼此不同且共享一条边或者一个角）。
+    ///     畅通路径的长度 是该路径途经的单元格总数。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：grid = [[0,1],[1,0]]
+    ///     输出：2
+    /// 示例 2：
+    ///
+    ///     输入：grid = [[0,0,0],[1,1,0],[1,1,0]]
+    ///     输出：4
+    /// 示例 3：
+    ///
+    ///     输入：grid = [[1,0,0],[1,1,0],[1,1,0]]
+    ///     输出：-1
+    ///
+    /// 提示：
+    ///
+    ///     n == grid.length
+    ///     n == grid[i].length
+    ///     1 <= n <= 100
+    ///     grid[i][j] 为 0 或 1
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/shortest-path-in-binary-matrix
+    func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
+        
+        // 深度返回值还有问题！
+        func dfs(_ mat: [[Int]], _ visited: inout [[Int]], _ x: Int, y: Int) -> Int {
+            let raw = mat.count, col = mat.first?.count ?? 0
+            
+            if x < 0 || x >= raw || y < 0 || y >= col { return 0 }
+            
+            if visited[x][y] != -1 { return visited[x][y] }
+            
+            // 此路不通
+            visited[x][y] = 0
+            if mat[x][y] == 1 {
+                return 0
+            }
+            
+            if x == raw - 1, y == col - 1 {
+                visited[x][y] = 1
+                return 1
+            }
+            
+            /* 上下左右+四角共8个方位，按优先级排列。
+                  5   4   2
+                    ↖︎ ↑ ↗︎
+                  4 ← 0 → 3
+                    ↙︎ ↓ ↘︎
+                  2   3   1
+             */
+            let dirs = [[1, 1],
+                        
+                        [1, 0], [0, 1],
+                        [1, -1], [-1, 1],
+                        [0, -1], [-1, 0],
+                        [-1, -1]]
+            let max = (raw + col) * 2
+            var minimum = max
+            for dir in dirs {
+                let step = dfs(mat, &visited, x + dir[0], y: y + dir[1])
+                if step > 0 {
+                    minimum = min(minimum, step)
+                }
+            }
+            visited[x][y] = minimum == max ? 0: minimum + 1
+            return visited[x][y]
+        }
+        
+        var visited = Array(repeating: Array(repeating: -1, count: grid[0].count), count: grid.count)
+        
+//        let mini = dfs(grid, &visited, 0, y: 0)
+//        if mini < 1 { return -1 }
+        
+        let pos = [[0, 0]]
+        let v = q_1091_bfs(grid, &visited, pos, 1)
+        let r = visited.last!.last!
+        return r > 0 ? r : -1;
+    }
+    
+    func q_1091_bfs(_ mat: [[Int]], _ visited: inout [[Int]], _ positions: [[Int]], _ round: Int) -> Int {
+        if positions.count == 0 { return 0 }
+        
+        let dirs = [[1, 1],
+                    [1, 0], [0, 1],
+                    [1, -1], [-1, 1],
+                    [0, -1], [-1, 0],
+                    [-1, -1]]
+        
+        var news: [[Int]] = []
+        
+        for idx in 0..<positions.count {
+            let position = positions[idx]
+            
+            if mat[position[0]][position[1]] == 1 {
+                    return 0
+            }
+            
+            visited[position[0]][position[1]] = round
+            
+            for dir in dirs {
+                let p = [position[0] + dir[0], position[1] + dir[1]]
+                if p[0] < 0 || p[0] >= visited.count ||
+                    p[1] < 0 || p[1] >= visited.count {
+                    continue
+                }
+                if visited[p[0]][p[1]] != -1 {
+                    continue
+                }
+                visited[p[0]][p[1]] = 0
+                
+                if mat[p[0]][p[1]] == 1 {
+                    continue
+                }
+                
+                news.append(p)
+            }
+        }
+        
+        if news.count == 0 { return 1}
+        
+        let v = q_1091_bfs(mat, &visited, news, round + 1)
+        return v > 0 ? v + 1: 0;
+    }
+    
+    // MARK: #130. 被围绕的区域
+    
+    /// #130. 被围绕的区域
+    /// 给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+    ///
+    /// 示例 1：
+    ///
+    ///          ["X","X","X","X"],                 ["X","X","X","X"],
+    ///          ["X","O","O","X"],                 ["X","X","X","X"],
+    ///          ["X","X","O","X"],       =>        ["X","X","X","X"],
+    ///          ["X","O","X","X"]]                 ["X","O","X","X"]]
+    ///
+    ///     输入：board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+    ///     输出：[["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
+    ///     解释：被围绕的区间不会存在于边界上，换句话说，任何边界上的 'O' 都不会被填充为 'X'。  任何不在边界上，或不与边界上的 'O' 相连的 'O' 最终都会被填充为 'X'。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。
+    /// 示例 2：
+    ///
+    ///     输入：board = [["X"]]
+    ///     输出：[["X"]]
+    ///
+    /// 提示：
+    ///
+    ///     m == board.length
+    ///     n == board[i].length
+    ///     1 <= m, n <= 200
+    ///     board[i][j] 为 'X' 或 'O'
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/surrounded-regions
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：112 ms, 在所有 Swift 提交中击败了94.44%的用户
+    ///     内存消耗：15 MB, 在所有 Swift 提交中击败了83.33%的用户
+    ///     通过测试用例：58 / 58
+    ///
+    func solve(_ board: inout [[Character]]) {
+        let raw = board.count, col = board.first?.count ?? 0
+        
+        var visited = Array(repeating: Array(repeating: -1, count: col), count: raw)
+        
+        for i in 0..<raw {
+            q_130_dfs(&board, &visited, SIMDInt2(i, 0))
+            q_130_dfs(&board, &visited, SIMDInt2(i, col - 1))
+        }
+        for i in 2..<col - 1 {
+            q_130_dfs(&board, &visited, SIMDInt2(0, i))
+            q_130_dfs(&board, &visited, SIMDInt2(raw - 1, i))
+        }
+        
+        let chX = Character("X")
+        for i in 0..<raw {
+            for j in 0..<col {
+                if visited[i][j] == 1 || board[i][j] == chX {
+                    continue
+                }
+                board[i][j] = chX
+            }
+        }
+    }
+    
+    public typealias SIMDInt2 = SIMD2<Int>
+
+    func q_130_dfs(_ mat: inout [[Character]], _ visited: inout [[Int]], _ pos: SIMDInt2) {
+        
+        let raw = mat.count, col = mat.first?.count ?? 0
+        let chO = Character("O")
+        
+        if visited[pos.x][pos.y] != -1 { return }
+        
+        visited[pos.x][pos.y] = 1
+        
+        if mat[pos.x][pos.y] != chO { return }
+        
+        let dirs = [SIMDInt2(-1, 0), SIMDInt2(1, 0), SIMDInt2(0, -1), SIMDInt2(0, 1)]
+        for dir in dirs {
+            let newpos = pos &+ dir
+            
+            if newpos.x < 0 || newpos.x >= raw || newpos.y < 0 || newpos.y >= col {
+                continue
+            }
+            if visited[newpos.x][newpos.y] != -1 {
+                continue
+            }
+            
+            q_130_dfs(&mat, &visited, newpos)
+        }
+    }
+    
+    // MARK: #797. 所有可能的路径
+    
+    /// #797. 所有可能的路径
+    ///
+    /// 给你一个有 n 个节点的 有向无环图（DAG），请你找出所有从节点 0 到节点 n-1 的路径并输出（不要求按特定顺序）
+    ///
+    /// 二维数组的第 i 个数组中的单元都表示有向图中 i 号节点所能到达的下一些节点，空就是没有下一个结点了。
+    ///
+    /// 译者注：有向图是有方向的，即规定了 a→b 你就不能从 b→a 。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：graph = [[1,2],[3],[3],[]]
+    ///     输出：[[0,1,3],[0,2,3]]
+    ///     解释：有两条路径 0 -> 1 -> 3 和 0 -> 2 -> 3
+    /// 示例 2：
+    ///
+    ///     输入：graph = [[4,3,1],[3,2,4],[3],[4],[]]
+    ///     输出：[[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]
+    /// 示例 3：
+    ///
+    ///     输入：graph = [[1],[]]
+    ///     输出：[[0,1]]
+    /// 示例 4：
+    ///
+    ///     输入：graph = [[1,2,3],[2],[3],[]]
+    ///     输出：[[0,1,2,3],[0,2,3],[0,3]]
+    /// 示例 5：
+    ///
+    ///     输入：graph = [[1,3],[2],[3],[]]
+    ///     输出：[[0,1,2,3],[0,3]]
+    ///
+    /// 提示：
+    ///
+    ///     n == graph.length
+    ///     2 <= n <= 15
+    ///     0 <= graph[i][j] < n
+    ///     graph[i][j] != i（即，不存在自环）
+    ///     graph[i] 中的所有元素 互不相同
+    ///     保证输入为 有向无环图（DAG）
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/all-paths-from-source-to-target
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：72 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：15.2 MB, 在所有 Swift 提交中击败了97.14%的用户
+    /// 	通过测试用例：30 / 30
+    /// - Parameter graph: graph
+    /// - Returns: paths
+    func allPathsSourceTarget(_ graph: [[Int]]) -> [[Int]] {
+        
+        var paths: [[Int]] = []
+        var path: [Int] = []
+        
+        func dfs(_ startIndex: Int) {
+            if startIndex >= graph.count { return }
+            
+            if startIndex == graph.count - 1 {
+                paths.append(path)
+                return
+            }
+            
+            for idx in graph[startIndex] {
+                path.append(idx)
+                dfs(idx)
+                path.removeLast()
+            }
+        }
+        path.append(0)
+        dfs(0)
+        
+        return paths
+    }
+}
+
