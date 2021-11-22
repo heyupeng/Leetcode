@@ -1878,3 +1878,243 @@ extension AlgorithmII {
         return subsets
     }
 }
+
+// #MARK: 第 9 天 - 递归 / 回溯 (-- 2021-11-21)
+extension AlgorithmII {
+    
+    // MARK: #47. 全排列 II
+    
+    ///
+    /// 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+    ///
+    ///
+    ///示例 1：
+    ///
+    ///     输入：nums = [1,1,2]
+    ///     输出：
+    ///     [[1,1,2],
+     ///     [1,2,1],
+     ///     [2,1,1]]
+    /// 示例 2：
+    ///
+    ///     输入：nums = [1,2,3]
+    ///     输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+    ///
+    /// 提示：
+    ///     1 <= nums.length <= 8
+    ///     -10 <= nums[i] <= 10
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/permutations-ii
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：20 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.7 MB, 在所有 Swift 提交中击败了92.63%的用户
+    ///     通过测试用例：33 / 33
+    ///
+    /// - Parameter nums: 包含重复数字的序列 nums
+    /// - Returns: 所有不重复的全排列
+    func permuteUnique(_ nums: [Int]) -> [[Int]] {
+        let nums = nums.sorted()
+        
+        var permutes: [[Int]] = []
+        var permute: [Int] = []
+        var temp: [Int] = nums
+        
+        func dfs() {
+            if permute.count == nums.count {
+                permutes.append(permute)
+                return
+            }
+            
+            var last: Int?
+            for _ in 0..<temp.count {
+                let num = temp.removeFirst()
+                
+                if let last = last, last != num {
+                    permute.append(num)
+                    dfs()
+                    permute.removeLast()
+                }
+                last = num
+                
+                temp.append(num)
+            }
+        }
+        
+        dfs()
+        return permutes
+    }
+    
+    // MARK: #39. 组合总和
+    
+    /// #39. 组合总和
+    ///
+    /// 给定一个无重复元素的正整数数组 candidates 和一个正整数 target ，找出 candidates 中所有可以使数字和为目标数 target 的唯一组合。
+    ///
+    /// candidates 中的数字可以无限制重复被选取。如果至少一个所选数字数量不同，则两种组合是唯一的。
+    ///
+    /// 对于给定的输入，保证和为 target 的唯一组合数少于 150 个。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入: candidates = [2,3,6,7], target = 7
+    ///     输出: [[7],[2,2,3]]
+    /// 示例 2：
+    ///
+    ///     输入: candidates = [2,3,5], target = 8
+    ///     输出: [[2,2,2,2],[2,3,3],[3,5]]
+    /// 示例 3：
+    ///
+    ///     输入: candidates = [2], target = 1
+    ///     输出: []
+    /// 示例 4：
+    ///
+    ///     输入: candidates = [1], target = 1
+    ///     输出: [[1]]
+    /// 示例 5：
+    ///
+    ///     输入: candidates = [1], target = 2
+    ///     输出: [[1,1]]
+    ///
+    /// 提示：
+    ///
+    ///     1 <= candidates.length <= 30
+    ///     1 <= candidates[i] <= 200
+    ///     candidate 中的每个元素都是独一无二的。
+    ///     1 <= target <= 500
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/combination-sum
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：12 ms, 在所有 Swift 提交中击败了96.20%的用户
+    ///     内存消耗：13.5 MB, 在所有 Swift 提交中击败了88.61%的用户
+    ///     通过测试用例：170 / 170
+    ///
+    /// - Parameters:
+    ///   - candidates: 无重复元素的正整数数组 candidates
+    ///   - target:  正整数 target
+    /// - Returns: 所有可以使数字和为目标数 target 的唯一组合
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        let candidates = candidates.sorted()
+        
+        var combinations: [[Int]] = []
+        var combination: [Int] = []
+        var sum = 0
+        
+        func dfs(_ start: Int) {
+            if sum > target { return }
+            if sum == target {
+                combinations.append(combination)
+                return
+            }
+            
+            for i in start..<candidates.count {
+                let num = candidates[i]
+
+                if sum + num > target {
+                    break
+                }
+
+                sum += num
+                combination.append(num)
+                                
+                dfs(i)
+
+                combination.removeLast()
+                sum -= num
+            }
+        }
+        
+        dfs(0)
+        return combinations
+    }
+    
+    // MARK: #40. 组合总和 II
+    
+    /// #40. 组合总和 II
+    ///
+    /// 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+    ///
+    /// candidates 中的每个数字在每个组合中只能使用一次。
+    ///
+    /// 注意：解集不能包含重复的组合。
+    ///
+    /// 示例 1:
+    ///
+    ///     输入: candidates = [10,1,2,7,6,1,5], target = 8,
+    ///     输出:
+    ///     [
+    ///     [1,1,6],
+    ///     [1,2,5],
+    ///     [1,7],
+    ///     [2,6]
+    ///     ]
+    /// 示例 2:
+    ///
+    ///     输入: candidates = [2,5,2,1,2], target = 5,
+    ///     输出:
+    ///     [
+    ///     [1,2,2],
+    ///     [5]
+    ///     ]
+    ///
+    /// 提示:
+    ///
+    ///     1 <= candidates.length <= 100
+    ///     1 <= candidates[i] <= 50
+    ///     1 <= target <= 30
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/combination-sum-ii
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：8 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.5 MB, 在所有 Swift 提交中击败了87.50%的用户
+    ///     通过测试用例：175 / 175
+    ///     
+    /// - Parameters:
+    ///   - candidates: 数组
+    ///   - target: 目标数 target
+    /// - Returns: 所有可以使数字和为 target 的组合
+    func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        let candidates = candidates.sorted()
+        
+        var combinations: [[Int]] = []
+        var combination: [Int] = []
+        var sum = 0
+        
+        func dfs(_ start: Int) {
+            if sum > target { return }
+            if sum == target {
+                combinations.append(combination)
+                return
+            }
+            
+            var last: Int?
+            for i in start..<candidates.count {
+                let num = candidates[i]
+
+                if sum + num > target {
+                    break
+                }
+                if let last = last, last == num {
+                    continue
+                }
+                last = num
+                
+                sum += num
+                combination.append(num)
+                                
+                dfs(i+1)
+
+                combination.removeLast()
+                sum -= num
+            }
+        }
+        
+        dfs(0)
+        return combinations
+    }
+}
