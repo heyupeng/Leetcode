@@ -255,6 +255,10 @@ class ViewController: UIViewController {
         let q_797_1_graph = [[4,3,1],[3,2,4],[3],[4],[]]
         
         algorithmII.allPathsSourceTarget(q_797_1_graph)
+        
+        // D9 - 2
+        let q_90_6_nums = [1,2,3]
+        algorithmII.subsetsWithDup(q_90_6_nums)
     }
     
     func testDynamic() {

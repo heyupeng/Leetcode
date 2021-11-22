@@ -1730,3 +1730,151 @@ extension AlgorithmII {
     }
 }
 
+
+// #MARK: 第 9 天 - 递归 / 回溯 (-- 2021-11-21)
+extension AlgorithmII {
+    
+    // MARK: #78. 子集
+    
+    /// #78. 子集
+    ///
+    /// 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。
+    ///
+    /// 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：nums = [1,2,3]
+    ///     输出：[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+    /// 示例 2：
+    ///
+    ///     输入：nums = [0]
+    ///     输出：[[],[0]]
+    ///
+    /// 提示：
+    ///
+    ///     1 <= nums.length <= 10
+    ///     -10 <= nums[i] <= 10
+    ///     nums 中的所有元素 互不相同
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/subsets
+    func subsets(_ nums: [Int]) -> [[Int]] {
+        
+        var subsets: [[Int]] = []
+        
+        func bfs(_ startIndex: Int) {
+            if startIndex >= nums.count {
+                return
+            }
+            
+            for i in 0..<subsets.count {
+                var subset = subsets[i]
+                subset.append(nums[startIndex])
+                subsets.append(subset)
+            }
+            
+            bfs(startIndex+1)
+        }
+        
+        subsets.append([])
+        bfs(0)
+        
+        return subsets
+    }
+    
+    // MARK: #90. 子集 II
+    
+    /// #90. 子集 II
+    ///
+    /// 给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
+    ///
+    /// 解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：nums = [1,2,2]
+    ///     输出：[[],[1],[1,2],[1,2,2],[2],[2,2]]
+    /// 示例 2：
+    ///
+    ///     输入：nums = [0]
+    ///     输出：[[],[0]]
+    ///
+    /// 提示：
+    ///
+    ///     1 <= nums.length <= 10
+    ///     -10 <= nums[i] <= 10
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：4 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.7 MB, 在所有 Swift 提交中击败了93.75%的用户
+    ///     通过测试用例：20 / 20
+    ///
+    /// 链接：https://leetcode-cn.com/problems/subsets-ii
+    /// 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    func subsetsWithDup(_ nums: [Int]) -> [[Int]] {
+        var subsets: [[Int]] = []
+        
+//        var dups: [Int: Int] = [:]
+//
+//        func bfs(_ startIndex: Int) {
+//            if startIndex >= nums.count {
+//                return
+//            }
+//
+//            var idx = 0
+//            if let c = dups[nums[startIndex]], c > 0 {
+//                idx = subsets.count - 1
+//            }
+//            dups[nums[startIndex]] = 1
+//
+//            for i in idx..<subsets.count {
+//                var subset = subsets[i]
+//                subset.append(nums[startIndex])
+//                subsets.append(subset)
+//            }
+//
+//            bfs(startIndex+1)
+//        }
+//
+//        subsets.append([])
+//        bfs(0)
+        
+        /* DFS
+         */
+        var subpath: [Int] = []
+        
+        func dfs(_ startIndex: Int) {
+            guard startIndex < nums.count else {
+                return
+            }
+            
+            if subpath.count == 0, startIndex > 0, nums[startIndex] == nums[startIndex - 1] {
+                dfs(startIndex+1)
+                return
+            }
+            
+            subpath.append(nums[startIndex])
+            subsets.append(subpath)
+            
+            var idx = startIndex + 1
+            while idx < nums.count {
+                if idx == startIndex + 1 || nums[idx] != nums[idx - 1] {
+                    dfs(idx)
+                }
+                idx += 1
+            }
+            
+            subpath.removeLast()
+            
+            if subpath.count == 0 {
+                dfs(startIndex+1)
+            }
+        }
+        
+        subsets.append(subpath)
+        dfs(0)
+        
+        return subsets
+    }
+}
