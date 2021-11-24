@@ -1879,7 +1879,7 @@ extension AlgorithmII {
     }
 }
 
-// #MARK: 第 9 天 - 递归 / 回溯 (-- 2021-11-21)
+// #MARK: 第 10 天 - 递归 / 回溯 (-- 2021-11-22)
 extension AlgorithmII {
     
     // MARK: #47. 全排列 II
@@ -2116,5 +2116,536 @@ extension AlgorithmII {
         
         dfs(0)
         return combinations
+    }
+}
+
+// MARK: 第 11 天 - 递归 / 回溯 (-- 2021-11-23)
+extension AlgorithmII {
+    
+    // MARK: #17. 电话号码的字母组合
+    
+    /// #17. 电话号码的字母组合
+    ///
+    /// 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+    ///
+    /// 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+    ///
+    /// 示例 1：
+
+    ///     输入：digits = "23"
+    ///     输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+    /// 示例 2：
+    ///
+    ///     输入：digits = ""
+    ///     输出：[]
+    /// 示例 3：
+    ///
+    ///     输入：digits = "2"
+    ///     输出：["a","b","c"]
+    ///
+    /// 提示：
+    ///
+    ///     0 <= digits.length <= 4
+    ///     digits[i] 是范围 ['2', '9'] 的一个数字。
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number
+    ///
+    /// 执行用时：0 ms, 在所有 Swift 提交中击败了100.00%的用户
+    /// 内存消耗：13.6 MB, 在所有 Swift 提交中击败了88.81%的用户
+    /// 通过测试用例：25 / 25
+    ///
+    /// - Parameter digits:包含数字 2-9 的字符串
+    /// - Returns:
+    func letterCombinations(_ digits: String) -> [String] {
+        let letters = "abcdefghijklmnopqrstuvwxyz"
+        let counts = [0, 0, 3, 3, 3,
+                      3, 3, 4, 3, 4]
+        
+        var startIndex = letters.startIndex
+        let digitMaps = counts.map { count -> [Character] in
+            var ltrs: [Character] = []
+            for _ in 0..<count {
+                if startIndex == letters.endIndex { break }
+                
+                ltrs.append(letters[startIndex])
+                startIndex = letters.index(after: startIndex)
+            }
+            return ltrs
+        }
+        
+        var combinations: [String] = []
+        var combination: String = ""
+        
+        func dfs(_ digits: String, _ index: String.Index, _ digitMaps: [[Character]]) {
+            if index == digits.endIndex {
+                combinations.append(combination)
+                return
+            }
+            let digit = digits[index]
+            let value = Int("\(digit)")!
+            
+            for ch in digitMaps[value] {
+                combination.append(ch)
+                
+                dfs(digits, digits.index(after: index), digitMaps)
+                
+                combination.removeLast()
+            }
+        }
+        
+        dfs(digits, digits.startIndex, digitMaps)
+        return combinations
+    }
+    
+    // MARK: #22. 括号生成
+    
+    // MARK: #79. 单词搜索
+    
+    /// #79. 单词搜索
+    ///
+    /// 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。
+    ///
+    /// 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+    ///
+    /// 示例 1：
+    ///
+    ///     ["A","B","C","E"],   ["A","B","C"," "],
+    ///     ["S","F","C","S"],   [" "," ","C"," "],
+    ///     ["A","D","E","E"],   [" "," ","E"," "]
+    ///     输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+    ///     输出：true
+    /// 示例 2：
+    ///
+    ///     输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+    ///     输出：true
+    /// 示例 3：
+    ///
+    ///     输入：board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+    ///     输出：false
+    ///
+    /// 提示：
+    ///
+    ///     m == board.length
+    ///     n = board[i].length
+    ///     1 <= m, n <= 6
+    ///     1 <= word.length <= 15
+    ///     board 和 word 仅由大小写英文字母组成
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/word-search
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：512 ms, 在所有 Swift 提交中击败了70.77%的用户
+    ///     内存消耗：13.8 MB, 在所有 Swift 提交中击败了58.46%的用户
+    ///     通过测试用例：80 / 80
+    ///
+    /// - Parameters:
+    ///   - board:  m x n 二维字符网格 board。仅由大小写英文字母组成
+    ///   - word: 字符串单词 word
+    /// - Returns: 如果 word 存在于网格中，返回 true ；否则，返回 false 。
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        let row = board.count, col = board.first?.count ?? 0
+        var visited = Array(repeating: Array(repeating: -1, count: col), count: row)
+        
+        func dfs(_ board: [[Character]], _ idx: String.Index, _ x: Int, _ y: Int) -> Bool {
+            if visited[x][y] != -1 {
+                return false
+            }
+            if  board[x][y] != word[idx] {
+                return false
+            }
+            
+            visited[x][y] = 1
+            
+            if idx == word.index(before: word.endIndex) {
+                return true
+            }
+            
+            let dirs = [SIMDInt2(-1, 0), SIMDInt2(1, 0), SIMDInt2(0, -1), SIMDInt2(0, 1)]
+            let nextIdx = word.index(after: idx)
+            for dir in dirs {
+                let x1 = x + dir.x, y1 = y + dir.y
+                if  x1 >= 0, x1 < row, y1 >= 0, y1 < col,
+                dfs(board, nextIdx, x1, y1) {
+                    return true
+                }
+            }
+            
+            visited[x][y] = -1
+            return false
+        }
+        
+        for i in 0..<row {
+            for j in 0..<col {
+                if board[i][j] == word.first!, dfs(board, word.startIndex, i, j) {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+}
+
+// MARK: 第 12 天 - 动态规划
+extension AlgorithmII {
+    
+    // MARK: #213. 打家劫舍 II
+    
+    // MARK: #55. 跳跃游戏
+}
+
+// MARK: 第 13 天 - 动态规划
+extension AlgorithmII {
+    
+    // MARK: #45. 跳跃游戏 II
+    ///
+    /// 给你一个非负整数数组 nums ，你最初位于数组的第一个位置。
+    ///
+    /// 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+    ///
+    /// 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+    ///
+    /// 假设你总是可以到达数组的最后一个位置。
+    ///
+    /// 示例 1:
+    ///
+    ///     输入: nums = [2,3,1,1,4]
+    ///     输出: 2
+    ///     解释: 跳到最后一个位置的最小跳跃数是 2。
+    ///      从下标为 0 跳到下标为 1 的位置，跳 1 步，然后跳 3 步到达数组的最后一个位置。
+    /// 示例 2:
+    ///
+    ///     输入: nums = [2,3,0,1,4]
+    ///     输出: 2
+    ///
+    /// 提示:
+    ///
+    ///     1 <= nums.length <= 104
+    ///     0 <= nums[i] <= 1000
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/jump-game-ii
+    ///
+    func jump2(_ nums: [Int]) -> Int {
+        
+        var minimums = Array(repeating: -1, count: nums.count)
+        let maximum = nums.count - 1
+        var minimum = maximum
+        var count = 0
+        
+        /* 递归 O(n^2)
+         执行用时：132 ms, 在所有 Swift 提交中击败了21.50%的用户
+         内存消耗：15.7 MB, 在所有 Swift 提交中击败了5.61%的用户
+         通过测试用例：106 / 106
+         */
+        func dfs(_ idx: Int) {
+            
+            if idx >= maximum   {
+                minimums[idx] = 0
+                minimum = min(minimum, count)
+                return
+            }
+            
+            if idx + nums[idx] >= nums.count - 1 {
+                minimums[idx] = 1
+                minimum = min(minimum, count+1)
+                return
+            }
+            
+            if count >= minimum {
+                return
+            }
+            
+            count += 1
+            
+            var num = nums[idx]
+            var next = maximum - idx
+            
+            while num > 0 {
+                if minimums[idx + num] == -1 {
+                    dfs(idx + num)
+                }
+                if minimums[idx + num] != -1 {
+                    next = min(next, minimums[idx + num])
+                    
+                    if (minimums[idx + num] < 2) {break}
+                }
+                
+                num -= 1
+            }
+            
+            if next != maximum - idx {
+                minimum = min(minimum, count + next)
+                minimums[idx] = next + 1
+            }
+            
+            count -= 1
+            
+        }
+        
+        dfs(0)
+        return minimum
+    }
+    
+    // MARK: #62. 不同路径
+    
+    /// #62. 不同路径
+    ///
+    /// 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
+    ///
+    /// 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+    ///
+    /// 问总共有多少条不同的路径？
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：m = 3, n = 7
+    ///     输出：28
+    /// 示例 2：
+    ///
+    ///     输入：m = 3, n = 2
+    ///     输出：3
+    ///     解释：
+    ///     从左上角开始，总共有 3 条路径可以到达右下角。
+    ///     1. 向右 -> 向下 -> 向下
+    ///     2. 向下 -> 向下 -> 向右
+    ///     3. 向下 -> 向右 -> 向下
+    /// 示例 3：
+    ///
+    ///     输入：m = 7, n = 3
+    ///     输出：28
+    /// 示例 4：
+    ///
+    ///     输入：m = 3, n = 3
+    ///     输出：6
+    ///
+    /// 提示：
+    ///
+    ///     1 <= m, n <= 100
+    ///     题目数据保证答案小于等于 2 * 109
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/unique-paths
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：0 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.3 MB, 在所有 Swift 提交中击败了85.29%的用户
+    ///     通过测试用例：62 / 62
+    ///
+    /// - Parameters:
+    ///   - m: raw
+    ///   - n: col
+    /// - Returns: <#description#>
+    func uniquePaths(_ m: Int, _ n: Int) -> Int {
+        var mat = Array(repeating:Array(repeating: 1, count: n), count:m)
+        for i in 1..<m {
+            for j in 1..<n {
+                mat[i][j] = mat[i-1][j] + mat[i][j-1]
+            }
+        }
+        return mat.last!.last!
+    }
+}
+
+// MARK: 第 14 天 - 动态规划 (-- 2021-11-23)
+extension AlgorithmII {
+    
+    // MARK: #5. 最长回文子串
+    
+    /// #5. 最长回文子串
+    ///
+    /// 给你一个字符串 s，找到 s 中最长的回文子串。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：s = "babad"
+    ///     输出："bab"
+    ///     解释："aba" 同样是符合题意的答案。
+    /// 示例 2：
+    ///
+    ///     输入：s = "cbbd"
+    ///     输出："bb"
+    /// 示例 3：
+    ///
+    ///     输入：s = "a"
+    ///     输出："a"
+    /// 示例 4：
+    ///
+    ///     输入：s = "ac"
+    ///     输出："a"
+    ///
+    /// 提示：
+    ///
+    /// 1 <= s.length <= 1000
+    /// s 仅由数字和英文字母（大写和/或小写）组成
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/longest-palindromic-substring
+    ///
+    /// - Parameter s: <#s description#>
+    /// - Returns: <#description#>
+    func longestPalindrome(_ s: String) -> String {
+        // test119 超时
+        
+        /// 中心收敛
+        func checkPalindrome(_ str: String, _ lowwer: String.Index, _ upper: String.Index) -> Bool {
+            var l = lowwer, r = upper
+            while l <= r {
+                if str[l] != str[r] {
+                    return false
+                }
+                l = str.index(after: l)
+                r = str.index(before: r)
+            }
+            return true
+        }
+        
+        var startIndex = s.startIndex
+        
+        var maxLen = 0
+        var maxS = ""
+        
+        while startIndex < s.endIndex {
+            
+            let ch = s[startIndex]
+            var upper = s.lastIndex(ch, startIndex, s.endIndex)
+            
+            while upper != nil, upper != startIndex {
+                let d = s.distance(from: startIndex, to: upper!) + 1
+                if d <= maxLen { break }
+                
+                if checkPalindrome(s, startIndex, upper!) == true {
+                    maxLen = max(maxLen, d)
+                    maxS = String(s[startIndex...upper!])
+                    break
+                }
+                upper = s.lastIndex(ch, startIndex, upper!)
+            }
+            
+            if maxLen == 0 {
+                maxLen = 1
+            }
+            
+            startIndex = s.index(after: startIndex)
+        }
+        
+        return maxS
+    }
+    
+    // MARK: #413. 等差数列划分
+    
+    /// #413. 等差数列划分
+    ///
+    /// 如果一个数列 至少有三个元素 ，并且任意两个相邻元素之差相同，则称该数列为等差数列。
+    ///
+    ///     例如，[1,3,5,7,9]、[7,7,7,7] 和 [3,-1,-5,-9] 都是等差数列。
+    /// 给你一个整数数组 nums ，返回数组 nums 中所有为等差数组的 子数组 个数。
+    ///
+    /// 子数组 是数组中的一个连续序列。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：nums = [1,2,3,4]
+    ///     输出：3
+    ///     解释：nums 中有三个子等差数组：[1, 2, 3]、[2, 3, 4] 和 [1,2,3,4] 自身。
+    /// 示例 2：
+    ///
+    ///     输入：nums = [1]
+    ///     输出：0
+    ///
+    /// 提示：
+    ///
+    ///     1 <= nums.length <= 5000
+    ///     -1000 <= nums[i] <= 1000
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/arithmetic-slices
+    ///
+    /// 执行结果：通过
+    ///     执行用时：4 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：14.5 MB, 在所有 Swift 提交中击败了8.33%的用户
+    ///     通过测试用例：15 / 15
+    ///
+    /// - Parameter nums: <#nums description#>
+    /// - Returns: <#description#>
+    func numberOfArithmeticSlices(_ nums: [Int]) -> Int {
+        if nums.count < 3 { return 0 }
+        
+        func numberOfSubslices(_ count: Int) -> Int {
+            if count < 3 { return 0 }
+            var n = 0
+            for i in 3..<count+1 {
+                n += count - i + 1
+            }
+            return n
+        }
+        
+        var n = 0
+        
+        var distance = 0
+        var count = 0
+        
+        func dfs(_ idx: Int) {
+            if idx >= nums.count {
+                n += numberOfSubslices(count)
+                return
+            }
+
+            if count >= 2 {
+                if distance != nums[idx] - nums[idx-1] {
+                    n += numberOfSubslices(count)
+                    count = 1
+                }
+            }
+            
+            count += 1
+            
+            if count == 2 {
+                distance = nums[idx] - nums[idx - 1]
+            }
+            
+            dfs(idx + 1)
+        }
+        
+        dfs(0)
+        return n
+    }
+}
+
+protocol StringToArray {
+    func characters() -> [Character]
+}
+
+extension String: StringToArray {
+    func characters() -> [Character] {
+        var chs: [Character] = []
+        for ch in self {
+            chs.append(ch)
+        }
+        return chs
+    }
+    
+    
+    /// 正向寻找字符，区间 [start, end) 。
+    func firstIndex(_ ch: Character, _ startIndex: String.Index, _ endIndex: String.Index) -> String.Index? {
+        var lIdx = startIndex, rIdx = endIndex
+        while lIdx < rIdx {
+            if self[lIdx] == ch {
+                return lIdx
+            }
+            lIdx = self.index(after: lIdx)
+        }
+        return nil
+    }
+    
+    /// 反向寻找字符，区间 [start, end) 。
+    func lastIndex(_ ch: Character, _ startIndex: String.Index, _ endIndex: String.Index) -> String.Index? {
+        var lIdx = startIndex, rIdx = endIndex
+        rIdx = self.index(before: rIdx)
+        while lIdx < rIdx {
+            if self[rIdx] == ch {
+                return rIdx
+            }
+            rIdx = self.index(before: rIdx)
+        }
+        return nil
     }
 }
