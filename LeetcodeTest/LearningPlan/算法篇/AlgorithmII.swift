@@ -2779,6 +2779,10 @@ extension AlgorithmII {
         
         let wordDict = wordDict.sorted().reversed()
         
+#if false
+        
+        var flags = Array(repeating: -1, count: s.count)
+        
         func dfs(_ start: String.Index) -> Bool {
             if start == s.endIndex {
                 return true
@@ -2787,14 +2791,61 @@ extension AlgorithmII {
             let ss = s[start..<s.endIndex]
             
             for word in wordDict {
+                if flags[s.distance(from: s.startIndex, to: start)] != -1 {
+                    return dp[s.distance(from: s.startIndex, to: start)] == 1
+                }
                 if ss.count >= word.count, ss.hasPrefix(word), dfs(ss.index(start, offsetBy: word.count)) {
+                    flags[s.distance(from: s.startIndex, to: start)] = 1
                     return true
                 }
             }
+            flags[s.distance(from: s.startIndex, to: start)] = 0
             return false
         }
         
         return dfs(s.startIndex)
+        
+#endif
+        
+        /*
+         执行结果：通过
+         
+            执行用时：8 ms, 在所有 Swift 提交中击败了96.67%的用户
+            内存消耗：13.7 MB, 在所有 Swift 提交中击败了95.00%的用户
+            通过测试用例：45 / 45
+         */
+        let minLen = wordDict.reduce(20) { partialResult, ele in
+            return min(ele.count, partialResult)
+        }
+        
+        var dp = Array(repeating: 0, count: s.count)
+        var idx = s.startIndex
+        
+        for i in 0..<s.count {
+            
+            if i < minLen - 1 {
+                idx = s.index(after: idx)
+                continue
+            }
+            
+            for word in wordDict {
+                let len = word.count
+                if i - len + 1 < 0 { continue}
+                
+                let lowwer = s.index(idx, offsetBy: len-1)
+                let upper = idx
+                let ss = s[lowwer...upper]
+                
+                if (i-len < 0 || dp[i - len] == 1), word == ss {
+                    dp[i] = 1
+                    break
+                }
+            }
+            
+            idx = s.index(after: idx)
+        }
+        
+        return dp.last! == 1
     }
 }
 
