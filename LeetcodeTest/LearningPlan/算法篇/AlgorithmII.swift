@@ -2073,7 +2073,7 @@ extension AlgorithmII {
     ///     执行用时：8 ms, 在所有 Swift 提交中击败了100.00%的用户
     ///     内存消耗：13.5 MB, 在所有 Swift 提交中击败了87.50%的用户
     ///     通过测试用例：175 / 175
-    ///     
+    ///
     /// - Parameters:
     ///   - candidates: 数组
     ///   - target: 目标数 target
@@ -2609,3 +2609,538 @@ extension AlgorithmII {
         return n
     }
 }
+
+// MARK: 第 15 天 - 动态规划 (-- 2021-11-25)
+extension AlgorithmII {
+    // MARK: #91. 解码方法
+    
+    /// #91. 解码方法
+    ///
+    /// 一条包含字母 A-Z 的消息通过以下映射进行了 编码 ：
+    ///
+    ///     'A' -> 1
+    ///     'B' -> 2
+    ///     ...
+    ///     'Z' -> 26
+    /// 要 解码 已编码的消息，所有数字必须基于上述映射的方法，反向映射回字母（可能有多种方法）。例如，"11106" 可以映射为：
+    ///
+    ///     "AAJF" ，将消息分组为 (1 1 10 6)
+    ///     "KJF" ，将消息分组为 (11 10 6)
+    ///     注意，消息不能分组为  (1 11 06) ，因为 "06" 不能映射为 "F" ，这是由于 "6" 和 "06" 在映射中并不等价。
+    ///
+    /// 给你一个只含数字的 非空 字符串 s ，请计算并返回 解码 方法的 总数 。
+    ///
+    /// 题目数据保证答案肯定是一个 32 位 的整数。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：s = "12"
+    ///     输出：2
+    ///     解释：它可以解码为 "AB"（1 2）或者 "L"（12）。
+    /// 示例 2：
+    ///
+    ///     输入：s = "226"
+    ///     输出：3
+    ///     解释：它可以解码为 "BZ" (2 26), "VF" (22 6), 或者 "BBF" (2 2 6) 。
+    /// 示例 3：
+    ///
+    ///     输入：s = "0"
+    ///     输出：0
+    ///     解释：没有字符映射到以 0 开头的数字。
+    ///     含有 0 的有效映射是 'J' -> "10" 和 'T'-> "20" 。
+    ///     由于没有字符，因此没有有效的方法对此进行解码，因为所有数字都需要映射。
+    /// 示例 4：
+    ///
+    ///     输入：s = "06"
+    ///     输出：0
+    ///     解释："06" 不能映射到 "F" ，因为字符串含有前导 0（"6" 和 "06" 在映射中并不等价）。
+    ///
+    /// 提示：
+    ///
+    ///     1 <= s.length <= 100
+    ///     s 只包含数字，并且可能包含前导零。
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/decode-ways
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：0 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.8 MB, 在所有 Swift 提交中击败了52.94%的用户
+    ///     通过测试用例：269 / 269
+    ///
+    func numDecodings(_ s: String) -> Int {
+
+        /* 2. DP
+         11101
+         - 0
+         - 1
+         1 (1) -> 1
+         1 (1, 1), (11) -> 2
+         1 (1, 11), (1, 1, 1), (11, 1) -> 3
+         0 (1, 1, 10), (11, 10) -> 2
+         1 (1, 1, 10, 1), (11, 10, 1) -> 2
+         */
+        
+        var f0 = 0, f1 = 1, f2 = 0
+        var start = s.startIndex
+        var lastV = 0
+        
+        while start < s.endIndex {
+            let v = s[start].wholeNumberValue!
+            
+            f2 = 0
+            if lastV * 10 + v <= 26 {
+                f2 = f0
+            }
+
+            if v == 0 {
+                f0 = 0
+                f1 = f2
+                lastV = lastV * 10 + v
+            } else {
+                f2 += f1
+                f0 = f1
+                f1 = f2
+                lastV = v
+            }
+            start = s.index(after: start)
+        }
+        
+        // 1. DFS
+        var paths: [[Int]] = []
+        var path: [Int] = []
+        func dfs(_ start: String.Index) {
+            if start == s.endIndex {
+                paths.append(path)
+                return
+            }
+            
+            let v = s[start].wholeNumberValue!
+            
+            if v == 0 {
+                if let last = path.last, last > 0, last * 10 < 26 {
+                    path[path.count - 1] = last * 10
+                    dfs(s.index(after: start))
+                } else {
+                    return
+                }
+            } else {
+                path.append(v)
+                dfs(s.index(after: start))
+                path.removeLast()
+                
+                if let last = path.last, last > 0, last * 10 + v < 26 {
+                    path[path.count - 1] = last * 10 + v
+                    dfs(s.index(after: start))
+                }
+            }
+        }
+        
+        dfs(s.startIndex)
+        
+        return paths.count
+    }
+    
+    // MARK: #139. 单词拆分
+    
+    /// #139. 单词拆分
+    ///
+    /// 给你一个字符串 s 和一个字符串列表 wordDict 作为字典，判定 s 是否可以由空格拆分为一个或多个在字典中出现的单词。
+    ///
+    /// 说明：拆分时可以重复使用字典中的单词。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入: s = "leetcode", wordDict = ["leet", "code"]
+    ///     输出: true
+    ///     解释: 返回 true 因为 "leetcode" 可以被拆分成 "leet code"。
+    /// 示例 2：
+    ///
+    ///     输入: s = "applepenapple", wordDict = ["apple", "pen"]
+    ///     输出: true
+    ///     解释: 返回 true 因为 "applepenapple" 可以被拆分成 "apple pen apple"。
+    ///          注意你可以重复使用字典中的单词。
+    /// 示例 3：
+    ///
+    ///     输入: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+    ///     输出: false
+    ///
+    /// 提示：
+    ///
+    ///     1 <= s.length <= 300
+    ///     1 <= wordDict.length <= 1000
+    ///     1 <= wordDict[i].length <= 20
+    ///     s 和 wordDict[i] 仅有小写英文字母组成
+    ///     wordDict 中的所有字符串 互不相同
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/word-break
+    ///
+    func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+        
+        let wordDict = wordDict.sorted().reversed()
+        
+        func dfs(_ start: String.Index) -> Bool {
+            if start == s.endIndex {
+                return true
+            }
+            
+            let ss = s[start..<s.endIndex]
+            
+            for word in wordDict {
+                if ss.count >= word.count, ss.hasPrefix(word), dfs(ss.index(start, offsetBy: word.count)) {
+                    return true
+                }
+            }
+            return false
+        }
+        
+        return dfs(s.startIndex)
+    }
+}
+
+// MARK: 第 16 天 - 动态规划 (-- 2021-11-25)
+extension AlgorithmII {
+    
+    // MARK: ##300. 最长递增子序列
+    
+    /// #300. 最长递增子序列
+    ///
+    /// 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
+    ///
+    /// 子序列是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] /// 的子序列。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：nums = [10,9,2,5,3,7,101,18]
+    ///     输出：4
+    ///     解释：最长递增子序列是 [2,3,7,101]，因此长度为 4 。
+    /// 示例 2：
+    ///
+    ///     输入：nums = [0,1,0,3,2,3]
+    ///     输出：4
+    /// 示例 3：
+    ///
+    ///     输入：nums = [7,7,7,7,7,7,7]
+    ///     输出：1
+    ///
+    /// 提示：
+    ///
+    ///     1 <= nums.length <= 2500
+    ///     -10^4 <= nums[i] <= 10^4
+    ///
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/longest-increasing-subsequence
+    /// 
+    func lengthOfLIS(_ nums: [Int]) -> Int {
+        
+        var lisdp: [[Int]] = []
+        var maxLen = 0
+        
+        for i in 0..<nums.count {
+            var isInsert = false
+            for j in (0..<lisdp.count).reversed() {
+                var lis = lisdp[j]
+                if lis.last! + 1 == nums[i] {
+                    lisdp[j].append(nums[i])
+                    maxLen = max(maxLen, lis.count + 1)
+                    isInsert = true
+                }
+                else if lis.last! < nums[i] {
+                    lis.append(nums[i])
+                    lisdp.append(lis)
+                    maxLen = max(maxLen, lis.count)
+                    isInsert = true
+                }
+                else if lisdp[j].count == 1, lisdp[j].last! >= nums[i] {
+                    lisdp.remove(at: j)
+                    lisdp.insert([nums[i]], at: j)
+                    isInsert = true
+                }
+            }
+
+            if isInsert == false {
+                lisdp.append([nums[i]])
+                maxLen = max(maxLen, 1)
+            }
+
+            if lisdp.count < 2 {
+                continue
+            }
+
+            for j in (0..<lisdp.count - 1).reversed() {
+                let lis1 = lisdp[j]
+                let lis2 = lisdp[j+1]
+
+                if lis1.last! == lis2.last!, lis1.count != lis2.count {
+                    lisdp.remove(at: lis1.count > lis2.count ? j+1 : j)
+                }
+                else if lis1.count == lis2.count, lis1.last! != lis2.last! {
+                    lisdp.remove(at: lis1.last! > lis2.last! ? j : j+1)
+                }
+            }
+        }
+        
+        // 2.
+        var dp = Array(repeating: 1, count: nums.count)
+        for i in 0..<nums.count {
+            var maximum = 1
+            for j in 0..<i {
+                let jj = i - j - 1 // 倒序查询
+                let distance = nums[i] - nums[jj]
+                if distance > 0 {
+                    maximum = max(maximum, dp[jj] + 1)
+                    if maximum == i + 1 { break }
+                }
+                else if distance == 0 {
+                    maximum = max(maximum, dp[jj])
+                    break
+                }
+            }
+            if maximum > 1 {
+                dp[i] = maximum
+            }
+            maxLen = max(maxLen, maximum)
+        }
+        return lisdp.count
+    }
+    
+    // MARK: #673. 最长递增子序列的个数
+    
+    /// #673. 最长递增子序列的个数
+    ///
+    /// 给定一个未排序的整数数组，找到最长递增子序列的个数。
+    ///
+    /// 示例 1:
+    ///
+    ///     输入: [1,3,5,4,7]
+    ///     输出: 2
+    ///     解释: 有两个最长递增子序列，分别是 [1, 3, 4, 7] 和[1, 3, 5, 7]。
+    /// 示例 2:
+    ///
+    ///     输入: [2,2,2,2,2]
+    ///     输出: 5
+    ///     解释: 最长递增子序列的长度是1，并且存在5个子序列的长度为1，因此输出5。
+    ///     注意: 给定的数组长度不超过 2000 并且结果一定是32位有符号整数。
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/number-of-longest-increasing-subsequence
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：56 ms, 在所有 Swift 提交中击败了95.24%的用户
+    ///     内存消耗：13.7 MB, 在所有 Swift 提交中击败了38.10%的用户
+    ///     通过测试用例：223 / 223
+    ///
+    func findNumberOfLIS(_ nums: [Int]) -> Int {
+        var dp = Array(repeating: 1, count: nums.count)
+        var cnt = Array(repeating: 1, count: nums.count)
+        var maxLen = 1
+        
+        for i in 0..<nums.count {
+            var maximum = 1
+            var c = 1
+            for j in 0..<i {
+                let jj = i - j - 1 // 倒序查询
+                let distance = nums[i] - nums[jj]
+                if distance > 0 {
+                    if dp[jj] + 1 > maximum {
+                        c = cnt[jj]
+                    }
+                    else if dp[jj] + 1 == maximum {
+                        c += cnt[jj]
+                    }
+                    maximum = max(maximum, dp[jj] + 1)
+                    if maximum == i + 1 { break }
+                }
+                else if distance == 0 {
+                    
+                    if dp[jj] > maximum {
+                        c = cnt[jj]
+                    }
+                    else if dp[jj] == maximum {
+                        c += cnt[jj]
+                    }
+                    
+                    maximum = max(maximum, dp[jj])
+                    break
+                }
+            }
+            if maximum > 1 {
+                dp[i] = maximum
+                cnt[i] = c
+            }
+            maxLen = max(maxLen, maximum)
+        }
+        
+        var count = 0
+        for i in maxLen-1..<dp.count {
+            if dp[i] == maxLen {
+                count += cnt[i]
+            }
+        }
+        return count
+    }
+}
+
+// MARK: 第 17 天 - 动态规划 (-- 2021-11-26)
+extension AlgorithmII {
+    
+    // MARK: #1143. 最长公共子序列
+    
+    /// #1143. 最长公共子序列
+    ///
+    /// 给定两个字符串 text1 和 text2，返回这两个字符串的最长 公共子序列 的长度。如果不存在 公共子序列 ，返回 0 。
+    ///
+    /// 一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何/// 字符）后组成的新字符串。
+    ///
+    ///     例如，"ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。
+    /// 两个字符串的 公共子序列 是这两个字符串所共同拥有的子序列。
+    ///
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：text1 = "abcde", text2 = "ace"
+    ///     输出：3
+    ///     解释：最长公共子序列是 "ace" ，它的长度为 3 。
+    /// 示例 2：
+    ///
+    ///     输入：text1 = "abc", text2 = "abc"
+    ///     输出：3
+    ///     解释：最长公共子序列是 "abc" ，它的长度为 3 。
+    /// 示例 3：
+    ///
+    ///     输入：text1 = "abc", text2 = "def"
+    ///     输出：0
+    ///     解释：两个字符串没有公共子序列，返回 0 。
+    ///
+    /// 提示：
+    ///
+    ///     1 <= text1.length, text2.length <= 1000
+    ///     text1 和 text2 仅由小写英文字符组成。
+    ///
+    /// 链接：https://leetcode-cn.com/problems/longest-common-subsequence
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：44 ms, 在所有 Swift 提交中击败了61.70%的用户
+    ///     内存消耗：13.5 MB, 在所有 Swift 提交中击败了98.94%的用户
+    ///     通过测试用例：44 / 44
+    ///
+    func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
+        
+//        var dp = Array(repeating: Array(repeating: 0, count: text2.count), count: text1.count)
+        var flags = Array(repeating: 0, count: text2.count)
+        
+        var idx1 = text1.startIndex
+        var idx2OffsetBy = 0 //
+        var farFlagIdx = 0 // 记录最大长度值的远端下标。更新即跳出循环，减少遍历次数。
+        
+        for _ in 0..<text1.count {
+            
+            var lastFlag = 0
+            if idx2OffsetBy > 0 { lastFlag = flags[idx2OffsetBy - 1] }
+            var idx2 = text2.index(text2.startIndex, offsetBy: idx2OffsetBy)
+            
+            for j in idx2OffsetBy..<text2.count {
+                
+                if text1[idx1] == text2[idx2] {
+//                    dp[i][j] = 1
+//                    dp[i][j] = dp[i - 1][j - 1] + 1
+//                    dp[i][j] = lastFlag + 1
+                    
+                    let temp = flags[j]
+                    flags[j] = lastFlag + 1
+                    lastFlag = max(lastFlag, temp)
+                    
+                    if flags[j] == j + 1 {
+                        idx2OffsetBy += 1
+                    }
+                    
+                    if flags[farFlagIdx] < flags[j] {
+                        farFlagIdx = j
+                        break
+                    }
+                    
+                } else {
+//                    dp[i][j] = max(dp[i][j - 1], dp[i - 1][j])
+                    lastFlag = max(lastFlag, flags[j])
+                }
+                
+                idx2 = text2.index(after: idx2)
+            }
+            
+            idx1 = text1.index(after: idx1)
+        }
+        
+        return flags.max()!
+    }
+    
+    // MARK: #583. 两个字符串的删除操作
+    
+    /// #583. 两个字符串的删除操作
+    ///
+    /// 给定两个单词 word1 和 word2，找到使得 word1 和 word2 相同所需的最小步数，每步可以删除任意一个字符串中的一个字符。
+    ///
+    /// 示例：
+    ///
+    ///     输入: "sea", "eat"
+    ///     输出: 2
+    ///     解释: 第一步将"sea"变为"ea"，第二步将"eat"变为"ea"
+    ///
+    /// 提示：
+    ///
+    ///     给定单词的长度不超过500。
+    ///     给定单词中的字符只含有小写字母。
+    ///
+    /// 链接：https://leetcode-cn.com/problems/delete-operation-for-two-strings
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：28 ms, 在所有 Swift 提交中击败了90.91%的用户
+    ///     内存消耗：13.9 MB, 在所有 Swift 提交中击败了100.00%的用户
+    ///     通过测试用例：1306 / 1306
+    ///
+    func minDistance(_ text1: String, _ text2: String) -> Int {
+
+        var flags = Array(repeating: 0, count: text2.count)
+        
+        var idx1 = text1.startIndex
+        var idx2OffsetBy = 0
+        var farFlagIdx = 0 // 更新最大长度值的远端下标
+        
+        for _ in 0..<text1.count {
+            
+            var lastFlag = 0
+            if idx2OffsetBy > 0 { lastFlag = flags[idx2OffsetBy - 1] }
+            var idx2 = text2.index(text2.startIndex, offsetBy: idx2OffsetBy)
+            
+            for j in idx2OffsetBy..<text2.count {
+                
+                if text1[idx1] == text2[idx2] {
+
+                    let temp = flags[j]
+                    flags[j] = lastFlag + 1
+                    lastFlag = max(lastFlag, temp)
+                    
+                    if flags[j] == j + 1 {
+                        idx2OffsetBy += 1
+                    }
+                    
+                    if flags[farFlagIdx] < flags[j] {
+                        farFlagIdx = j
+                        break
+                    }
+                    
+                } else {
+                    lastFlag = max(lastFlag, flags[j])
+                }
+                
+                idx2 = text2.index(after: idx2)
+            }
+            
+            idx1 = text1.index(after: idx1)
+        }
+        
+        return text1.count + text2.count - 2 * flags.max()!
+    }
+}
+
