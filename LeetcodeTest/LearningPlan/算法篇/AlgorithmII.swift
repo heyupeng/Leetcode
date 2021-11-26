@@ -2486,46 +2486,51 @@ extension AlgorithmII {
     func longestPalindrome(_ s: String) -> String {
         // test119 超时
         
-        /// 中心收敛
-        func checkPalindrome(_ str: String, _ lowwer: String.Index, _ upper: String.Index) -> Bool {
-            var l = lowwer, r = upper
-            while l <= r {
-                if str[l] != str[r] {
-                    return false
-                }
-                l = str.index(after: l)
-                r = str.index(before: r)
+        /// 中心扩散
+        func checkPalindrome(_ str: String, _ lowwer: String.Index, _ upper: String.Index) -> (String.Index, String.Index)? {
+            if upper == str.endIndex || str[lowwer] != str[upper] {
+                return nil
             }
-            return true
+
+            if lowwer > str.startIndex,
+            let range = checkPalindrome(str, str.index(before: lowwer), str.index(after: upper))  {
+                return range
+            }
+
+            return (lowwer, upper)
         }
         
         var startIndex = s.startIndex
+        let endIndex = s.endIndex
         
         var maxLen = 0
         var maxS = ""
+        var count = s.count
+        var i = 0
         
-        while startIndex < s.endIndex {
+        while startIndex < endIndex {
+            let next = s.index(after: startIndex)
             
-            let ch = s[startIndex]
-            var upper = s.lastIndex(ch, startIndex, s.endIndex)
+            if count - i < maxLen / 2 {
+                break
+            }
             
-            while upper != nil, upper != startIndex {
-                let d = s.distance(from: startIndex, to: upper!) + 1
-                if d <= maxLen { break }
-                
-                if checkPalindrome(s, startIndex, upper!) == true {
-                    maxLen = max(maxLen, d)
-                    maxS = String(s[startIndex...upper!])
-                    break
+            if let r = checkPalindrome(s, startIndex, next) {
+                let d = s.distance(from: r.0, to: r.1) + 1
+                if d > maxLen {
+                    maxLen = d
+                    maxS = String(s[r.0...r.1])
                 }
-                upper = s.lastIndex(ch, startIndex, upper!)
             }
-            
-            if maxLen == 0 {
-                maxLen = 1
+            if let r = checkPalindrome(s, startIndex, startIndex) {
+                let d = s.distance(from: r.0, to: r.1) + 1
+                if d > maxLen {
+                    maxLen = d
+                    maxS = String(s[r.0...r.1])
+                }
             }
-            
-            startIndex = s.index(after: startIndex)
+            startIndex = next
+            i += 1
         }
         
         return maxS
