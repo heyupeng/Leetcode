@@ -3200,3 +3200,444 @@ extension AlgorithmII {
     }
 }
 
+struct BinarySearch {
+    
+    /// 在按升序排列的数组 nums 中，查找最后一个不大于 target 的元素的下标。
+    ///
+    /// 示例 1:
+    ///
+    ///     输入: [1,3,4,5,5,7] 5
+    ///     输出: 4
+    /// 示例 2:
+    ///
+    ///     输入: [1,3,4,5,5,7] 6
+    ///     输出: 4
+    ///
+    /// - Parameters:
+    ///   - nums: 升序排列的数组
+    ///   - target: 目标值
+    /// - Returns: 返回最后一个不大于 target 的元素的下标。-1 表示不存在。
+    static func findLast(_ nums: [Int], LessThanOrEqualTo target: Int) -> Int {
+        if nums.count == 0 { return -1 }
+        if target < nums[0] { return -1 }
+        
+        var l = 0, r = nums.count
+        var res = -1
+        while l < r {
+            let m = (l + r) / 2
+            if nums[m] <= target {
+                l = m - 1
+                res = m
+            } else {
+                r = m - 1
+            }
+        }
+        return res
+    }
+    
+    static func findLast(_ nums: [Int], lessThanOrEqualTo target: Int, lftIdx: Int, rgtIdx: Int) -> Int {
+        if nums.count == 0 { return -1 }
+        if target < nums[0] { return -1 }
+        
+        var l = lftIdx, r = rgtIdx
+        var res = -1
+        while l < r {
+            let m = (l + r) / 2
+            if nums[m] <= target {
+                l = m - 1
+                res = m
+            } else {
+                r = m - 1
+            }
+        }
+        return res
+    }
+}
+
+// MARK: 第 18 天 - 动态规划 (-- 2021-12-01)
+extension AlgorithmII {
+    
+    // MARK: #72. 编辑距离
+    
+    // MARK: #322. 零钱兑换
+    
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        let sortedCoins = coins.sorted()
+                
+        var remaind = amount
+        var cnt = 0
+        
+        while remaind > 0 {
+            let idx = BinarySearch.findLast(sortedCoins, LessThanOrEqualTo:remaind)
+            if idx == -1 {
+                break
+            }
+            cnt += 1
+            remaind -= coins[idx]
+        }
+        return cnt
+    }
+    
+    func coinChange2(_ coins: [Int], _ amount: Int) -> Int {
+        if amount == 0 { return 0 }
+        let sortedCoins = coins.sorted().reversed() as [Int]
+        
+        var sums = Array(repeating: 0, count: amount)
+        
+        func count(_ indexset: [Int]) -> Int {
+            var value = 0
+            for idx in 0..<indexset.count {
+                value += indexset[idx]
+            }
+            return value
+        }
+        
+        func coinsum(_ indexset: [Int]) -> Int {
+            var value = 0
+            for idx in 0..<indexset.count {
+                value += sortedCoins[idx] * indexset[idx]
+            }
+            return value
+        }
+        
+        func bfs(_ indexsets: [[Int]]) -> Int {
+            var news: [[Int]] = []
+            for indexset in indexsets {
+                let v = coinsum(indexset)
+                for i in 0..<sortedCoins.count {
+                    let v1 = v + sortedCoins[i]
+                    if v1 > amount {
+                        continue
+                    }
+                    if v1 == amount {
+                        return count(indexset) + 1
+                    } else if sums[v1] > 0 {
+                        continue
+                    }
+                    var idxset = indexset
+                    idxset[i] += 1
+                    news.append(idxset)
+
+                    sums[v1] = count(idxset)
+                }
+            }
+            
+            if news.count == 0 { return -1 }
+            return bfs(news)
+        }
+        
+        let indexset = Array(repeating: 0, count: sortedCoins.count)
+        return bfs([indexset])
+    }
+    
+    
+    // MARK: #343. 整数拆分
+    
+    /// 343. 整数拆分
+    ///
+    /// 给定一个正整数 n，将其拆分为至少两个正整数的和，并使这些整数的乘积最大化。 返回你可以获得的最大乘积。
+    ///
+    /// 示例 1:
+    ///
+    ///     输入: 2
+    ///     输出: 1
+    ///     解释: 2 = 1 + 1, 1 × 1 = 1。
+    /// 示例 2:
+    ///
+    ///     输入: 10
+    ///     输出: 36
+    ///     解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36。
+    /// 说明: 你可以假设 n 不小于 2 且不大于 58。
+    ///
+    /// 链接：https://leetcode-cn.com/problems/integer-break
+    func integerBreak(_ n: Int) -> Int {
+//        if n < 2 { return 0 }
+//        if n == 2 { return 1 }
+//        if n == 3 { return 2 }
+//        if n == 4 { return 4 }
+//        if n == 5 { return 6 }
+//        if n == 6 { return 9 }
+//
+//        var dp = [4,6,9]
+//        for _ in 7...n {
+//            let mul = max(dp[0] * 3, dp[1] * 2, dp[2] * 1)
+//            dp.removeFirst()
+//            dp.append(mul)
+//            print(mul)
+//        }
+        
+        if n == 2 { return 1 }
+        if n == 3 { return 2 }
+
+        var dp = [0,1,2]
+        for v in 4...n {
+            let mul = max(max(v - 3, dp[0]) * 3, max(v - 2, dp[1]) * 2)
+            dp.removeFirst()
+            dp.append(mul)
+            print(mul)
+        }
+        
+        return dp.last!
+    }
+}
+
+// MARK: 第 19 天 - 位运算 (-- 2021-11-29)
+extension AlgorithmII {
+    
+    // MARK: #201. 数字范围按位与
+    
+    /// #201. 数字范围按位与
+    ///
+    /// 给你两个整数 left 和 right ，表示区间 [left, right] ，返回此区间内所有数字 按位与 的结果（包含 left 、right 端点）。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：left = 5, right = 7
+    ///     输出：4
+    /// 示例 2：
+    ///
+    ///     输入：left = 0, right = 0
+    ///     输出：0
+    /// 示例 3：
+    ///
+    ///     输入：left = 1, right = 2147483647
+    ///     输出：0
+    ///
+    /// 提示：
+    ///
+    ///     0 <= left <= right <= 231 - 1
+    ///
+    /// 链接：https://leetcode-cn.com/problems/bitwise-and-of-numbers-range
+    ///
+    func rangeBitwiseAnd(_ left: Int, _ right: Int) -> Int {
+        
+        /*
+         执行用时：2164 ms, 在所有 Swift 提交中击败了20.00%的用户
+         内存消耗：13.6 MB, 在所有 Swift 提交中击败了80.00%的用户
+         通过测试用例：8268 / 8268
+         */
+//        var value = 0xffffffff
+//        for v in left...right {
+//            value &= v
+//        }
+//        return value
+        
+        /* 2012-12-03
+         
+         left = 5  = 0x101
+         right = 7 = 0x111
+         res = 0x100 = 4
+         
+         left = 16  = 0x1 0000
+         right = 15 = 0x0 1111
+         res = 0x 0x0 0000
+         分析：从高位到低位，第一个不同的数位及后面部分丢弃。
+         
+         执行用时：28 ms, 在所有 Swift 提交中击败了100.00%的用户
+         内存消耗：13.6 MB, 在所有 Swift 提交中击败了100.00%的用户
+         通过测试用例：8268 / 8268
+         */
+        var res = 1 << 31
+        var idx = 31
+        for _ in 0..<31 {
+            if res & left == res & right {
+                res = res >> 1
+                idx -= 1
+            } else {
+                break
+            }
+        }
+        return ( (left >> idx) << idx )
+    }
+    
+}
+
+// MARK: 第 20 天 - 其他 (-- 2021-12-02)
+extension AlgorithmII {
+    
+    // MARK: #384. 打乱数组
+    
+    /// #384. 打乱数组
+    ///
+    /// 给你一个整数数组 nums ，设计算法来打乱一个没有重复元素的数组。
+    
+    /// 实现 Solution class:
+    ///
+    ///     Solution(int[] nums) 使用整数数组 nums 初始化对象
+    ///     int[] reset() 重设数组到它的初始状态并返回
+    ///     int[] shuffle() 返回数组随机打乱后的结果
+    ///
+
+    /// 示例：
+    ///
+    ///     输入
+    ///     ["Solution", "shuffle", "reset", "shuffle"]
+    ///     [[[1, 2, 3]], [], [], []]
+    ///     输出
+    ///     [null, [3, 1, 2], [1, 2, 3], [1, 3, 2]]
+    ///     解释
+    ///     Solution solution = new Solution([1, 2, 3]);
+    ///     solution.shuffle();    // 打乱数组 [1,2,3] 并返回结果。任何 [1,2,3]的排列返回的概率应该相同。例如，返回 [3, 1, 2]
+    ///     solution.reset();      // 重设数组到它的初始状态 [1, 2, 3] 。返回 [1, 2, 3]
+    ///     solution.shuffle();    // 随机返回数组 [1, 2, 3] 打乱后的结果。例如，返回 [1, 3, 2]
+    ///
+    /// 提示：
+    ///
+    ///     1 <= nums.length <= 200
+    ///     -106 <= nums[i] <= 106
+    ///     nums 中的所有元素都是 唯一的
+    ///     最多可以调用 5 * 104 次 reset 和 shuffle
+    ///
+    /// 链接：https://leetcode-cn.com/problems/shuffle-an-array
+    static var k384Nums = "k384Nums"
+    private var nums: [Int] {
+        set {
+            objc_setAssociatedObject(self, &Self.k384Nums, newValue, .OBJC_ASSOCIATION_ASSIGN)
+        }
+        get {
+            return objc_getAssociatedObject(self, &Self.k384Nums) as! [Int]
+        }
+    }
+
+    convenience init(_ nums: [Int]) {
+        self.init()
+        self.nums = nums
+    }
+    
+    func reset() -> [Int] {
+        return self.nums
+    }
+    
+    func shuffle() -> [Int] {
+        var nums = Array(self.nums)
+        
+        for i in 0..<nums.count {
+            let random = Int.random(in: i..<nums.count)
+            if i == random { continue }
+            let temp = nums[i]
+            nums[i] = nums[random]
+            nums[random] = temp
+        }
+
+        return nums
+    }
+    
+    // MARK: #202. 快乐数
+    
+    /// #202. 快乐数
+    /// 编写一个算法来判断一个数 n 是不是快乐数。
+    ///
+    /// 「快乐数」定义为：
+    ///
+    ///     对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。
+    ///     然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。
+    ///     如果 可以变为  1，那么这个数就是快乐数。
+    /// 如果 n 是快乐数就返回 true ；不是，则返回 false 。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：n = 19
+    ///     输出：true
+    ///     解释：
+    ///     12 + 92 = 82
+    ///     82 + 22 = 68
+    ///     62 + 82 = 100
+    ///     12 + 02 + 02 = 1
+    /// 示例 2：
+    ///
+    ///     输入：n = 2
+    ///     输出：false
+    ///
+    /// 提示：
+    ///
+    ///     1 <= n <= 231 - 1
+    ///
+    /// 链接：https://leetcode-cn.com/problems/happy-number
+    
+    func isHappy(_ n: Int) -> Bool {
+        var dp = Array(repeating: 0, count: 500)
+        
+        func _nextNumber(_ value: Int) -> Int {
+            let dividend = 10
+            var next = 0
+            
+            var quotient = value
+            var remainder = 0
+            while quotient > 0 {
+                remainder = quotient % dividend
+                quotient = quotient / dividend
+                next += remainder * remainder
+            }
+
+            return next
+        }
+        
+//        func _isHappy(_ value: Int) -> Bool {
+//            let sum = _nextNumber(value)
+//            if sum == 1 {
+//                return true
+//            }
+//            if sum < dp.count {
+//                if dp[sum] == 1 { return false}
+//                dp[sum] = 1
+//            }
+//            return _isHappy(sum)
+//        }
+//        return _isHappy(n)
+        
+        var sum = n
+        while sum > 1 {
+            if sum < dp.count {
+                if dp[sum] == 1 { return false }
+                dp[sum] = 1
+            }
+            sum = _nextNumber(sum)
+        }
+        
+        /* 在数学上，非快乐数最后都会进入循环链 (num -> 4 -> 16 -> 37 -> 58 -> 89 -> 145 -> 42 -> 20 -> 4)
+         */
+        return true
+    }
+
+    /// 位数分离。一个正整数，分离为它每个位数上的数字集合[a0, a1, ..., an]。
+    func digitSplit(_ dividor: Int, dividend: Int = 10) -> [Int] {
+        if dividor == 0 { return [0] }
+        
+        var quotient = dividor
+        var remainder = 0
+        var nums: [Int] = []
+
+        while quotient > 0 {
+            remainder = quotient % dividend
+            quotient = quotient / dividend
+            nums.append(remainder)
+        }
+        
+        return nums
+    }
+    
+    // MARK: #149. 直线上最多的点数
+    func maxPoints(_ points: [[Int]]) -> Int {
+        if points.count == 1 { return 0 }
+
+        var lines: [[Int]] = []
+        var cnts: [Int] = []
+
+        for i in 1..<points.count {
+
+            for j in 0..<i {
+                let p1 = points[i], p2 = points[j]
+                let ABC = LineEquation.getABC(p1, p2)
+                if lines.contains(ABC) {
+                    let idx = lines.firstIndex(of: ABC)
+                    cnts[idx!] += 2
+                } else {
+                    lines.append(ABC)
+                    cnts.append(2)
+                }
+            }
+        }
+        
+        return Int(sqrt(Double(cnts.max() ?? 0))) + 1
+    }
+}

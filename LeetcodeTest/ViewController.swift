@@ -285,6 +285,14 @@ class ViewController: UIViewController {
         let q_1143_1_text2 = "hafcdqbgncrcbihkd"
         
         algorithmII.longestCommonSubsequence(q_1143_0_text1, q_1143_0_text2)
+        
+        // D18-1
+        let q_332_t49_coins = [1, 2, 5]
+        
+        
+        let q_332_t183_coins = [406,435,260,178,55]
+        let q_332_t183_target = 2924
+        algorithmII.coinChange2(q_332_t183_coins, q_332_t183_target)
     }
     
     func testDynamic() {

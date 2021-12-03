@@ -43,3 +43,23 @@ extension String: StringToArray {
         return nil
     }
 }
+
+extension Int {
+    static func greatestCommonDivisor(_ num1: Int, _ num2: Int) -> Int {
+        if num1 == 0 { return num2 }
+        if num2 == 0 { return num1 }
+        #if true
+        return greatestCommonDivisor(num2, num1 % num2)
+        #else
+        var div1 = num1 // max(abs(num1), abs(num2))
+        var div2 = num2 // min(abs(num1), abs(num2))
+        var r = div1 % div2
+        while r != 0 {
+            div1 = div2
+            div2 = r
+            r = div1 % div2
+        }
+        return div2
+        #endif
+    }
+}
