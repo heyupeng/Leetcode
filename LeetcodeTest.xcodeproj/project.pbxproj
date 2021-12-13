@@ -20,6 +20,8 @@
 		B88B4ECB273BC36B007F8D63 /* AlgorithmII.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4ECA273BC36B007F8D63 /* AlgorithmII.swift */; };
 		B88B4ECE274E0F1B007F8D63 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4ECD274E0F1B007F8D63 /* Extension.swift */; };
 		B88B4ED32759BE1C007F8D63 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4ED22759BE1C007F8D63 /* Equation.swift */; };
+		B88B4ED6275A1319007F8D63 /* LCP.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4ED5275A1319007F8D63 /* LCP.swift */; };
+		B88B4ED8275A13F8007F8D63 /* BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88B4ED7275A13F8007F8D63 /* BinarySearch.swift */; };
 		B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0F92728E74200E40C11 /* Search2DMatrix.swift */; };
 		B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FB2729016700E40C11 /* ValidParentheses.swift */; };
 		B8BBD0FE2729057A00E40C11 /* GenerateParentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBD0FD2729057A00E40C11 /* GenerateParentheses.swift */; };
@@ -65,6 +67,8 @@
 		B88B4ECA273BC36B007F8D63 /* AlgorithmII.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmII.swift; sourceTree = "<group>"; };
 		B88B4ECD274E0F1B007F8D63 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		B88B4ED22759BE1C007F8D63 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
+		B88B4ED5275A1319007F8D63 /* LCP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCP.swift; sourceTree = "<group>"; };
+		B88B4ED7275A13F8007F8D63 /* BinarySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinarySearch.swift; sourceTree = "<group>"; };
 		B8BBD0F92728E74200E40C11 /* Search2DMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search2DMatrix.swift; sourceTree = "<group>"; };
 		B8BBD0FB2729016700E40C11 /* ValidParentheses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidParentheses.swift; sourceTree = "<group>"; };
 		B8BBD0FD2729057A00E40C11 /* GenerateParentheses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateParentheses.swift; sourceTree = "<group>"; };
@@ -183,12 +187,21 @@
 			path = Math;
 			sourceTree = "<group>";
 		};
+		B88B4ED4275A12F4007F8D63 /* LCP */ = {
+			isa = PBXGroup;
+			children = (
+				B88B4ED5275A1319007F8D63 /* LCP.swift */,
+			);
+			path = LCP;
+			sourceTree = "<group>";
+		};
 		B8BBD10127293FDB00E40C11 /* LearningPlan */ = {
 			isa = PBXGroup;
 			children = (
 				B8BBD104272A8CFD00E40C11 /* 数据结构入门篇 */,
 				B8BBD107272A91A800E40C11 /* 算法篇 */,
 				B8BBD10A272AAFD400E40C11 /* 动态规划 */,
+				B88B4ED4275A12F4007F8D63 /* LCP */,
 			);
 			path = LearningPlan;
 			sourceTree = "<group>";
@@ -207,6 +220,7 @@
 			children = (
 				B8BBD108272A91F900E40C11 /* Algorithm.swift */,
 				B88B4ECA273BC36B007F8D63 /* AlgorithmII.swift */,
+				B88B4ED7275A13F8007F8D63 /* BinarySearch.swift */,
 			);
 			path = "算法篇";
 			sourceTree = "<group>";
@@ -353,12 +367,14 @@
 				B8BBD106272A8D8900E40C11 /* DataStructure.swift in Sources */,
 				B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */,
 				B825BE9E2727F554001238E6 /* ViewController.swift in Sources */,
+				B88B4ED6275A1319007F8D63 /* LCP.swift in Sources */,
 				B8BBD109272A91F900E40C11 /* Algorithm.swift in Sources */,
 				B8BBD0FC2729016700E40C11 /* ValidParentheses.swift in Sources */,
 				B8BBD0FA2728E74200E40C11 /* Search2DMatrix.swift in Sources */,
 				B88B4ECB273BC36B007F8D63 /* AlgorithmII.swift in Sources */,
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,
 				B825BECB2727F5AF001238E6 /* NthUglyNumber.swift in Sources */,
+				B88B4ED8275A13F8007F8D63 /* BinarySearch.swift in Sources */,
 				B88B4ECE274E0F1B007F8D63 /* Extension.swift in Sources */,
 				B825BE9C2727F554001238E6 /* SceneDelegate.swift in Sources */,
 				B8BBD10C272AB01C00E40C11 /* Dynamic.swift in Sources */,

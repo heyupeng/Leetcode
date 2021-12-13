@@ -25,9 +25,22 @@ class ViewController: UIViewController {
         
 //        testAlgorithm()
         
-        testAlgorithmII()
+//        testAlgorithmII()
+//
+//        testDynamic()
         
-        testDynamic()
+        testLCP()
+    }
+    
+    func testLCP() {
+        let lcp = LCP()
+        
+//        lcp.orchestraLayout(449572, 209397, 306801)
+        
+        lcp.maxGroupNumber([1,1,2,2,2,3,3])
+        
+//        lcp.minRecSize(<#T##lines: [[Int]]##[[Int]]#>)
+        
     }
     
     func testDataStructure() {
