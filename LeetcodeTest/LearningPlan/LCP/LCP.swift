@@ -604,4 +604,173 @@ class LCP {
         return 0.0
     }
     
+    func guardCastle(_ grid: [String]) -> Int {
+        var grid = grid.map { s in
+            return s.characters()
+        }
+        
+        let pass = Character(".")
+        let ob = Character("#")
+        let s = Character("S")
+        let bp = Character("P")
+        let dst = Character("C")
+        
+        var starts: [[Int]] = []
+        var bps: [[Int]] = []
+        for i in 0..<grid.count {
+            for j in 0..<grid[i].count {
+                if grid[i][j] == s {
+                    starts.append([i, j])
+                }
+                else if grid[i][j] == bp {
+                    bps.append([i, j, 0]) // 0 表示未访问
+                }
+            }
+        }
+        
+        var minCnt = 0
+        var guardPoints: [[Int]] = []
+        var guardCnts: [Int] = []
+        func addGuardCastlePath(_ path: [[Int]]) {
+            let newPoints = path.filter { point in
+                return !guardPoints.contains(point)
+            }
+            if newPoints.count == 0 { return }
+            
+            for i in 0..<guardPoints.count {
+                if path.contains(guardPoints[i]) {
+                    continue
+                }
+                minCnt = min(minCnt, guardCnts[i])
+                guardCnts[i] = guardCnts[i] + 1
+            }
+            minCnt += 1
+            for i in 0..<newPoints.count {
+                guardPoints.append(newPoints[i])
+                guardCnts.append(minCnt)
+            }
+        }
+        
+        let raw = grid.count, col = grid.first?.count ?? 0
+        var path: [[Int]] = []
+        
+        func dfs(_ start: [Int], _ step: Int, _ isbp: Bool) -> Int {
+            
+            if grid[start[0]][start[1]] == bp, isbp == false {
+                // 未经过传送点
+                for p in bps {
+                    if grid[p[0]][p[1]] == bp, p[2] != 0 {
+                        continue
+                    }
+                    let faceback = dfs(p, step, true)
+                    if faceback == 0 {
+                        continue
+                    }
+                    if faceback == 1 {
+                        return -1
+                    }
+                }
+                return 0
+            }
+            
+            let ch = grid[start[0]][start[1]]
+            if ch == pass {
+                grid[start[0]][start[1]] = Character("A")
+                
+                path.append(start)
+            }
+            
+            let dirs = [ [0, 1], [1, 0], [0, -1], [-1, 0] ]
+            
+            for dir in dirs {
+                let x = start[0] + dir[0], y = start[1] + dir[1]
+                if x < 0 || x >= raw || y < 0 || y >= col {
+                    continue
+                }
+                if grid[x][y] != dst {
+                    continue
+                }
+                print(path)
+                addGuardCastlePath(path)
+                
+                if ch == pass {
+                    grid[start[0]][start[1]] = ch
+                    path.removeLast()
+                }
+                return step + (ch == bp ? 0 : 1)
+            }
+            
+            for dir in dirs {
+                let x = start[0] + dir[0], y = start[1] + dir[1]
+                if x < 0 || x >= raw || y < 0 || y >= col {
+                    continue
+                }
+                if grid[x][y] == ob {
+                    continue
+                }
+                
+                if grid[x][y] == Character("A") {
+                    // 已走过
+                    continue
+                }
+                
+                if grid[x][y] == s {
+//                    if isbp == true { return -1 }
+                    continue
+                }
+                
+                if grid[x][y] == bp, isbp == true {
+                    continue
+                }
+                
+                
+                let fb = dfs([x, y], step + (ch == bp ? 0 : 1), isbp)
+                if fb == 0 {
+                    continue
+                }
+                if step == 0, fb == -1 {
+                    return fb
+                }
+            }
+            
+            if ch == pass {
+                grid[start[0]][start[1]] = ch
+                path.removeLast()
+            }
+            return 0
+        }
+        
+        var cnt = 0
+        for start in starts {
+            let c = dfs(start, 0, false)
+            if c == -1 {
+                cnt = c
+                break
+            }
+        }
+        
+        return cnt
+    }
+    func daysOf(_ year: Int, _ month: Int) -> Int {
+        switch month {
+        case 1, 3, 5, 7, 8, 10, 12:
+            return 31
+        case 4, 6, 9, 11:
+            return 30
+        default:
+            break
+        }
+        if (year % 100 == 0 && year % 400 == 0) || (year % 100 != 0 || year % 4 == 0) {
+            return 29
+        }                                             
+        return 28
+    }
+    func dayOfYear(_ date: String) -> Int {
+        let cmps = date.split(separator: Character("-")) as! [String]
+        var days = Int(cmps[2])!
+        for v in 1..<Int(cmps[1])! {
+            days += v
+        }
+        return 0
+    }
 }

@@ -24,40 +24,24 @@ class ValidParentheses: NSObject {
     static let test41 = "()[]{}"
     
     func isValid(_ s: String) -> Bool {
+        let sets: [String.Element: String.Element] = [")": "(", "[": "]", "}": "{"]
+        
         var s1 = ""
         for ch in s {
             
             if ch == "(" || ch == "{" || ch == "[" {
                 s1.append(ch)
             }
-            else if ch == ")" {
-                if let ch1 = s1.last, ch1 == "(" {
-                    s1.removeLast()
-                } else {
-                    s1.append(ch)
-                    break
-                }
+            else if let ch1 = s1.last, let ch2 = sets[ch], ch1 == ch2 {
+                s1.removeLast()
             }
-            else if ch == "}" {
-                if let ch1 = s1.last, ch1 == "{" {
-                    s1.removeLast()
-                } else {
-                    s1.append(ch)
-                    break
-                }
-            }
-            else if ch == "]" {
-                if let ch1 = s1.last, ch1 == "[" {
-                    s1.removeLast()
-                } else {
-                    s1.append(ch)
-                    break
-                }
+            else {
+                s1.append(ch)
+                break
             }
         }
         
         return s1.count == 0
     }
-    
     
 }

@@ -939,3 +939,278 @@ extension DataStructure:Question {
 //        print(l)
     }
 }
+
+extension DataStructure {
+    
+    // MARK: #20. 有效的括号
+    
+    /// #20. 有效的括号
+    ///
+    /// 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+    ///
+    /// 有效字符串需满足：
+    ///
+    ///     左括号必须用相同类型的右括号闭合。
+    ///     左括号必须以正确的顺序闭合。
+    ///
+    /// 示例 1：
+    ///
+    ///     输入：s = "()"
+    ///     输出：true
+    /// 示例 2：
+    ///
+    ///     输入：s = "()[]{}"
+    ///     输出：true
+    /// 示例 3：
+    ///
+    ///     输入：s = "(]"
+    ///     输出：false
+    /// 示例 4：
+    ///
+    ///     输入：s = "([)]"
+    ///     输出：false
+    /// 示例 5：
+    ///
+    ///     输入：s = "{[]}"
+    ///     输出：true
+    ///
+    /// 提示：
+    ///
+    ///     1 <= s.length <= 104
+    ///     s 仅由括号 '()[]{}' 组成
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/valid-parentheses
+    ///
+    func isValid(_ s: String) -> Bool {
+        let sets: [String.Element: String.Element] = [")": "(", "[": "]", "}": "{"]
+                
+        var s1 = ""
+        for ch in s {
+            
+            if ch == "(" || ch == "{" || ch == "[" {
+                s1.append(ch)
+            }
+            else if let ch1 = s1.last, let ch2 = sets[ch], ch1 == ch2 {
+                s1.removeLast()
+            }
+            else {
+                s1.append(ch)
+                break
+            }
+        }
+        
+        return s1.count == 0
+    }
+    
+    // MARK: #232. 用栈实现队列
+    
+    /// #232. 用栈实现队列
+    class MyQueue {
+        private var list: [Int] = []
+        init() {
+            
+        }
+        
+        func push(_ x: Int) {
+            list.append(x)
+        }
+        
+        func pop() -> Int {
+            list.removeFirst()
+        }
+        
+        func peek() -> Int {
+            return list[0]
+        }
+        
+        func empty() -> Bool {
+            return list.count == 0
+        }
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ */
+public class TreeNode {
+    public var val: Int
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init() { self.val = 0; self.left = nil; self.right = nil; }
+    public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+    public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+        self.val = val
+        self.left = left
+        self.right = right
+    }
+}
+
+// MARK: 第 10 天 - 树 (-- 2021-12-13)
+extension DataStructure {
+    
+    // MARK: #144. 二叉树的前序遍历
+    func preorderTraversal(_ root: TreeNode?) -> [Int] {
+        if root == nil { return []}
+        var values: [Int] = []
+        values.append(root!.val)
+        values.append(contentsOf: preorderTraversal(root?.left))
+        values.append(contentsOf: preorderTraversal(root?.right))
+        return values
+    }
+    
+    // MARK: #94. 二叉树的中序遍历
+    func inorderTraversal(_ root: TreeNode?) -> [Int] {
+        if root == nil { return []}
+        var values: [Int] = []
+        values.append(contentsOf: inorderTraversal(root?.left))
+        values.append(root!.val)
+        values.append(contentsOf: inorderTraversal(root?.right))
+        return values
+    }
+    
+    // MARK: #145. 二叉树的后序遍历
+    func postorderTraversal(_ root: TreeNode?) -> [Int] {
+        if root == nil { return []}
+        var values: [Int] = []
+        values.append(contentsOf: postorderTraversal(root?.left))
+        values.append(contentsOf: postorderTraversal(root?.right))
+        values.append(root!.val)
+        return values
+    }
+}
+
+// MARK: 第 11 天 - 树 (-- 2021-12-13)
+extension DataStructure {
+    // MARK: #102. 二叉树的层序遍历
+    
+    /// #102. 二叉树的层序遍历
+    ///
+    ///给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+    ///
+    /// 示例：
+    ///
+    ///     二叉树：[3,9,20,null,null,15,7],
+    ///
+    ///       3
+    ///      / \
+    ///     9  20
+    ///       /  \
+    ///      15   7
+    ///     返回其层序遍历结果：
+    ///     [
+    ///       [3],
+    ///       [9,20],
+    ///       [15,7]
+    ///     ]
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/binary-tree-level-order-traversal
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：8 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.7 MB, 在所有 Swift 提交中击败了80.85%的用户
+    ///     通过测试用例：34 / 34
+    ///
+    func levelOrder(_ root: TreeNode?) -> [[Int]] {
+        if root == nil { return [] }
+        
+        func nextLevelTrees(_ trees: [TreeNode]) -> [TreeNode] {
+            var nexts: [TreeNode] = []
+            for tree in trees {
+                if tree.left != nil {
+                    nexts.append(tree.left!)
+                }
+                if tree.right != nil {
+                    nexts.append(tree.right!)
+                }
+            }
+            return nexts
+        }
+
+        var levelValues: [[Int]] = []
+        var trees: [TreeNode] = [root!]
+        while trees.count > 0 {
+            var values: [Int] = []
+            for tree in trees {
+                values.append(tree.val)
+            }
+            levelValues.append(values)
+            trees = nextLevelTrees(trees)
+        }
+        
+        return levelValues
+    }
+    
+    // MARK: #104. 二叉树的最大深度
+    
+    /// #104. 二叉树的最大深度
+    ///
+    /// 给定一个二叉树，找出其最大深度。
+    ///
+    /// 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+    ///
+    /// 说明: 叶子节点是指没有子节点的节点。
+    ///
+    /// 示例：
+    ///
+    ///     给定二叉树 [3,9,20,null,null,15,7]，
+    ///
+    ///     3
+    ///    / \
+    ///   9  20
+    ///     /  \
+    ///    15   7
+    /// 返回它的最大深度 3 。
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/maximum-depth-of-binary-tree
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：20 ms, 在所有 Swift 提交中击败了99.66%的用户
+    ///     内存消耗：13.8 MB, 在所有 Swift 提交中击败了98.32%的用户
+    ///     通过测试用例：39 / 39
+    ///
+    func maxDepth(_ root: TreeNode?) -> Int {
+        if root == nil { return 0 }
+        return max(maxDepth(root?.left), maxDepth(root?.right)) + 1
+    }
+    
+    // MARK: #101. 对称二叉树
+    
+    /// #101. 对称二叉树
+    ///
+    /// 给定一个二叉树，检查它是否是镜像对称的。
+    /// 
+    /// 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+    ///
+    ///         1
+    ///        / \
+    ///       2   2
+    ///      / \ / \
+    ///     3  4 4  3
+    ///
+    ///     但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+    ///
+    ///        1
+    ///       / \
+    ///      2   2
+    ///       \   \
+    ///       3    3
+    ///
+    ///
+    /// 进阶：
+    ///
+    ///     你可以运用递归和迭代两种方法解决这个问题吗？
+    ///
+    /// - 链接：https://leetcode-cn.com/problems/symmetric-tree
+    ///
+    func isSymmetric(_ root: TreeNode?) -> Bool {
+
+        func _isSymmetric(_ l: TreeNode?, _ r: TreeNode?) -> Bool {
+            if l == nil && r == nil { return true }
+            if l == nil || r == nil || l!.val != r!.val { return false }
+            return _isSymmetric(l!.left, r!.right) && _isSymmetric(l!.right, r!.left)
+        }
+        return _isSymmetric(root?.left, root?.right)
+    }
+}

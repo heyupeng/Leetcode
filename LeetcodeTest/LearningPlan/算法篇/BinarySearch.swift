@@ -58,4 +58,29 @@ struct BinarySearch {
         }
         return res
     }
+    
+    static func findFirst(sorted nums:[Int], equalToOrMoreThan target: Int, lft: Int, rgt: Int) -> Int {
+        if nums.count == 0 { return -1 }
+        if rgt < nums.count, nums[rgt] < target { return -1 }
+        
+        if lft >= 0, target <= nums[lft] { return lft }
+        
+        var l = lft, r = rgt
+        var idx = -1
+        while l <= r {
+            let mid = (l + r) / 2
+            if target <= nums[mid] {
+                r = mid - 1
+                idx = mid
+            } else {
+                l = mid + 1
+            }
+        }
+        return idx
+    }
+    
+    static func findFirst(sorted nums:[Int], equalToOrMoreThan target: Int, lft: Int) -> Int {
+        if nums.count == 0 { return -1 }
+        return findFirst(sorted: nums, equalToOrMoreThan: target, lft: lft, rgt: nums.count - 1)
+    }
 }
