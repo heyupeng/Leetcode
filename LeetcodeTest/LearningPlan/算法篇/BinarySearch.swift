@@ -59,6 +59,59 @@ struct BinarySearch {
         return res
     }
     
+    static func find(sorted nums:[Int], equalTo target: Int, lft: Int, rgt: Int) -> Int {
+        if nums.count == 0 { return -1 }
+        if lft >= nums.count { return -1 }
+        
+        var l = lft, r = rgt
+        if r > nums.count - 1 { r = nums.count - 1 }
+        
+        var idx = -1
+        while l <= r {
+            let mid = (l + r) / 2
+            if target == nums[mid] {
+                idx = mid
+                break
+            }
+            else if target < nums[mid] {
+                r = mid - 1
+            } else {
+                l = mid + 1
+            }
+        }
+        return idx
+    }
+    
+    static func find(unsorted nums:[Int], equalTo target: Int, lft: Int, rgt: Int) -> Int {
+        if nums.count == 0 { return -1 }
+        if lft >= nums.count { return -1 }
+        
+        var l = lft, r = rgt
+        if l < 0 { l = 0 }
+        if r > nums.count - 1 { r = nums.count - 1 }
+        
+        var idxMap: [Int: Int] = [:]
+        var nums1: [Int] = []
+        for i in l...r {
+            let v = nums[i]
+            if (idxMap .contains(where: { (key: Int, value: Int) in
+                key == v
+            })) {
+                continue
+            }
+            idxMap[v] = i
+            nums1.append(v)
+        }
+        nums1 = nums1.sorted { a, b in
+            a <= b
+        }
+        let index = find(sorted: nums1, equalTo: target, lft: 0, rgt: nums1.count - 1)
+        if (index == -1) { return index }
+        
+        let idx = idxMap[nums1[index]]
+        return idx!
+    }
+    
     static func findFirst(sorted nums:[Int], equalToOrMoreThan target: Int, lft: Int, rgt: Int) -> Int {
         if nums.count == 0 { return -1 }
         if rgt < nums.count, nums[rgt] < target { return -1 }
