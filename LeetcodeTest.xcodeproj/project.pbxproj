@@ -36,6 +36,7 @@
 		B8D30D3D2809793E0044313E /* LCSolution1099.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D3C2809793E0044313E /* LCSolution1099.swift */; };
 		B8D30D3F280981DD0044313E /* LCSolution1899.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D3E280981DD0044313E /* LCSolution1899.swift */; };
 		B8D30D42280C14730044313E /* LCSolution499.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D41280C14730044313E /* LCSolution499.swift */; };
+		B8D30D45280C2A660044313E /* LCCompetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D44280C2A660044313E /* LCCompetition.swift */; };
 		B8D9598328067CCF00153CEF /* LCSolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D9598228067CCF00153CEF /* LCSolution.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		B8D30D3C2809793E0044313E /* LCSolution1099.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution1099.swift; sourceTree = "<group>"; };
 		B8D30D3E280981DD0044313E /* LCSolution1899.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution1899.swift; sourceTree = "<group>"; };
 		B8D30D41280C14730044313E /* LCSolution499.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution499.swift; sourceTree = "<group>"; };
+		B8D30D44280C2A660044313E /* LCCompetition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCCompetition.swift; sourceTree = "<group>"; };
 		B8D9598228067CCF00153CEF /* LCSolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +148,7 @@
 				B8D30D3528093AD80044313E /* LCBase */,
 				B825BEC92727F585001238E6 /* Sample */,
 				B8BBD10127293FDB00E40C11 /* LearningPlan */,
+				B8D30D43280C2A090044313E /* LCCompetition */,
 				B825BE992727F554001238E6 /* AppDelegate.swift */,
 				B825BE9B2727F554001238E6 /* SceneDelegate.swift */,
 				B825BE9D2727F554001238E6 /* ViewController.swift */,
@@ -260,6 +263,14 @@
 				B8D30D3628093B030044313E /* LCBase.swift */,
 			);
 			path = LCBase;
+			sourceTree = "<group>";
+		};
+		B8D30D43280C2A090044313E /* LCCompetition */ = {
+			isa = PBXGroup;
+			children = (
+				B8D30D44280C2A660044313E /* LCCompetition.swift */,
+			);
+			path = LCCompetition;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8D30D45280C2A660044313E /* LCCompetition.swift in Sources */,
 				B8D30D3728093C8F0044313E /* LCBase.swift in Sources */,
 				B8BBD106272A8D8900E40C11 /* DataStructure.swift in Sources */,
 				B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */,
