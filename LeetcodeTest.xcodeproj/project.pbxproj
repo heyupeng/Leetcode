@@ -35,6 +35,7 @@
 		B8D30D3B280977730044313E /* LCSolution399.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D3A280977730044313E /* LCSolution399.swift */; };
 		B8D30D3D2809793E0044313E /* LCSolution1099.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D3C2809793E0044313E /* LCSolution1099.swift */; };
 		B8D30D3F280981DD0044313E /* LCSolution1899.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D3E280981DD0044313E /* LCSolution1899.swift */; };
+		B8D30D42280C14730044313E /* LCSolution499.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D41280C14730044313E /* LCSolution499.swift */; };
 		B8D9598328067CCF00153CEF /* LCSolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D9598228067CCF00153CEF /* LCSolution.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		B8D30D3A280977730044313E /* LCSolution399.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution399.swift; sourceTree = "<group>"; };
 		B8D30D3C2809793E0044313E /* LCSolution1099.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution1099.swift; sourceTree = "<group>"; };
 		B8D30D3E280981DD0044313E /* LCSolution1899.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution1899.swift; sourceTree = "<group>"; };
+		B8D30D41280C14730044313E /* LCSolution499.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution499.swift; sourceTree = "<group>"; };
 		B8D9598228067CCF00153CEF /* LCSolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +184,7 @@
 				B8BBD0FF272924C200E40C11 /* NextGreaterElement.swift */,
 				B8D9598228067CCF00153CEF /* LCSolution.swift */,
 				B8D30D3A280977730044313E /* LCSolution399.swift */,
+				B8D30D41280C14730044313E /* LCSolution499.swift */,
 				B8D30D3828096C420044313E /* LCSolution899.swift */,
 				B8D30D3C2809793E0044313E /* LCSolution1099.swift */,
 				B8D30D3E280981DD0044313E /* LCSolution1899.swift */,
@@ -402,6 +405,7 @@
 				B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */,
 				B8D9598328067CCF00153CEF /* LCSolution.swift in Sources */,
 				B8D30D3B280977730044313E /* LCSolution399.swift in Sources */,
+				B8D30D42280C14730044313E /* LCSolution499.swift in Sources */,
 				B8D30D3928096C420044313E /* LCSolution899.swift in Sources */,
 				B8D30D3D2809793E0044313E /* LCSolution1099.swift in Sources */,
 				B8D30D3F280981DD0044313E /* LCSolution1899.swift in Sources */,

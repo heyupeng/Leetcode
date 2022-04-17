@@ -40,3 +40,14 @@ class NestedInteger {
         return _list
     }
 }
+
+func powi(_ m:Int, _ n: Int) -> Int {
+    if m <= 0 { return 0 }
+    if n == 0 { return 1 }
+    
+    var num = 1
+    for _ in 0..<n {
+        num *= m
+    }
+    return num
+}

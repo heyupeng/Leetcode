@@ -47,6 +47,17 @@ class ViewController: UIViewController {
         
         let _ = solution.convert("PAYPALISHIRING", 3)
         
+        let _ = solution.myAtoi("20000000000000000000")
+        
+        let _ = solution.isMatch("aabc", "a*b*c")
+        
+        for i in 1...8 {
+            let _ = solution.largestPalindrome(i)
+        }
+        
+        let _ = solution.mostCommonWord("abc abc? abcd the jeff!", ["abc","abcd","jeff"])
+        
+        let _ = solution.romanToInt("III")
     }
     
     func testLCP() {

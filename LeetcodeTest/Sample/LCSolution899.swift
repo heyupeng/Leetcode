@@ -70,4 +70,170 @@ extension LC_899 {
         }
         return [width, lines]
     }
+    
+    /* -- 2022-04-17 */
+    
+    // MARK: #819. 最常见的单词
+    
+    /// #819. 最常见的单词
+    ///
+    /// 难度：简单
+    ///
+    /// 给定一个段落 (paragraph) 和一个禁用单词列表 (banned)。返回出现次数最多，同时不在禁用列表中的单词。
+    ///
+    /// 题目保证至少有一个词不在禁用列表中，而且答案唯一。
+    ///
+    /// 禁用列表中的单词用小写字母表示，不含标点符号。段落中的单词不区分大小写。答案都是小写字母。
+    ///
+    /// 示例：
+    ///
+    ///     输入:
+    ///     paragraph = "Bob hit a ball, the hit BALL flew far after it was hit."
+    ///     banned = ["hit"]
+    ///     输出: "ball"
+    ///     解释:
+    ///     "hit" 出现了3次，但它是一个禁用的单词。
+    ///     "ball" 出现了2次 (同时没有其他单词出现2次)，所以它是段落里出现次数最多的，且不在禁用列表中的单词。
+    ///     注意，所有这些单词在段落里不区分大小写，标点符号需要忽略（即使是紧挨着单词也忽略， 比如 "ball,"），
+    ///     "hit"不是最终的答案，虽然它出现次数更多，但它在禁用单词列表中。
+    ///
+    /// 提示：
+    ///
+    ///     1 <= 段落长度 <= 1000
+    ///     0 <= 禁用单词个数 <= 100
+    ///     1 <= 禁用单词长度 <= 10
+    ///     答案是唯一的, 且都是小写字母 (即使在 paragraph 里是大写的，即使是一些特定的名词，答案都是小写的。)
+    ///     paragraph 只包含字母、空格和下列标点符号!?',;.
+    ///     不存在没有连字符或者带有连字符的单词。
+    ///     单词里只包含字母，不会出现省略号或者其他标点符号。
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：8 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：14.2 MB, 在所有 Swift 提交中击败了50.00%的用户
+    ///     通过测试用例：47 / 47
+    ///
+    func mostCommonWord(_ paragraph: String, _ banned: [String]) -> String {
+        
+        var wordMap: [String: Int] = [:]
+        func wordMapInsert(_ lowerWord: String) {
+            if let cnt = wordMap[lowerWord] {
+                wordMap[lowerWord] = cnt + 1
+            } else {
+                wordMap[lowerWord] = 1
+            }
+        }
+        
+        var word = ""
+        for letter in paragraph {
+            if (letter.isLetter) {
+                word.append(letter)
+                continue
+            }
+            if word.count > 0 {
+                wordMapInsert(word.lowercased())
+                word = ""
+            }
+        }
+        
+//        let characterSet = CharacterSet(charactersIn: " !?',;.")
+//        let words = paragraph.components(separatedBy: characterSet).filter { word in
+//            return word.count > 0
+//        }
+//        for word in words {
+//            let lowerWord = word.lowercased()
+//            wordMapInsert(lowerWord)
+//        }
+        
+        for ban in banned {
+            if let _ = wordMap[ban.lowercased()] {
+                wordMap.removeValue(forKey: ban.lowercased())
+            }
+        }
+        
+        var mostWord = ""
+        var cnt = 0
+        for (key, value) in wordMap {
+            if value > cnt {
+                cnt = value
+                mostWord = key
+            }
+        }
+        return mostWord
+    }
+    
+    // MARK: #804. 唯一摩尔斯密码词
+    
+    /// #804. 唯一摩尔斯密码词
+    ///
+    ///难度：简单
+    ///
+    /// 国际摩尔斯密码定义一种标准编码方式，将每个字母对应于一个由一系列点和短线组成的字符串， 比如:
+    ///
+    ///     '   a' 对应 ".-" ，
+    ///     '   b' 对应 "-..." ，
+    ///     '   c' 对应 "-.-." ，以此类推。
+    /// 为了方便，所有 26 个英文字母的摩尔斯密码表如下：
+    ///
+    ///     [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    ///
+    /// 给你一个字符串数组 words ，每个单词可以写成每个字母对应摩尔斯密码的组合。
+    
+    /// 例如，"cab" 可以写成 "-.-..--..." ，(即 "-.-." + ".-" + "-..." 字符串的结合)。我们将这样一个连接过程称作 单词翻译 。
+    ///
+    /// 对 words 中所有单词进行单词翻译，返回不同 单词翻译 的数量。
+    ///
+    ///     示例 1：
+    ///     输入: words = ["gin", "zen", "gig", "msg"]
+    ///     输出: 2
+    ///     解释:
+    ///     各单词翻译如下:
+    ///     "gin" -> "--...-."
+    ///     "zen" -> "--...-."
+    ///     "gig" -> "--...--."
+    ///     "msg" -> "--...--."
+    ///     共有 2 种不同翻译, "--...-." 和 "--...--.".
+    ///
+    ///     示例 2：
+    ///     输入：words = ["a"]
+    ///     输出：1
+    ///
+    /// 提示：
+    ///
+    ///     1 <= words.length <= 100
+    ///     1 <= words[i].length <= 12
+    ///     words[i] 由小写英文字母组成
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：8 ms, 在所有 Swift 提交中击败了70.42%的用户
+    ///     内存消耗：14.4 MB, 在所有 Swift 提交中击败了49.29%的用户
+    ///     通过测试用例：82 / 82
+    func uniqueMorseRepresentations(_ words: [String]) -> Int {
+        let morseTable = [".-","-...","-.-.","-..",".","..-.",
+                          "--.","....","..",".---","-.-",".-..",
+                          "--","-.","---",".--.","--.-",".-.",
+                          "...","-","..-","...-",".--","-..-",
+                          "-.--","--.."]
+        if words.count <= 1 { return words.count }
+        
+        var morseMap: [String: Int] = [:]
+        for word in words {
+            var morseString = ""
+            for ch in word {
+                if let ascii = ch.asciiValue {
+                    let morse = morseTable[Int(ascii) - Int(Character("a").asciiValue!)]
+                    morseString.append(morse)
+                }
+            }
+            if morseString.count > 0, let cnt = morseMap[morseString] {
+                morseMap[morseString] = cnt + 1
+            } else if morseString.count > 0 {
+                morseMap[morseString] = 1
+            }
+        }
+        
+        return morseMap.count
+    }
+    
 }
