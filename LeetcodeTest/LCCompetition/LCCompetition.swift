@@ -11,6 +11,10 @@ protocol LCCompetition_289 {
     
 }
 
+extension LCSolution: LCCompetition_289 {
+    
+}
+
 extension LCCompetition_289 {
     /* -- 2022-04-17 */
     
@@ -135,8 +139,111 @@ extension LCCompetition_289 {
     ///     1 <= m, n <= 105
     ///     1 <= m * n <= 105
     ///     1 <= grid[i][j] <= 1000
+    ///
+    /// 执行结果：通过
+    ///     执行用时：3960 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：55.5 MB, 在所有 Swift 提交中击败了100.00%的用户
+    ///     通过测试用例：54 / 54
     func maxTrailingZeros(_ grid: [[Int]]) -> Int {
+        // 04/18 08:34 - 09:35
+        let m = grid.count, n = grid.first?.count ?? 0
+        // 10, 5, 2
+        let factorys = [10, 5, 2]
         
-        return 0
+        var params = Array(repeating: Array(repeating: Array(repeating: 0, count: 3), count: n), count: m)
+        
+        for i in 0..<m {
+            for j in 0..<n {
+                var value = grid[i][j]
+                var cnts:[Int] = []
+                for factory in factorys {
+                    var cnt = 0
+                    while value >= factory && value % factory == 0 {
+                        cnt += 1
+                        value = value / factory
+                    }
+                    cnts.append(cnt)
+                }
+                params[i][j] = cnts
+            }
+        }
+        
+        func factoryCountAddFactoryCount(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+            var nums: [Int] = []
+            for i in 0..<nums1.count {
+                nums.append(nums1[i] + nums2[i])
+            }
+            if nums[1] == 0, nums[2] == 0 {
+                return nums
+            }
+            let mm = min(nums[1], nums[2])
+            nums[0] += mm
+            nums[1] -= mm
+            nums[2] -= mm
+            return nums
+        }
+                
+        // top, left, bottom, right
+        var tlbr = [[0,0,0], [0,0,0], [0,0,0], [0,0,0]]
+        var dp = Array(repeating: Array(repeating: tlbr, count: n), count: m)
+        
+        for i in 0..<m {
+            for j in 0..<n {
+                tlbr = dp[i][j]
+                let dictorys = [[-1, 0], [0, -1], [1, 0], [0, 1]]
+                for z in 0..<2 {
+                    let dict = dictorys[z]
+                    var ii = i, jj = j
+                    var cnts = tlbr[z]
+                    ii += dict[0]
+                    jj += dict[1]
+                    while (ii >= 0 && ii < m && jj >= 0 && jj < n) {
+                        cnts = factoryCountAddFactoryCount(dp[ii][jj][z], params[ii][jj])
+                        break
+                    }
+                    tlbr[z] = cnts
+                }
+                dp[i][j] = tlbr
+             }
+        }
+        
+        for i in (0..<m).reversed() {
+            for j in (0..<n).reversed() {
+                tlbr = dp[i][j]
+                let dictorys = [[-1, 0], [0, -1], [1, 0], [0, 1]]
+                for z in 2..<4 {
+                    let dict = dictorys[z]
+                    var ii = i, jj = j
+                    var cnts = tlbr[z]
+                    ii += dict[0]
+                    jj += dict[1]
+                    while (ii >= 0 && ii < m && jj >= 0 && jj < n) {
+                        cnts = factoryCountAddFactoryCount(dp[ii][jj][z], params[ii][jj])
+                        break
+                    }
+                    tlbr[z] = cnts
+                }
+                dp[i][j] = tlbr
+             }
+        }
+        
+        var maximum = 0
+        for i in (0..<m).reversed() {
+            for j in (0..<n).reversed() {
+                tlbr = dp[i][j]
+                
+                var maxValue = 0
+                for x in 1..<tlbr.count {
+                    for y in 0..<x {
+                        let v = factoryCountAddFactoryCount(params[i][j], factoryCountAddFactoryCount(tlbr[x], tlbr[y]))
+                        let c = v[0]
+                        
+                        maxValue = max(maxValue, c)
+                    }
+                }
+                maximum = max(maximum, maxValue)
+             }
+        }
+        return maximum
     }
 }
