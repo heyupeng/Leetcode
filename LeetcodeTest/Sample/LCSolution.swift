@@ -491,7 +491,7 @@ extension LCSolution99 {
         return sIdx == sEndIdx
     }
     
-    /* -- 2022-04-17 */
+    // MARK: -- 2022/04/17
     
     // MARK: #12. 整数转罗马数字
     
@@ -708,6 +708,8 @@ extension LCSolution99 {
         return num
     }
     
+    // MARK: -- 2022/04/18
+    
     // MARK: #14. 最长公共前缀
     
     /// #14. 最长公共前缀
@@ -745,6 +747,238 @@ extension LCSolution99 {
         }
         
         return longestPrefix
+    }
+    
+    // MARK: #4. 寻找两个正序数组的中位数
+    
+    /// #4. 寻找两个正序数组的中位数
+    ///
+    /// 难度：困难
+    ///
+    /// 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
+    ///
+    /// 算法的时间复杂度应该为 O(log (m+n)) 。
+    ///
+    ///     示例 1：
+    ///     输入：nums1 = [1,3], nums2 = [2]
+    ///     输出：2.00000
+    ///     解释：合并数组 = [1,2,3] ，中位数 2
+    ///
+    ///     示例 2：
+    ///     输入：nums1 = [1,2], nums2 = [3,4]
+    ///     输出：2.50000
+    ///     解释：合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
+    ///
+    /// 提示：
+    ///
+    ///     nums1.length == m
+    ///     nums2.length == n
+    ///     0 <= m <= 1000
+    ///     0 <= n <= 1000
+    ///     1 <= m + n <= 2000
+    ///     -106 <= nums1[i], nums2[i] <= 106
+    ///
+    func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
+        // 10:36 - 10-46
+        /*
+        O(min(m , n))
+        */
+        var nums: [Int] = []
+        var idx1 = 0, idx2 = 0
+        while idx1 < nums1.count && idx2 < nums2.count {
+            if nums1[idx1] <= nums2[idx2] {
+                nums.append(nums1[idx1])
+                idx1 += 1
+            }
+            else {
+                nums.append(nums2[idx2])
+                idx2 += 1
+            }
+        }
+
+        if idx1 < nums1.count {
+            for idx in idx1..<nums1.count {
+                nums.append(nums1[idx])
+            }
+        } else if idx2 < nums2.count {
+            for idx in idx2..<nums2.count {
+                nums.append(nums2[idx])
+            }
+        }
+        
+        var median: Double = Double(nums[(nums.count-1)/2])
+        if nums.count % 2 == 0 {
+            median += Double( nums[(nums.count+1)/2] )
+            median *= 0.5
+        }
+        return median
+    }
+    
+    // MARK: #23. 合并K个升序链表
+    
+    /// #23. 合并K个升序链表
+    ///
+    /// 难度：困难
+    ///
+    /// 给你一个链表数组，每个链表都已经按升序排列。
+    ///
+    /// 请你将所有链表合并到一个升序链表中，返回合并后的链表。
+    ///
+    ///     示例 1：
+    ///     输入：lists = [[1,4,5],[1,3,4],[2,6]]
+    ///     输出：[1,1,2,3,4,4,5,6]
+    ///     解释：链表数组如下：
+    ///     [
+    ///       1->4->5,
+    ///       1->3->4,
+    ///       2->6
+    ///     ]
+    ///     将它们合并到一个有序链表中得到。
+    ///     1->1->2->3->4->4->5->6
+    ///
+    ///     示例 2：
+    ///     输入：lists = []
+    ///     输出：[]
+    ///
+    ///     示例 3：
+    ///     输入：lists = [[]]
+    ///     输出：[]
+    ///
+    /// 提示：
+    ///
+    ///     k == lists.length
+    ///     0 <= k <= 10^4
+    ///     0 <= lists[i].length <= 500
+    ///     -10^4 <= lists[i][j] <= 10^4
+    ///     lists[i] 按 升序 排列
+    ///     lists[i].length 的总和不超过 10^4
+    ///
+    func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+        // 14:08 - 14:26
+        let node = ListNode()
+        
+        var lists: [ListNode?] = lists
+        lists = lists.filter { list in
+            list != nil
+        }
+        
+        var next: ListNode? = node
+        while lists.count > 0 {
+            lists.sort { list1, list2 in
+                if (list1 == nil) {
+                    return false
+                }
+                if (list2 == nil) {
+                    return true
+                }
+                return list1!.val < list2!.val
+            }
+            next?.next = lists[0]
+            next = next?.next
+            if let nn = next?.next {
+                lists[0] = nn
+            } else {
+                lists.remove(at: 0)
+            }
+        }
+        
+        return node.next
+    }
+    
+    // MARK: -- 2022/04/19
+    
+    // MARK: #31. 下一个排列
+    
+    /// #31. 下一个排列
+    ///
+    ///难度：中等
+    ///
+    /// 整数数组的一个 排列  就是将其所有成员以序列或线性顺序排列。
+    ///
+    /// 例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。
+    /// 整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。更正式地，如果数组的所有排列根据其字典顺序从小到大排列在一个容器中，那么数组的 下一个排列
+    ///
+    /// 就是在这个有序容器中排在它后面的那个排列。如果不存在下一个更大的排列，那么这个数组必须重排为字典序最小的排列（即，其元素按升序排列）。
+    ///
+    ///     例如，arr = [1,2,3] 的下一个排列是 [1,3,2] 。
+    ///     类似地，arr = [2,3,1] 的下一个排列是 [3,1,2] 。
+    ///     而 arr = [3,2,1] 的下一个排列是 [1,2,3] ，因为 [3,2,1] 不存在一个字典序更大的排列。
+    ///
+    /// 给你一个整数数组 nums ，找出 nums 的下一个排列。
+    ///
+    /// 必须 原地 修改，只允许使用额外常数空间。
+    ///
+    ///     示例 1：
+    ///
+    ///     输入：nums = [1,2,3]
+    ///     输出：[1,3,2]
+    ///
+    ///     示例 2：
+    ///     输入：nums = [3,2,1]
+    ///     输出：[1,2,3]
+    ///
+    ///     示例 3：
+    ///     输入：nums = [1,1,5]
+    ///     输出：[1,5,1]
+    ///
+    /// 提示：
+    ///
+    ///     1 <= nums.length <= 100
+    ///     0 <= nums[i] <= 100
+    ///
+    /// 执行结果：通过
+    ///
+    ///     执行用时：4 ms, 在所有 Swift 提交中击败了100.00%的用户
+    ///     内存消耗：13.6 MB, 在所有 Swift 提交中击败了80.16%的用户
+    ///     通过测试用例：265 / 265
+    ///
+    func nextPermutation(_ nums: inout [Int]) {
+        // 14:52
+        if nums.count <= 1 {
+            return
+        }
+        if nums.count == 2 {
+            nums = nums.reversed()
+            return
+        }
+        let count = nums.count
+        var idx = count
+        for i in (0..<count-1).reversed() {
+           for j in (i+1..<count).reversed() {
+               if nums[i] < nums[j] {
+                   let temp = nums[j]
+                   nums[j] = nums[i]
+                   nums[i] = temp
+                   idx = j + 1
+                   break
+               }
+           }
+           if idx != count {
+               break
+           }
+       }
+        
+        if idx == count - 1 {
+            return
+        }
+        
+        if idx == count {
+            nums = nums.reversed()
+            return
+        }
+
+        for i in idx..<count-1 {
+            for j in i+1..<count {
+                if nums[i] <= nums[j] {
+                    continue
+                }
+                let temp = nums[j]
+                nums[j] = nums[i]
+                nums[i] = temp
+            }
+        }
+        
+        return
     }
 }
 
