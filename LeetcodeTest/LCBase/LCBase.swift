@@ -51,3 +51,30 @@ func powi(_ m:Int, _ n: Int) -> Int {
     }
     return num
 }
+
+extension Int {
+    
+    /// value = m ^ n
+    public static func pow(_ m:Int, _ n: Int) -> Int {
+        if m <= 0 { return 0 }
+        if n == 0 { return 1 }
+        if n == 1 { return m }
+        
+        var num = 1
+        for _ in 0..<n {
+            num *= m
+        }
+        return num
+    }
+    
+    /// value。lft ≤ value ≤ rgt
+    func clamp(_ lft: Self, _ rgt: Self) -> Int {
+        var value = self
+        if value > rgt {
+            value = rgt
+        } else if value < lft {
+            value = lft
+        }
+        return value
+    }
+}

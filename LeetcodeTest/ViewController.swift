@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         let _ = solution.isMatch("aabc", "a*b*c")
         
         for i in 1...8 {
-            let _ = solution.largestPalindrome(i)
+//            let _ = solution.largestPalindrome(i)
         }
         
         let _ = solution.mostCommonWord("abc abc? abcd the jeff!", ["abc","abcd","jeff"])
@@ -67,6 +67,12 @@ class ViewController: UIViewController {
         
         var lc_31_nums = [5,4,7,5,3,2]
         let _ = solution.nextPermutation(&lc_31_nums)
+        
+        let _ = solution.lengthLongestPath("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext")
+        
+        let _ = solution.trap([0,1,0,2,1,0,1,3,2,1,2,1])
+        
+        let _ = solution.divideAdvance(10, 2)
     }
     
     func testLCP() {

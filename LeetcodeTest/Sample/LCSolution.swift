@@ -980,7 +980,542 @@ extension LCSolution99 {
         
         return
     }
+    
+    // MARK: -- 22/04/20
+    
+    // MARK: #42
+    func trap(_ height: [Int]) -> Int {
+        if height.count < 3 {
+            return 0
+        }
+        var total = 0
+        
+        return total
+    }
+    
+    // MARK: 22/04/21
+    
+    // MARK: #24. 两两交换链表中的节点
+    
+    /// #24. 两两交换链表中的节点
+    ///
+    /// 难度：中等
+    ///
+    /// 给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+    ///
+    ///     示例 1：
+    ///     输入：head = [1,2,3,4]
+    ///     输出：[2,1,4,3]
+    ///
+    ///     示例 2：
+    ///     输入：head = []
+    ///     输出：[]
+    ///
+    ///     示例 3：
+    ///     输入：head = [1]
+    ///     输出：[1]
+    ///
+    /// 提示：
+    /// - 链表中节点的数目在范围 [0, 100] 内
+    /// -  0 <= Node.val <= 100
+    ///
+    func swapPairs(_ head: ListNode?) -> ListNode? {
+        if head?.next == nil {
+            return head
+        }
+        let next = head?.next
+        head?.next = swapPairs(next?.next)
+        next?.next = head
+        return next
+    }
+    
+    // MARK: #25. K 个一组翻转链表
+    
+    /// #25. K 个一组翻转链表
+    ///
+    /// 难度：困难
+    ///
+    /// 给你链表的头节点 head ，每 k 个节点一组进行翻转，请你返回修改后的链表。
+    ///
+    /// k 是一个正整数，它的值小于或等于链表的长度。如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
+    ///
+    /// 你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。
+    ///
+    ///     示例 1：
+    ///     输入：head = [1,2,3,4,5], k = 2
+    ///     输出：[2,1,4,3,5]
+    ///
+    ///     示例 2：
+    ///     输入：head = [1,2,3,4,5], k = 3
+    ///     输出：[3,2,1,4,5]
+    ///
+    /// 提示：
+    /// - 链表中的节点数目为 n
+    /// - 1 <= k <= n <= 5000
+    /// - 0 <= Node.val <= 1000
+    ///
+    func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
+        // 15:40
+        func reverse(_ node: ListNode?) -> ListNode? {
+            if node?.next == nil {
+                return node
+            }
+            let next = node?.next
+            let h = reverse(next)
+            next?.next = node
+            return h
+        }
+        let reverseHead: ListNode? = ListNode(0, head)
+        var pre: ListNode? = reverseHead
+        var end: ListNode? = head
+        var len = 0
+        
+        while end != nil {
+            len += 1
+            if len < k {
+                end = end?.next
+                continue
+            }
+            let next = end?.next
+            let preNext = pre?.next
+            end?.next = nil
+            pre?.next = reverse(pre?.next)
+            preNext?.next = next
+            pre = preNext
+            end = next
+            len = 0
+        }
+        return reverseHead?.next
+    }
+    
+    // MARK: #26. 删除有序数组中的重复项
+    
+    /// #26. 删除有序数组中的重复项
+    ///
+    /// 难度：简单
+    ///
+    /// 给你一个 升序排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。
+    ///
+    /// 由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有 k 个元素，那么 nums 的前 k 个元素应该保存最终结果。
+    ///
+    /// 将最终结果插入 nums 的前 k 个位置后返回 k 。
+    ///
+    /// 不要使用额外的空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+    ///
+    /// 判题标准:
+    ///
+    /// 系统会用下面的代码来测试你的题解:
+    ///
+    ///     int[] nums = [...]; // 输入数组
+    ///     int[] expectedNums = [...]; // 长度正确的期望答案
+    ///
+    ///     int k = removeDuplicates(nums); // 调用
+    ///
+    ///     assert k == expectedNums.length;
+    ///     for (int i = 0; i < k; i++) {
+    ///         assert nums[i] == expectedNums[i];
+    ///     }
+    /// 如果所有断言都通过，那么您的题解将被 通过。
+    ///
+    ///     示例 1：
+    ///     输入：nums = [1,1,2]
+    ///     输出：2, nums = [1,2,_]
+    ///     解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。
+    ///
+    ///     示例 2：
+    ///     输入：nums = [0,0,1,1,1,2,2,3,3,4]
+    ///     输出：5, nums = [0,1,2,3,4]
+    ///     解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。
+    ///
+    /// 提示：
+    /// - 0 <= nums.length <= 3 * 104
+    /// - -104 <= nums[i] <= 104
+    /// - nums 已按 升序 排列
+    ///
+    /// 链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array
+    ///
+    /// 执行结果：通过
+    /// - 执行用时：40 ms, 在所有 Swift 提交中击败了98.43%的用户
+    /// - 内存消耗：14.5MB, 在所有 Swift 提交中击败了70.16%的用户
+    /// - 通过测试用例：361 / 361
+    ///
+    func removeDuplicates(_ nums: inout [Int]) -> Int {
+        if nums.count < 2 {
+            return nums.count
+        }
+        var cnt = 1
+        var pre = nums[0]
+        
+        for i in 1..<nums.count {
+            if pre != nums[0] {
+                cnt += 1
+                pre = nums[i]
+                nums[cnt-1] = nums[i]
+            }
+        }
+        return cnt
+    }
+    
+    
+    // MARK: #27. 移除元素
+    
+    /// #27. 移除元素
+    ///
+    /// 难度：简单
+    ///
+    /// 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
+    ///
+    /// 不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
+    ///
+    /// 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
+    ///
+    /// 说明:
+    ///
+    /// 为什么返回数值是整数，但输出的答案是数组呢?
+    ///
+    /// 请注意，输入数组是以「引用」方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。
+    ///
+    /// 你可以想象内部操作如下:
+    ///
+    ///     // nums 是以“引用”方式传递的。也就是说，不对实参作任何拷贝
+    ///     int len = removeElement(nums, val);
+    ///
+    ///     // 在函数里修改输入数组对于调用者是可见的。
+    ///     // 根据你的函数返回的长度, 它会打印出数组中 该长度范围内 的所有元素。
+    ///     for (int i = 0; i < len; i++) {
+    ///         print(nums[i]);
+    ///     }
+    ///
+    /// 示例
+    ///
+    ///     示例 1：
+    ///     输入：nums = [3,2,2,3], val = 3
+    ///     输出：2, nums = [2,2]
+    ///     解释：函数应该返回新的长度 2, 并且 nums 中的前两个元素均为 2。你不需要考虑数组中超出新长度后面的元素。例如，函数返回的新长度为 2 ，而 ///  nums = [2,2,3,3] 或 nums = [2,2,0,0]，也会被视作正确答案。
+    ///
+    ///     示例 2：
+    ///     输入：nums = [0,1,2,2,3,0,4,2], val = 2
+    ///     输出：5, nums = [0,1,4,0,3]
+    ///     解释：函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, /// 4。注意这五个元素可为任意顺序。你不需要考虑数组中超出新长度后面的元素。
+    ///
+    /// 提示：
+    /// - 0 <= nums.length <= 100
+    /// - 0 <= nums[i] <= 50
+    /// - 0 <= val <= 100
+    ///
+    /// 链接：https://leetcode-cn.com/problems/remove-element
+    ///
+    /// 执行结果：通过
+    /// - 执行用时：4 ms, 在所有 Swift 提交中击败了88.19%的用户
+    /// - 内存消耗：13.7 MB, 在所有 Swift 提交中击败了71.18%的用户
+    /// - 通过测试用例：113 / 113
+    ///
+    func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
+        // 17:03
+        var cnt = 0
+        for i in 0..<nums.count {
+            if nums[i] == val {
+                continue
+            }
+            cnt += 1
+            nums[cnt-1] = nums[i]
+        }
+        return cnt
+    }
+    
+    // MARK: #28. 实现 strStr()
+    
+    /// #28. 实现 strStr()
+    ///
+    ///难度：简单
+    ///
+    /// 实现 strStr() 函数。
+    ///
+    /// 给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回 ///  -1 。
+    ///
+    /// 说明：
+    ///
+    /// 当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+    ///
+    /// 对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与 C 语言的 strstr() 以及 Java 的 indexOf() 定义相符。
+    ///
+    ///     示例 1：
+    ///     输入：haystack = "hello", needle = "ll"
+    ///     输出：2
+    ///
+    ///     示例 2：
+    ///     输入：haystack = "aaaaa", needle = "bba"
+    ///     输出：-1
+    ///
+    ///     示例 3：
+    ///     输入：haystack = "", needle = ""
+    ///     输出：0
+    ///
+    /// 提示：
+    /// - 1 <= haystack.length, needle.length <= 104
+    /// - haystack 和 needle 仅由小写英文字符组成
+    func strStr(_ haystack: String, _ needle: String) -> Int {
+        // 17:17
+        if needle.count == 0 {
+            return 0
+        }
+        if haystack.count == 0 || haystack.count < needle.count {
+            return -1
+        }
+        var idx = haystack.startIndex
+        var idx1 = haystack.startIndex, idx2 = needle.startIndex
+        while (idx1 != haystack.endIndex && idx2 != needle.endIndex) {
+            if haystack[idx1] == needle[idx2] {
+                idx1 = haystack.index(after: idx1)
+                idx2 = needle.index(after: idx2)
+                continue
+            }
+            idx = haystack.index(after: idx)
+            idx1 = idx
+            idx2 = needle.startIndex
+        }
+        if idx2 == needle.endIndex {
+            return haystack.distance(from: haystack.startIndex, to: idx)
+        }
+        return -1
+    }
+    
+    // MARK: #29. 两数相除
+    
+    /// #29. 两数相除
+    ///
+    /// 难度：中等
+    ///
+    /// 给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
+
+    /// 返回被除数 dividend 除以除数 divisor 得到的商。
+
+    /// 整数除法的结果应当截去（truncate）其小数部分，例如：truncate(8.345) = 8 以及 truncate(-2.7335) = -2
+    ///
+    ///     示例 1:
+    ///     输入: dividend = 10, divisor = 3
+    ///     输出: 3
+    ///     解释: 10/3 = truncate(3.33333..) = truncate(3) = 3
+    ///
+    ///     示例 2:
+    ///     输入: dividend = 7, divisor = -3
+    ///     输出: -2
+    ///     解释: 7/-3 = truncate(-2.33333..) = -2
+    ///
+    /// 提示：
+    /// - 被除数和除数均为 32 位有符号整数。
+    /// - 除数不为 0。
+    /// - 假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−231,  231 − 1]。本题中，如果除法结果溢出，则返回 231 − 1。
+    ///
+    /// 链接：https://leetcode-cn.com/problems/divide-two-integers
+    /// 
+    func divide(_ dividend: Int, _ divisor: Int) -> Int {
+        // 17:50
+        let signedValue = 0x80000000
+        let signedFlag = (dividend & signedValue) == (divisor & signedValue) ? 1: -1
+        
+        var dividend1 = abs(dividend)
+        let divisor1 = abs(divisor)
+        
+        var divide = 0
+        while dividend1 >= divisor1 {
+            divide += 1
+            dividend1 -= divisor1
+        }
+        divide = divide * signedFlag
+        // 数值范围是 [−2^31,  2^31 − 1]
+        if divide > 0x7fffffff {
+            divide = 0x7fffffff
+        }
+        else if divide < -(0x7fffffff + 1) {
+            divide = -(0x7fffffff + 1)
+        }
+        
+        return divide
+    }
+    
+    /// 执行结果：通过
+    /// - 执行用时：4 ms, 在所有 Swift 提交中击败了92.19%的用户
+    /// - 内存消耗：13 MB, 在所有 Swift 提交中击败了96.88%的用户
+    /// - 通过测试用例：992 / 992
+    ///
+    func divideAdvance(_ dividend: Int, _ divisor: Int) -> Int {
+        // 18:11
+        // 位运算
+        let byteSize = 32
+        // 符号位
+        let signedFlag = dividend >> (byteSize - 1)  == divisor >> (byteSize - 1) ? 1 : -1
+        
+        let udividend = abs(dividend)
+        let udivisor = abs(divisor)
+        var firstBinIdx1 = -1
+        var firstBinIdx2 = -1
+        for i in (0..<byteSize).reversed() {
+            let bin = udividend >> i & 1
+            if bin == 1 {
+                firstBinIdx1 = i
+                break
+            }
+        }
+        for i in (0..<byteSize).reversed() {
+            let bin = udivisor >> i & 1
+            if bin == 1 {
+                firstBinIdx2 = i
+                break
+            }
+        }
+        if firstBinIdx1 == -1 || firstBinIdx2 == -1 || firstBinIdx1 < firstBinIdx2 {
+            return 0
+        }
+        
+        var divide = 0
+        var dividend1 = 0
+        
+        while firstBinIdx1 >= 0 {
+            dividend1 = dividend1 << 1 + ( udividend >> firstBinIdx1 & 1 )
+            firstBinIdx1 -= 1
+            
+            if dividend1 >= udivisor {
+                dividend1 -= udivisor
+                divide = divide << 1 + 1
+            }
+            else {
+                divide = divide << 1
+            }
+        }
+        
+        divide *= signedFlag
+        divide = divide.clamp(-0x80000000, 0x7fffffff)
+        
+        return divide
+    }
+    
+    // MARK: #38. 外观数列
+    
+    /// #38. 外观数列
+    ///
+    /// 难度：中等
+    ///
+    /// 给定一个正整数 n ，输出外观数列的第 n 项。
+    ///
+    /// 「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
+    ///
+    /// 你可以将其视作是由递归公式定义的数字字符串序列：
+    /// - countAndSay(1) = "1"
+    /// - countAndSay(n) 是对 countAndSay(n-1) 的描述，然后转换成另一个数字字符串。
+    ///
+    ///  前五项如下：
+    ///
+    ///     1.     1
+    ///     2.     11
+    ///     3.     21
+    ///     4.     1211
+    ///     5.     111221
+    ///     第一项是数字 1
+    ///     描述前一项，这个数是 1 即 “ 一 个 1 ”，记作 "11"
+    ///     描述前一项，这个数是 11 即 “ 二 个 1 ” ，记作 "21"
+    ///     描述前一项，这个数是 21 即 “ 一 个 2 + 一 个 1 ” ，记作 "1211"
+    ///     描述前一项，这个数是 1211 即 “ 一 个 1 + 一 个 2 + 二 个 1 ” ，记作 "111221"
+    ///
+    /// 要 描述 一个数字字符串，首先要将字符串分割为 最小 数量的组，每个组都由连续的最多 相同字符 /// 组成。然后对于每个组，先描述字符的数量，然后描述字符，形成一个描述组。要将描述转换为数字字符串，先将每组中的字符数量用数字替换，再将所有描述组连接起来。
+    ///
+    /// 例如，数字字符串 "3322251" 的描述如下图：
+    ///
+    ///     示例 1：
+    ///     输入：n = 1
+    ///     输出："1"
+    ///     解释：这是一个基本样例。
+    ///
+    ///     示例 2：
+    ///     输入：n = 4
+    ///     输出："1211"
+    ///     解释：
+    ///     countAndSay(1) = "1"
+    ///     countAndSay(2) = 读 "1" = 一 个 1 = "11"
+    ///     countAndSay(3) = 读 "11" = 二 个 1 = "21"
+    ///     countAndSay(4) = 读 "21" = 一 个 2 + 一 个 1 = "12" + "11" = "1211"
+    ///
+    /// 提示：
+    /// - 1 <= n <= 30
+    ///
+    /// 链接：https://leetcode-cn.com/problems/count-and-say
+    ///
+    /// 执行结果：通过
+    /// - 执行用时：12 ms, 在所有 Swift 提交中击败了69.77%的用户
+    /// - 内存消耗：13.1 MB, 在所有 Swift 提交中击败了100.00%的用户
+    /// - 通过测试用例：30 / 30
+    func countAndSay(_ n: Int) -> String {
+        // 19:50 - 20:01
+        if n == 0 { return "" }
+        if n == 1 { return "1" }
+        if n == 2 { return "11" }
+
+        let str1 = countAndSay(n - 1)
+        var str = ""
+        var cnt = 0
+
+        var preCh = Character(" ")
+        for ch in str1 {
+            if ch == preCh {
+                cnt += 1
+                continue
+            }
+            if (cnt != 0) {
+                str.append("\(cnt)")
+                str.append(preCh)
+            }
+
+            cnt = 1
+            preCh = ch
+        }
+        if cnt != 0 {
+            str.append("\(cnt)")
+            str.append(preCh)
+        }
+        return str
+    }
+    
+    // MARK: #50. Pow(x, n)
+    
+    /// #50. Pow(x, n)
+    ///
+    /// 难度：中等
+    ///
+    /// 实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn ）。
+    ///
+    ///     示例 1：
+    ///     输入：x = 2.00000, n = 10
+    ///     输出：1024.00000
+    ///
+    ///     示例 2：
+    ///     输入：x = 2.10000, n = 3
+    ///     输出：9.26100
+    ///
+    ///     示例 3：
+    ///     输入：x = 2.00000, n = -2
+    ///     输出：0.25000
+    ///     解释：2-2 = 1/22 = 1/4 = 0.25
+    ///
+    /// 链接：https://leetcode-cn.com/problems/powx-n
+    ///
+    /// 提示：
+    /// - -100.0 < x < 100.0
+    /// - -231 <= n <= 231-1
+    /// - -104 <= xn <= 104
+    ///
+    func myPow(_ x: Double, _ n: Int) -> Double {
+        // 21:28 - 21:31
+        
+        if (x == 0) { return 0 }
+        if (n == 0) { return 1 }
+        if (n == 1) { return x }
+        if (n == -1) { return 1/x }
+        
+        var value = myPow(x, n/2)
+        value *= value
+        value *= myPow(x, n%2)
+        return value
+    }
+    
 }
-
-
 
