@@ -1,0 +1,15 @@
+# OS X
+.DS_Store
+
+
+# Xcode
+## *.xcodeproj/xcuserdata/*.xcuserdatad/
+*/xcuserdata
+*/xcshareddata
+*.xcuserdatad
+## Build file
+build/
+
+# xcworkspace
+*.xcworkspace
+
