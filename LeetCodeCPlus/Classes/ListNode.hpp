@@ -27,4 +27,18 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+#include <vector>
+
+inline ListNode * ListNodeCreate(std::vector<int> nums) {
+    if (nums.empty()) { return nullptr; }
+    size_t size = nums.size();
+    ListNode * l = new ListNode();
+    ListNode * temp = l;
+    for (int i = 0; i < size; i ++) {
+        temp->next = new ListNode(nums[i]);
+        temp = temp->next;
+    }
+    return l->next;
+};
+
 #endif /* ListNode_hpp */

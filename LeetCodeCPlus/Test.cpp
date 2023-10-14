@@ -8,7 +8,9 @@
 #include "Test.hpp"
 
 #include <iostream>
+
 #include "Solution.hpp"
+#include "Solution2309.hpp"
 
 string projectPath() {
     return "/Users/peng/Desktop/Custom Project/LeetCodeCPlus/LeetCodeCPlus";
@@ -51,33 +53,21 @@ void parsestring(string& str) {
 
 #include "string_to_any.hpp"
 
-ListNode * ListNodeCreateWith(vector<int> nums) {
-    if (nums.empty()) { return nullptr; }
-    size_t size = nums.size();
-    ListNode * l = new ListNode();
-    ListNode * temp = l;
-    for (int i = 0; i < size; i ++) {
-        temp->next = new ListNode(nums[i]);
-        temp = temp->next;
-    }
-    return l->next;
-};
-
 Solution * solution = new Solution();
 
 void test2() {
     vector<int> n1 = {9,9,9,9,9,9,9};
     vector<int> n2 = {9,9,9,9};
-    ListNode * l1 = ListNodeCreateWith(n1);
-    ListNode * l2 = ListNodeCreateWith(n2);
+    ListNode * l1 = ListNodeCreate(n1);
+    ListNode * l2 = ListNodeCreate(n2);
     __unused ListNode * l3 = solution->addTwoNumbers(l1, l2);
 }
 
 void test445() {
     vector<int> n1 = {7,2,4,3};
     vector<int> n2 = {5,6,4};
-    ListNode * l1 = ListNodeCreateWith(n1);
-    ListNode * l2 = ListNodeCreateWith(n2);
+    ListNode * l1 = ListNodeCreate(n1);
+    ListNode * l2 = ListNodeCreate(n2);
     __unused ListNode * l3 = solution->addTwoNumbersII(l1, l2);
 }
 
@@ -256,7 +246,7 @@ void test148() {
     vector<int> nums = {
         // Todo
     };
-    solution->sortList(ListNodeCreateWith(nums));
+    solution->sortList(ListNodeCreate(nums));
 }
 
 void test834() {
@@ -360,6 +350,8 @@ void test221() {
     }
 }
 
+#include "time.hpp"
+
 void test1851() {
     typedef LC::Params2< vector<vector<int>>, vector<int> > Params_T;
     typedef LC::Sample<Params_T, vector<int> > Sample_T;
@@ -392,8 +384,7 @@ void test1851() {
 //        s34,
     };
     
-    time_t t1;
-    time(&t1);
+    time_t t1 = gettime();
     
     printf("Test #1851. 包含每个查询的最小区间 (%zi samples) \n", samples.size());
     for (auto sample: samples) {
@@ -407,8 +398,7 @@ void test1851() {
 //            s->minInterval(par.val1, par.val2);
         }
     }
-    time_t t2;
-    time(&t2);
+    time_t t2 = gettime();
     
     printf(" Usaged time: %lu\n", t2 - t1);
 }
@@ -512,6 +502,195 @@ void test279() {
     }
 }
 
+void test1289() {
+    string title = "";
+    typedef LC::Sample<string, int > SampleT;
+    vector<SampleT> samples = {
+        {1, "[[1,2,3],[4,5,6],[7,8,9]]", 13},
+    };
+    printf("Test %s (%zi samples) \n", title.c_str(), samples.size());
+    for (auto sample: samples) {
+        auto par = sample.par;
+        vector<vector<int>> p1 = string_to_vector_vector_int(par);
+        auto ans = solution->minFallingPathSumII(p1);
+        if (ans == sample.ans) {
+            printf("  #%d is ok. \n", sample.ID);
+        }
+        else {
+            printf("  #%d has an error! \n", sample.ID);
+        }
+    }
+}
+
+static void test57() {
+    vector<vector<string>> samples = {
+        {"[[1,3],[6,9]]", "[2,5]"},
+        {"[[1,2],[3,5],[6,7],[8,10],[12,16]]", "[4,8]"},
+        {"[]", "[5,7]"}, // #114
+    };
+    string title = "#57. 插入区间";
+    printf("Test %s (%zi samples) \n", title.c_str(), samples.size());
+    for (auto& sample: samples) {
+        auto intervals = string_to_vector_vector_int(sample[0]);
+        auto newInterval = string_to_vector_int(sample[1]);
+        solution->insert(intervals, newInterval);
+    }
+}
+
+static void test823() {
+    vector<vector<string>> samples = {
+//        {"[2,4]"},
+//        {"[2,4,5,10]"},
+//{"[45,42,2,18,23,1170,12,41,40,9,47,24,33,28,10,32,29,17,46,11,759,37,6,26,21,49,31,14,19,8,13,7,27,22,3,36,34,38,39,30,43,15,4,16]"},
+        {"[45,42,2,18,23,12,41,40,9,47,24,33,28,10,32,29,17,46,11,37,6,26,21,49,31,14,19,8,13,7,27,22,3,36,34,38,39,30,43,15,4,16]"}
+    };
+    string title = "#823. ";
+    printf("Test %s (%zi samples) \n", title.c_str(), samples.size());
+    for (auto& sample: samples) {
+        auto p1 = string_to_vector_int(sample[0]);
+        solution->numFactoredBinaryTree(p1);
+    }
+}
+
+Solution_2309 * solution2309 = new Solution_2309();
+
+static void test2560() {
+    typedef LC::Params2<string, int> Params2;
+    
+    vector<LC::Sample<Params2, int>> samples = {
+//        {1, {"[2,3,5,9]", 2}, 5},
+//        {2, {"[2,7,9,3,1]", 2}, 2}
+        
+//        {-3, {"[2,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9, 2,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9,2,3,5,9 ,3,5,9, 2,3,5,9,2,3,5,9,2,3,5,9]", 4}, 2}
+        {28,
+        {"\
+[5038,3053,2825,3638,4648,3259,4948,4248,4940,2834,109,5224,5097,4708,2162,3438,4152,4134,551,3961,\
+2294,3961,1327,2395,1002,763,4296,3147,5069,2156,572,1261,4272,4158,5186,2543,5055,4735,2325,1206,1019,1257,5048,1563,3507,4269,5328,173,5007,2392,967,2768,86,3401,3667,4406,4487,876,1530,819,1320,883,1101,5317,2305,89,788,1603,3456,5221,1910,3343,4597]"
+            , 28}, 200
+        }
+    };
+    string title = "#2560. ";
+    printf("Test %s (%zi samples) \n", title.c_str(), samples.size());
+    for (auto& sample: samples) {
+        auto nums = string_to_vector_int(sample.par.val1);
+        int k = sample.par.val2;
+        solution2309->minCapability(nums, k);
+    }
+}
+
+static void test32() {
+    typedef LC::Params2<string, string> Params_str_str;
+    vector<LC::Sample<Params_str_str, bool>> samples = {
+        {1, {"aa", "a"}, false},
+        {2, {"aa", "a*"}, true},
+        {3, {"ab", ".*"}, true},
+        {261, {"ab", ".c*"}, false},
+        {-1, {"ab", "a*"}, false},
+        {-2, {"ababc", ".*aa"}, false},
+        {-3, {"abab", "b*.b"}, false},
+        {-4, {"abab", ".*.b"}, true},
+        
+        {301, {"aab", "c*a*b"}, true},
+        {327, {"ab", ".*.."}, true},
+        {331, {"aaaa", "aaaaa"}, false},
+        {341, {"aa", ".c*"}, false},
+        {351, {"aababcacabccbacaaba", "ab*c*c*b..*a*c*a*"}, false},
+        {352, {"acbccccacccaabcc", "ab*.*c*b*ac*c*c*."}, false},
+    };
+    string title = "#32. ";
+    printf("Test %s (%zi samples) \n", title.c_str(), samples.size());
+    for (auto& sample: samples) {
+        string s = sample.par.val1, p = sample.par.val2;
+        auto res = solution->isMatch(s, p);
+        if (res != sample.ans) {
+            printf("! Error\n");
+            throw "#32";
+        }
+    }
+}
+
+static void test76() {
+    typedef LC::Params2<string, string> Params_str_str;
+    vector<LC::Sample<Params_str_str, string>> samples = {
+        {1, {"ADOBECODEBANC", "ABC"}, "BANC"},
+        {2, {"aa", "aa"}, "aa"},
+        {178, {"bba", "ab"}, "ba"},
+    };
+    string title = "#76. ";
+    printf("Test %s (%zi samples) \n", title.c_str(), samples.size());
+    
+    for (auto& sample: samples) {
+        string s = sample.par.val1, t = sample.par.val2;
+        auto res = solution2309->minWindow(s, t);
+        if (res != sample.ans) {
+            printf("! Error\n");
+            throw "#76";
+        }
+    }
+    
+}
+
+static void test85() {
+    vector<vector<char>> matrix1 = {
+        {'1', '0', '1', '0', '0'},
+        {'1', '0', '1', '1', '1'},
+        {'1', '1', '1', '1', '1'},
+        {'1', '0', '0', '1', '0'},
+    };
+    vector<vector<char>> matrix62 = {
+        {'1', '1'},
+    };
+    solution->maximalRectangle(matrix1);
+}
+
+static std::string questionPathForTestSample(int qID) {
+    string rootPath = projectPath() + "/TestSample";
+    rootPath += "/#" + to_string(qID);
+    return rootPath;
+}
+static std::string samplePath(std::string qPath, int sID) {
+    return qPath + "/" + to_string(sID) + ".txt";
+}
+
+static void test84() {
+    const int qID = 84;
+    string title = "";
+    
+    std::string rootPath = questionPathForTestSample(qID);
+    function<vector<int>(int)> createSample = [&](int sID) {
+        string filename = samplePath(rootPath, sID);
+        vector<string> params = readfline(filename);
+        return params.size() > 0 ? string_to_vector_int(params[0]): vector<int>();
+    };
+    
+    vector<int> heights1 = string_to_vector_int("[2,1,5,6]");
+    vector<int> heights2 = {
+        {2, 4},
+    };
+    vector<int> heights89 = createSample(89); // 259833437
+    vector<int> heights80 = string_to_vector_int("[3,5,5,2,5,5,6,6,4,4,1,1,2,5,5,6,6,4,1,3]"); // 24
+    
+    typedef LC::Params2<vector<int>, string> Params_vi;
+    vector<LC::Sample<Params_vi, int>> samples = {
+//        {1, {heights1}, 10},
+//        {2, {heights2}, 4},
+//        {89, {heights89}, 259833437},
+//        {80, {heights80}, 24},
+        {96,  createSample(96), 250000000},
+    };
+    
+    printf("Test #%d. %s (%zi samples) \n", qID, title.c_str(), samples.size());
+    for (auto& sample: samples) {
+    
+        auto heights = sample.par.val1;
+        auto res = solution2309->largestRectangleArea(heights);
+        if (res != sample.ans) {
+            printf("! Error\n");
+            throw "#"+to_string(qID);
+        }
+    }
+}
+
 int testmain() {
     // insert code here...
     
@@ -566,5 +745,61 @@ int testmain() {
     test1499();
     
     test279();
+    
+    test1289();
+    
+    test32();
+    
+    vector<string> pizza = {
+        "A..",
+        "AAA",
+        "...",
+    };
+    solution->ways(pizza, 3);
+    
+    solution->simplifyPath("/qwe/er/.///e2/../f");
+    
+    test57();
+    
+    test823();
+    
+    test2560();
+    
+    // 09/20
+    test76();
+    
+    test85();
+    
+//    test84();
+    
+    time_t t1 = gettime_millseconds();
+    // Todo
+    
+    time_t t2 = gettime_millseconds();
+    printf("Usaged time: %.3f s.\n", 1.0*(t2-t1)/1000);
+    
+    string s1 = "qwf";
+    string s2 = "qwea";
+    bool res = s1 < s2;
+    
+    map<int, int> mp;
+    mp[5] = 3;
+    mp[4] = 3;
+    mp[3] = 3;
+//    mp[30] = 400;
+    auto mit = mp.end();
+    mit --;
+    auto m2 = -- mit;
+    mp.erase(++mit);
+    auto lit = mp.lower_bound(7);
+    auto lit2 = --mit;
+    set<int> s;
+    s.insert(100);
+    s.insert(300);
+    s.insert(-100);
+    s.insert(200);
+    auto it = s.begin();
+    auto ss = *it;
+    
     return 0;
 }

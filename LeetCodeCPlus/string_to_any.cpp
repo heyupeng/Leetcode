@@ -12,7 +12,7 @@ using namespace std;
 
 #include <regex>
 template<class _ResTyp>
-vector<_ResTyp> string_regex_split_totyp(string::iterator begin, string::iterator end, string& split, function<_ResTyp(string)> totype) {
+vector<_ResTyp> string_split_regex_totyp(string::iterator begin, string::iterator end, string& split, function<_ResTyp(string)> totype) {
     regex re(split);
     auto token_it = sregex_token_iterator(begin, end, re, -1);
     
@@ -24,15 +24,15 @@ vector<_ResTyp> string_regex_split_totyp(string::iterator begin, string::iterato
     return vec;
 }
 
-vector<string> string_regex_split(string::iterator begin, string::iterator end, string& split) {
+vector<string> string_split_regex(string::iterator begin, string::iterator end, string& split) {
     regex re(split);
     auto token_it = sregex_token_iterator(begin, end, re, -1);
     vector<string> vec(token_it, sregex_token_iterator());
     return vec;
 }
 
-vector<string> string_regex_split(string& str, string& split) {
-    return string_regex_split(str.begin(), str.end(), split);
+vector<string> string_split_regex(string& str, string& split) {
+    return string_split_regex(str.begin(), str.end(), split);
 }
 
 // convert
@@ -41,7 +41,7 @@ int string_to_int(string s) {
     return (int)strtol(s.c_str(), nullptr, 10);
 }
 
-vector<int> string_to_vector_int(string& str) {
+vector<int> string_to_vector_int(string str) {
     string split = ",";
     
     int length = (int)str.size();
@@ -49,7 +49,7 @@ vector<int> string_to_vector_int(string& str) {
     auto bi = str.find_first_of("[", begin);
     auto ei = str.find_first_of("]", begin);
     while (bi >= begin && bi < length && ei > begin && ei < length) {
-        vector<int> temp = string_regex_split_totyp(str.begin()+bi+1, str.begin()+ei, split, (function<int(string)>)string_to_int);
+        vector<int> temp = string_split_regex_totyp(str.begin()+bi+1, str.begin()+ei, split, (function<int(string)>)string_to_int);
         return temp;
     };
     return {};
@@ -66,7 +66,7 @@ vector<vector<int>> string_to_vector_vector_int(string str) {
     auto bi = str.find_first_of("[", begin);
     auto ei = str.find_first_of("]", begin);
     while (bi >= begin && bi < n && ei > begin && bi+1 < ei && ei < n) {
-        vector<int> temp = string_regex_split_totyp(str.begin()+bi+1, str.begin()+ei, split, string_to_int);
+        vector<int> temp = string_split_regex_totyp(str.begin()+bi+1, str.begin()+ei, split, string_to_int);
         res.push_back(temp);
         
         begin = (int)ei + 1;

@@ -9,6 +9,7 @@
 #define Solution_hpp
 
 #include <stdio.h>
+#include <math.h>
 
 #include <vector>
 #include <map>
@@ -20,6 +21,18 @@
 using namespace std;
 
 #include "ListNode.hpp"
+
+template<class _Tp, class _PrintFunc>
+inline void print_element(vector<_Tp>& arr, _PrintFunc __f, string sepatator = " ", string terminator = "\n") {
+    for (int i = 0; i < arr.size(); i++) {
+        __f(arr[i]);
+        if (i != arr.size()-1) {
+            printf(sepatator.c_str());
+        } else {
+            printf(terminator.c_str());
+        }
+    }
+};
 
 class Solution {
 public:
@@ -41,7 +54,7 @@ public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         if (l1 == nullptr) { return l2; }
         if (l2 == nullptr) { return l1; }
-
+        
         int val = l1->val + l2->val;
         if (val > 9) {
             val -= 10;
@@ -71,7 +84,7 @@ public:
             int n2 = s2.empty() ? 0: s2.top();
             if (!s1.empty()) { s1.pop(); }
             if (!s2.empty()) { s2.pop(); }
-        
+            
             int n = n1 + n2 + temp;
             temp = n / 10;
             l3 = new ListNode(n % 10, l3);
@@ -123,28 +136,28 @@ public:
             return v1[0] < v2[0] || (v1[0] = v2[0] && v1[1] < v2[0]);
         });
         // 1.
-//        vector<int> lastInterval;
-//        for (auto & interval: intervals) {
-//            if (lastInterval.size() == 0) {
-//                lastInterval = interval;
-//                continue;
-//            }
-//            if (lastInterval[1] < interval[0]) {
-//                res.push_back(lastInterval);
-//                lastInterval = interval;
-//                continue;
-//            }
-//            if (lastInterval[1] < interval[1]) {
-//                lastInterval[1] = interval[1];
-//            }
-//        }
-//        if (lastInterval.size() != 0) {
-//            res.push_back(lastInterval);
-//        }
+        //        vector<int> lastInterval;
+        //        for (auto & interval: intervals) {
+        //            if (lastInterval.size() == 0) {
+        //                lastInterval = interval;
+        //                continue;
+        //            }
+        //            if (lastInterval[1] < interval[0]) {
+        //                res.push_back(lastInterval);
+        //                lastInterval = interval;
+        //                continue;
+        //            }
+        //            if (lastInterval[1] < interval[1]) {
+        //                lastInterval[1] = interval[1];
+        //            }
+        //        }
+        //        if (lastInterval.size() != 0) {
+        //            res.push_back(lastInterval);
+        //        }
         
         // 2.
         function<bool(vector<int> & v1, vector<int> v2)> mergev = [](vector<int> & v1, vector<int> v2) {
-            if (v1[1] < v2[0] || v2[0] < v1[0]) { return false; }
+            if (v1[1] < v2[0] || v2[1] < v1[0]) { return false; }
             if (v1[0] <= v2[0] && v1[1] >= v2[1]) { return true; }
             v1[0] = min(v1[0], v2[0]);
             v1[1] = max(v1[1], v2[1]);
@@ -164,23 +177,50 @@ public:
         return res;
     }
     
+    vector<vector<int>> merge3(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](vector<int> v1, vector<int> v2) {
+            return v1[0] < v2[0] || (v1[0] = v2[0] && v1[1] < v2[0]);
+        });
+        function<bool(vector<int>&, vector<int>&)> isintersect = [](vector<int>& in1, vector<int>& in2) {
+            if (in1[1] < in2[0] || in2[1] < in1[0])
+                return false;
+            return true;
+        };
+        function<bool(vector<int>&, vector<int>&)> mergein = [](vector<int>& in1, vector<int>& in2) {
+            in1[0] = min(in1[0], in2[0]);
+            in1[1] = min(in1[1], in2[1]);
+            return true;
+        };
+        
+        vector<vector<int>> res;
+        for (auto& in: intervals) {
+            if (res.size() == 0 || !isintersect(res[res.size()-1], in)) {
+                res.push_back(in);
+            }
+            else {
+                mergein(res[res.size()-1], in);
+            }
+        }
+        return res;
+    }
+    
     /// #2679.
     int matrixSum(vector<vector<int>>& nums) {
-//        auto maxs = vector<int>(nums[0].size(), 0);
-//        for (auto col: nums) {
-//            sort(col.begin(), col.end(), [](int n1, int n2){
-//                return n1 > n2;
-//            });
-//            for (int i = 0; i < col.size(); i++) {
-//                if (maxs[i] < col[i]) {
-//                    maxs[i] = col[i];
-//                }
-//            }
-//        }
-//        int res = 0;
-//        for (auto num: maxs) {
-//            res += num;
-//        }
+        //        auto maxs = vector<int>(nums[0].size(), 0);
+        //        for (auto col: nums) {
+        //            sort(col.begin(), col.end(), [](int n1, int n2){
+        //                return n1 > n2;
+        //            });
+        //            for (int i = 0; i < col.size(); i++) {
+        //                if (maxs[i] < col[i]) {
+        //                    maxs[i] = col[i];
+        //                }
+        //            }
+        //        }
+        //        int res = 0;
+        //        for (auto num: maxs) {
+        //            res += num;
+        //        }
         
         // way2.
         int res = 0;
@@ -222,7 +262,7 @@ public:
         return dp[n];
     }
     
-   /// #75. 颜色分类
+    /// #75. 颜色分类
     void sortColors(vector<int>& nums) {
         auto sums = vector<int>(3, 0);
         for(auto &num: nums) {
@@ -359,16 +399,16 @@ public:
     //
     bool hasCycle(ListNode *head) {
         // 1.
-//        map<ListNode *, int> mp;
-//        while(head != nullptr) {
-//            auto it = mp.find(head);
-//            if (it != mp.end()) {
-//                // printf("(%d, %d), ", it->first, it->second);
-//                return true;
-//            }
-//            mp[head] = head->val;
-//            head = head->next;
-//        }
+        //        map<ListNode *, int> mp;
+        //        while(head != nullptr) {
+        //            auto it = mp.find(head);
+        //            if (it != mp.end()) {
+        //                // printf("(%d, %d), ", it->first, it->second);
+        //                return true;
+        //            }
+        //            mp[head] = head->val;
+        //            head = head->next;
+        //        }
         // 2.
         if (head == nullptr) { return false;}
         ListNode * n1 = head;
@@ -386,16 +426,16 @@ public:
     
     ListNode * detectCycle(ListNode *head) {
         // 1.
-//        map<ListNode *, int> mp;
-//        while(head != nullptr) {
-//            auto it = mp.find(head);
-//            if (it != mp.end()) {
-//                // printf("(%d, %d), ", it->first, it->second);
-//                return true;
-//            }
-//            mp[head] = head->val;
-//            head = head->next;
-//        }
+        //        map<ListNode *, int> mp;
+        //        while(head != nullptr) {
+        //            auto it = mp.find(head);
+        //            if (it != mp.end()) {
+        //                // printf("(%d, %d), ", it->first, it->second);
+        //                return true;
+        //            }
+        //            mp[head] = head->val;
+        //            head = head->next;
+        //        }
         // 2.
         if (head == nullptr) { return nullptr;}
         
@@ -533,7 +573,7 @@ public:
         return maxVal;
     }
     
-    /// #931. 下降路径最小和 --22/07/13
+    /// #931. 下降路径最小和 --23/07/13
     int minFallingPathSum(vector<vector<int>> matrix) {
         int m = (int)matrix.size();
         int n = (int)matrix[0].size();
@@ -543,7 +583,7 @@ public:
         for (int i = 0; i < m; i++) {
             flag = 1 - flag;
             for (int j = 0; j < n; j++) {
-               // min(dp[j], dp[j+1], dp[j+2]) + matrix[i][j]
+                // min(dp[j], dp[j+1], dp[j+2]) + matrix[i][j]
                 int minVal = dp[1-flag][j];
                 if (j > 0)      { minVal = min(minVal, dp[1-flag][j-1]); }
                 if (j < n - 1)  { minVal = min(minVal, dp[1-flag][j+1]); }
@@ -616,7 +656,7 @@ public:
         return n;
     }
     
-    /// #979. 在二叉树中分配硬币 -- 22/07/14
+    /// #979. 在二叉树中分配硬币 -- 23/07/14
     int distributeCoins(TreeNode * root) {
         auto res = _distributeCoins_map(root);
         return res[1];
@@ -634,7 +674,7 @@ public:
         return res1;
     }
     
-    /// #18. 四数和-- 22/07/15
+    /// #18. 四数和-- 23/07/15
     vector<vector<int>> fourSum(vector<int> & nums, int target) {
         vector<vector<int>> res;
         sort(nums.begin(), nums.end());
@@ -754,30 +794,24 @@ public:
         return res;
     }
     
+    /// #148. 排序链表
+    /// 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
     ListNode * sortList(ListNode * head) {
         // way 1. 数组排序，再重组。
-        vector<ListNode *> nodevec;
+        vector<ListNode *> list;
         while (head != nullptr) {
-            nodevec.push_back(head);
+            list.push_back(head);
             head = head->next;
         }
-        int n = (int)nodevec.size();
-        for (int i = 0; i < n; i++) {
-            if (nodevec[i] == nullptr) {
-                break;;
-            }
-        }
-        sort(nodevec.begin(), nodevec.end(), [](ListNode *n1, ListNode *n2){
+        
+        sort(list.begin(), list.end(), [](ListNode *n1, ListNode *n2){
             return n1->val <= n2->val;
         });
-        for (int i = 0; i < nodevec.size(); i++) {
-            if (i == 0) {
-                head = nodevec[i];
-            }
-            else {
-                nodevec[i - 1]->next = nodevec[i];
-                nodevec[i]->next = nullptr;
-            }
+        
+        head = nullptr;
+        for (int i = (int)list.size()-1; i >= 0; i--) {
+            list[i]->next = head;
+            head = list[i];
         }
         return head;
     }
@@ -812,7 +846,7 @@ public:
         vector<vector<int>> matn = mat;
         while (count < totaldistance) {
             dist ++;
-//            _matrix_mul(matn, mat, dist, updateDist);
+            //            _matrix_mul(matn, mat, dist, updateDist);
             _matrix_mul2(matn, dist, updateDist);
         }
         return res;
@@ -856,7 +890,7 @@ public:
         //
         auto m1_m = m1.size();
         auto m1_n = m1[0].size();
-                
+        
         for (int i = 0; i < m1_m; i++) {
             vector<int> temp = m1[i];
             for (int j = i + 1; j < m1_n; j++) {
@@ -866,7 +900,7 @@ public:
                 int val = 0;
                 for (int k = 0; k < m1_n; k++) {
                     int d = m1[k][j];
-//                    val += temp[k] * m2[k][j];
+                    //                    val += temp[k] * m2[k][j];
                     val += temp[k] * (d == 1 ? : 0);
                 }
                 
@@ -1040,7 +1074,7 @@ public:
         return res;
     }
     
-    /// #415. 字符串相加 -- 22/07/17
+    /// #415. 字符串相加 -- 23/07/17
     string addString(string num1, string num2) {
         int idx1 = (int)num1.size() - 1;
         int idx2 = (int)num2.size() - 1;
@@ -1292,36 +1326,36 @@ public:
                 else if (val > intervals[in->val][1])
                     left ++;
                 
-//                else if (intervals[in->val][0] <= val && val <= intervals[in->val][1]) {
-                    int temp = findMinInterval(in, val);
-                    if (temp != -1) {
-                        if (dist == -1) dist = temp;
-                        dist = min(dist, temp);
-                    }
-//                }
+                //                else if (intervals[in->val][0] <= val && val <= intervals[in->val][1]) {
+                int temp = findMinInterval(in, val);
+                if (temp != -1) {
+                    if (dist == -1) dist = temp;
+                    dist = min(dist, temp);
+                }
+                //                }
             }
             mp[val] = dist;
             
             // #33. 28 ms.
-//            stack<pair<int, int>> stk;
-//            stk.push({left, r3});
-//            while (stk.size()) {
-//                auto range = stk.top();
-//                stk.pop();
-//                int cur = (range.first + range.second) * 0.5;
-//                auto& in = intervals[node_vec[cur]->val];
-//                if ( intervalContainValue(in, qq[i]) ) {
-//                    int dist = findMinInterval(node_vec[cur], qq[i]);
-//                    if (mp.count(qq[i]) > 0)
-//                        dist = min( mp[qq[i]], dist );
-//                    mp[qq[i]] = dist;
-//                }
-//                if (range.first <= cur - 1 && intervals[node_vec[cur]->val][1] >= qq[i])
-//                    stk.push({range.first, cur - 1});
-//
-//                if (range.second >= cur + 1 && intervals[node_vec[cur]->val][0] <= qq[i])
-//                    stk.push({cur + 1, range.second});
-//            }
+            //            stack<pair<int, int>> stk;
+            //            stk.push({left, r3});
+            //            while (stk.size()) {
+            //                auto range = stk.top();
+            //                stk.pop();
+            //                int cur = (range.first + range.second) * 0.5;
+            //                auto& in = intervals[node_vec[cur]->val];
+            //                if ( intervalContainValue(in, qq[i]) ) {
+            //                    int dist = findMinInterval(node_vec[cur], qq[i]);
+            //                    if (mp.count(qq[i]) > 0)
+            //                        dist = min( mp[qq[i]], dist );
+            //                    mp[qq[i]] = dist;
+            //                }
+            //                if (range.first <= cur - 1 && intervals[node_vec[cur]->val][1] >= qq[i])
+            //                    stk.push({range.first, cur - 1});
+            //
+            //                if (range.second >= cur + 1 && intervals[node_vec[cur]->val][0] <= qq[i])
+            //                    stk.push({cur + 1, range.second});
+            //            }
         }
         
         vector<int> res;
@@ -1443,7 +1477,7 @@ public:
             
             int& val = qq[i];
             // 1. #33. 340 ms.
-//            mp[qq[i]] = IntervalNodeFindValue(root, val, left);
+            //            mp[qq[i]] = IntervalNodeFindValue(root, val, left);
             
             // 2. #33. 240 ms.
             int dist = -1;
@@ -1463,7 +1497,7 @@ public:
                 }
             }
             mp[qq[i]] = dist;
-//
+            //
         }
         
         vector<int> res;
@@ -1475,7 +1509,7 @@ public:
         return res;
     }
     
-    /// #874. 模拟行走机器人 -- 22/07/19
+    /// #874. 模拟行走机器人 -- 23/07/19
     ///
     /// 机器人在一个无限大小的 XY 网格平面上行走，从点 (0, 0) 处开始出发，面向北方。该机器人可以接收以下三种类型的命令 commands ：
     ///
@@ -1528,7 +1562,7 @@ public:
         return longest;
     }
     
-    /// #918. 环形子数组的最大和 --22/07/20
+    /// #918. 环形子数组的最大和 --23/07/20
     int maxsubarraySum(vector<int>& nums) {
         vector<int> leftNMaxsums(nums.size(), 0);
         int res = nums[0];
@@ -1591,7 +1625,7 @@ public:
                 }
             }
             
-
+            
             if (bpi < left)
                 continue;
             int val = points[i][1] + points[bpi][1] + points[i][0] - points[bpi][0];
@@ -1603,7 +1637,7 @@ public:
         return maxval;
     }
     
-    /// #771. 宝石与石头 --22/07/24
+    /// #771. 宝石与石头 --23/07/24
     int numJewelsInStones(string jewels, string stones) {
         int res = 0;
         set<char> jew_set;
@@ -1631,7 +1665,7 @@ public:
         return 3 * integerBreak(n - 3);
     }
     
-    /// #2500. 删除每行中的最大值 --22/07/27
+    /// #2500. 删除每行中的最大值 --23/07/27
     int deleteGreatestValue(vector<vector<int>>& grid) {
         int res = 0;
         for (auto& g: grid) {
@@ -1668,8 +1702,8 @@ public:
         
         return res;
     }
-        
-    /// #980. 不同路径 III --22/08/07
+    
+    /// #980. 不同路径 III --23/08/07
     int uniquePathIII(vector<vector<int>>& grid) {
         int m = (int)grid.size();
         int n = (int)grid[0].size();
@@ -1763,35 +1797,666 @@ public:
     
     /// #85. 最大矩形
     /// 给定一个仅包含 0 和 1 、大小为 rows x cols 的二维二进制矩阵，找出只包含 1 的最大矩形，并返回其面积。
+    ///
+    /// Modify
+    /// - 23/09/21.
     int maximalRectangle(vector<vector<char>>& matrix) {
         int col = (int)matrix.size();
         int row = (int)matrix[0].size();
-        vector<vector<vector<int>>> dp(col+1, vector(row+1, vector(2,0)));
-        
+        //        vector<vector<int>> ws(col+1, vector(row+1, 0)); // w
+        vector<vector<int>> hs(col+1, vector(row+1, 0)); // h
+        int w = 0; // 单行矩形长度
         int maximum = 0;
         for(int i = 0; i < col; i ++) {
+            w = 0;
             for (int j = 0; j < row; j++) {
                 if (matrix[i][j] == '1') {
-                    dp[i+1][j+1][0] = dp[i+1][j][0] + 1;
-                    dp[i+1][j+1][1] = dp[i][j+1][1] + 1;
-                    
-                    maximum = max(maximum, max(dp[i+1][j+1][0],dp[i+1][j+1][1]));
+                    //                    ws[i+1][j+1] = ws[i+1][j] + 1;
+                    //                    maximum = max(maximum, ws[i+1][j+1]);
+                    hs[i+1][j+1] = hs[i][j+1] + 1;
+                    maximum = max(maximum, hs[i+1][j+1]);
+                    w += 1;
+                    maximum = max(maximum, w);
+                }
+                else {
+                    w = 0;
                 }
             }
         }
         
-        for(int i = 0; i < col; i ++) {
-            for (int j = 0; j < row; j++) {
+        for(int i = 1; i < col; i ++) {
+            for (int j = 1; j < row; j++) {
                 if (matrix[i][j] == '1') {
-                    dp[i+1][j+1][0] = dp[i+1][j][0] + 1;
-                    dp[i+1][j+1][1] = dp[i][j+1][1] + 1;
-                    
-                    maximum = max(maximum, dp[i+1][j+1][0] * dp[i+1][j+1][1]);
+                    //                    int w = ws[i+1][j+1];
+                    int h = hs[i+1][j+1];
+                    int jj = j - 1;
+                    while (jj >= 0 && matrix[i][jj] == '1' && h > 1) {
+                        h = min(h, hs[i+1][jj+1]);
+                        maximum = max(maximum, (j - jj + 1) * h);
+                        jj --;
+                    }
                 }
             }
         }
         return maximum;
     }
+    
+    /// #1749. 任意子数组和的绝对值的最大值 --23/08/08
+    int maxAbsSoluteSum(vector<int>& nums) {
+        int res = 0;
+        int n = (int)nums.size();
+        // 1. memory
+        //        vector<vector<int>> dp(n + 1, vector(n + 1, 0));
+        //        for( int i = 0; i < nums.size(); i++) {
+        //            for (int j = i; j < nums.size(); j++) {
+        //                dp[i+1][j+1] = dp[i][j] + nums[j];
+        //                res = max(res, abs(dp[i+1][j+1]));
+        //            }
+        //        }
+        // 2. time
+        vector<vector<int>> dp(2, vector(n + 1, 0));
+        int flag = 1;
+        for( int i = 0; i < nums.size(); i++) {
+            for (int j = i; j < nums.size(); j++) {
+                dp[flag][j+1] = dp[1-flag][j] + nums[j];
+                res = max(res, abs(dp[flag][j+1]));
+            }
+            flag = 1 - flag;
+        }
+        
+        int sum = 0;
+        // 非负数最大值
+        for( int i = 0; i < nums.size(); i++) {
+            sum = max(sum, 0) + nums[i];
+            res = max(res, sum);
+        }
+        sum = 0;
+        // 负数最小值
+        for( int i = 0; i < nums.size(); i++) {
+            sum = min(sum, 0) + nums[i];
+            res = max(res, -sum);
+        }
+        return res;
+    }
+    
+    /// #1289. 下降路径最小和 --23/08/10
+    ///
+    /// 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
+    ///
+    /// 完全平方数 是一个整数，其值等于另一个整数的平方；换句话说，其值等于一个整数自乘的积。例如，1、4、9 和 16 都是完全平方数，而 3 和 11 不是。
+    ///
+    /// 链接：https://leetcode.cn/problems/perfect-squares
+    int minFallingPathSumII(vector<vector<int>>& grid) {
+        int n = (int)grid.size();
+        if (n == 1) return grid[0][0];
+        vector<int> sum(n, 0);
+        for(int i = 0; i < n; i++) {
+            int minidx1 = 0, minidx2 = 1;
+            for (int j = 1; j < n; j++) {
+                if (sum[j] < sum[minidx1]) {
+                    minidx2 = minidx1; minidx1 = j;
+                }
+                else if (sum[j] < sum[minidx2])
+                    minidx2 = j;
+            }
+            int minsum1 = sum[minidx1], minsum2 = sum[minidx2];
+            for (int j = 0; j < n; j++) {
+                int s = minsum1;
+                if (j == minidx1)
+                    s = minsum2;
+                sum[j] = s + grid[i][j];
+            }
+        }
+        
+        int res = INT32_MAX;
+        for(int i = 0; i < n; i++) {
+            res = min(res, sum[i]);
+        }
+        return res;
+    }
+    
+    /// #207. 课程表 --23/08/10
+    /// 你这个学期必须选修 `numCourses` 门课程，记为 0 到 numCourses - 1 。
+    ///
+    /// 在选修某些课程之前需要一些先修课程。 先修课程按数组 `prerequisites` 给出，其中 `prerequisites[i] = [ai, bi]` ，表示如果要学习课程 ai 则 必须 先学习课程  bi 。
+    ///
+    /// 例如，先修课程对 [0, 1] 表示：想要学习课程 0 ，你需要先完成课程 1 。
+    ///
+    /// 请你判断是否可能完成所有课程的学习？如果可以，返回 true ；否则，返回 false 。
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> pqs(numCourses, vector<int>(0));
+        for (auto& pq: prerequisites) {
+            pqs[pq[0]].push_back(pq[1]);
+        }
+        
+        vector<int> flags(numCourses, 0);
+        function<bool(int i)> dfs = [&](int i) {
+            flags[i] = -1;
+            for(auto& q: pqs[i]) {
+                if (flags[q] == 1) continue;
+                if (flags[q] == -1) return false;
+                if (dfs(q) == false) return false;
+            }
+            flags[i] = 1;
+            return true;
+        };
+        for (int i = 0; i < numCourses; i++) {
+            if (pqs[i].size() == 0) {
+                flags[i] = 1;
+            }
+            if (!dfs(i)) {return false;}
+        }
+        return true;
+    }
+    
+    /// #215. 数组中第K个最大元素 --23/08/10
+    /// 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
+    ///
+    /// 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+    ///
+    /// 你必须设计并实现时间复杂度为 O(n) 的算法解决此问题。
+    int findKthLargest(vector<int>& nums, int k) {
+        // 1.
+        sort(nums.begin(), nums.end());
+        return nums[nums.size() - k];
+        
+        int res = 0;
+        //
+        priority_queue<int> q(nums.begin(), nums.end());
+        while (k > 1) {
+            q.pop();
+            k --;
+        }
+        res = q.top();
+        
+        return res;
+    }
+    
+    /// #236. 二叉树的最近公共祖先 --23/08/10
+    /// 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+    ///
+    /// 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+    TreeNode * lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (isContainNode(p, q)) return p;
+        if (isContainNode(q, p)) return q;
+        vector<TreeNode*> pl;
+        vector<TreeNode*> ql;
+        ancestorList(root, p, pl);
+        ancestorList(root, q, ql);
+        int pr = (int)pl.size() - 1, qr = (int)ql.size() - 1;
+        int idx = pr;
+        while (pr >= 0 && qr >= 0 && pl[pr]->val == ql[qr]->val) {
+            idx = pr;
+            pr --; qr --;
+        }
+        return pl[pr];
+    }
+    bool isContainNode(TreeNode* root, TreeNode* n) {
+        if (!root) return false;
+        return root->val == n->val || isContainNode(root->left, n) || isContainNode(root->right, n);
+    }
+    bool ancestorList(TreeNode* root, TreeNode* n, vector<TreeNode*>& list) {
+        if (!root) return false;
+        if (root->val == n->val) return true;
+        if (ancestorList(root->left, n, list) || ancestorList(root->right, n, list)) {
+            list.push_back(root);
+            return true;
+        }
+        return false;
+    }
+    
+    int findDuplicate(vector<int>& nums) {
+        int res = 0;
+        int n = (int)nums.size();
+        int idx = -1;
+        for (int i = 0; i < n; i++) {
+            if (nums[abs(nums[i]) - 1] < 0) {
+                res = abs(nums[i]);
+                idx = i;
+                break;
+            }
+            nums[nums[i] - 1] *= -1;
+        }
+        for (int i = 0; i < n; i++) {
+            nums[nums[i] - 1] *= -1;
+        }
+        return res;
+    }
+    
+    /// #23. 合并 K 个升序链表
+    ListNode* mergeKList(vector<ListNode*>& lists) {
+        ListNode * prehead = new ListNode();
+        ListNode * pre = prehead;
+        
+        sort(lists.begin(), lists.end(), [](ListNode*& p1, ListNode*& p2) {
+            return (p1 && p2 && p1->val < p2->val) || !p1;
+        });
+        
+        int idx = 0;
+        while (idx < lists.size()) {
+            
+            ListNode * p = lists[idx];
+            if (!lists[idx]) {
+                idx += 1;
+                continue;
+            }
+            pre->next = lists[idx];
+            pre = pre->next;
+            
+            if (!pre->next) {
+                idx += 1;
+            } else {
+                lists[idx] = pre->next;
+                sort(lists.begin() + idx, lists.end(), [](ListNode*& p1, ListNode*& p2) {
+                    return (p1 && p2 && p1->val < p2->val) || !p1;
+                });
+            }
+        }
+        return prehead->next;
+    }
+    
+    /// #80. 删除有序数组中的重复项 II
+    ///
+    /// 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使得出现次数超过两次的元素只出现两次 ，返回删除后数组的新长度。
+    ///
+    /// 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+    int removeDuplicatesII(vector<int>& nums) {
+        // W1
+        //        int count = 1;
+        //        int n = 1;
+        //        for (int i = 1; i < nums.size(); i++) {
+        //            if (nums[i] == nums[i-1])
+        //                count ++;
+        //            else
+        //                count = 1;
+        //            if (count <= 2) {
+        //                nums[n] = nums[i];
+        //                n ++;
+        //            }
+        //        }
+        
+        // W2
+        if (nums.size() < 2) return (int)nums.size();
+        int n = 2;
+        for (int i = 2; i < nums.size(); i++) {
+            if (nums[i] == nums[n-2])
+                continue;
+            nums[n] = nums[i];
+            n ++;
+        }
+        return n;
+    }
+    
+    /// #81. 搜索旋转排序数组 II
+    ///
+    /// 已知存在一个按非降序排列的整数数组 nums ，数组中的值不必互不相同。
+    ///
+    /// 在传递给函数之前，nums 在预先未知的某个下标 k（`0 <= k < nums.length`）上进行了 旋转 ，使数组变为 `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]`（下标 从 0 开始 计数）。例如， `[0,1,2,4,4,4,5,6,6,7]` 在下标 5 处经旋转后可能变为 `[4,5,6,6,7,0,1,2,4,4]` 。
+    ///
+    /// 给你 旋转后 的数组 nums 和一个整数 target ，请你编写一个函数来判断给定的目标值是否存在于数组中。如果 nums 中存在这个目标值 target ，则返回 true ，否则返回 false 。
+    ///
+    /// 你必须尽可能减少整个操作步骤。
+    bool searchII(vector<int>& nums, int target) {
+        int l = 0;
+        int r = (int)nums.size() - 1;
+        return search_part(nums, l, r, target);
+    }
+    
+    bool search_part(vector<int>& nums, int l, int r, int target) {
+        if (l > r)
+            return false;
+        if (nums[l] == target || nums[r] == target)
+            return true;
+        
+        if (nums[l] < nums[r]) { // 单调性
+            return search_binary(nums, l, r, target);
+        }
+        if (search_part(nums, l+1, (l+r) >> 1, target))
+            return true;
+        if (search_part(nums, ((l+r) >> 1) + 1, r-1, target))
+            return true;
+        return false;
+    }
+    
+    bool search_binary(vector<int>& nums, int l, int r, int target) {
+        if (target < nums[l] || nums[r] < target)
+            return false;
+        while (l <= r) {
+            int mid = (l + r) >> 1;
+            if (nums[mid] == target)
+                return true;
+            if (target < nums[mid])
+                r = mid - 1;
+            else
+                l = mid + 1;
+        }
+        return false;
+    }
+    
+    /// #10. 正则表达式匹配
+    /// 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
+    ///
+    /// '.' 匹配任意单个字符
+    /// '*' 匹配零个或多个前面的那一个元素
+    /// 所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。
+    ///
+    bool isMatch(string s, string p) {
+        /* a-z, ['.','*']
+         0: ch1 != ch2;
+         1: ch1 = ch2;
+         2: ch2 = '.';
+         4: ch2 = '*';
+         8: ch2 = '*' && ch2_pre != ch1 / '.'; 即需要忽略。
+         */
+        int sn = (int)s.size();
+        int pn = (int)p.size();
+        vector<vector<int>> dp(sn+1, vector(pn+1, 0));
+        dp[0][0] = 1;
+        
+        /// `s[si] == p[pi] || p[pi] == '.'`
+        auto match_s_p = [&](int si, int pi) {
+            return s[si] == p[pi] || p[pi] == '.';
+        };
+        
+        int pstart = 1;
+        for (int i = 1; i <= sn; i++) {
+            // 记录 s, p 严格匹配的下标
+            int matchIndex = -1;
+            // 第一个可匹配 s[i]
+            int hasFirstMatch = false;
+            for (int j = pstart; j <= pn; j++) {
+                int flag = 0;
+                if (match_s_p(i-1, j-1)) {
+                    flag = dp[i-1][j-1]&7;
+                    if (matchIndex == -1) {
+                        flag = 1;
+                        flag = (dp[i-1][j-1]&7) || dp[i][j-1];
+                        flag = flag << (p[j-1] == '.' ? 1:0);
+                        if (flag)
+                            matchIndex = j-1;
+                    }
+                    
+                    if (flag && !hasFirstMatch) {
+                        pstart = j+1;
+                        hasFirstMatch = true;
+                    }
+                }
+                else if (p[j-1] == '*' && j > 1) {
+                    if (j-2 == matchIndex) {
+                        matchIndex = -1;
+                    }
+                    // ab, ab* | ab, abc*
+                    flag = dp[i][j-1] || dp[i][j-2];
+                    
+                    // #2;  aa a* | ab, ac*
+                    int isMatchLastp = match_s_p(i-1, j-2);
+                    flag = flag || ((dp[i-1][j]&7) && isMatchLastp);
+                    flag = flag || (dp[i-1][j-2]&7);
+                    
+                    flag = flag << (2+!isMatchLastp) | (!isMatchLastp && dp[i][j-2]&0x7);;
+                    if (isMatchLastp && flag&7)
+                        hasFirstMatch = true;
+                }
+                else {
+                    
+                }
+                dp[i][j] = flag;
+                
+                // 枝剪
+                //                if (flag == 0 && j > 1 && dp[i][j-1] == 0)
+                //                    break;
+            }
+            
+            // 枝剪
+            if (!hasFirstMatch)
+                break;
+        }
+        //        printf("\n");
+        print_element(dp, [](auto& c){
+            print_element(c, [](auto& r){
+                printf("%2d", r);
+            }, " ", "\n");
+        }, "");
+        return dp[sn][pn] & 7;
+    }
+    
+    /// #147. 对链表进行插入排序 --23/08/14
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode* res = nullptr;
+        while (head) {
+            ListNode * n = head->next;
+            head->next = nullptr;
+            insertion_part(res, head);
+            head = n;
+        }
+        res = reverseListNode(res);
+        return res;
+    }
+    void insertion_part(ListNode*& head, ListNode* n) {
+        if (head == nullptr)
+            head = n;
+        else if (n->val < head->val)
+            insertion_part(head->next, n);
+        else {
+            n->next = head;
+            head = n;
+        }
+    }
+    ListNode* reverseListNode(ListNode* head) {
+        ListNode* pre = nullptr;
+        while(head) {
+            ListNode* n = head->next;
+            head->next = pre;
+            pre = head;
+            head = n;
+        }
+        return pre;
+    }
+    
+    ///
+    string findReplaceString(string s, vector<int>& indices, vector<string>& sources, vector<string>& targets) {
+        string res = "";
+        int k = (int)indices.size();
+        int si = 0;
+        //
+        vector<int> ins(k, 0);
+        for (int i = 0; i < k; i++) {
+            ins[i] = i;
+        }
+        sort(ins.begin(), ins.end(), [&](int i, int j) { return indices[i] < indices[j]; } );
+        
+        for (int i = 0; i < k; i++) {
+            int idx = ins[i];
+            int in = indices[idx];
+            bool isRep = true;
+            for (int j = 0, ii = in; j < sources[idx].size(); j++,ii++) {
+                if (s[ii] != sources[idx][j]) {
+                    isRep = false;
+                    break;
+                }
+            }
+            for (int j = si; j < in; j++) {
+                res += s[j];
+            }
+            si = in;
+            if (isRep) {
+                res += targets[idx];
+                si += (int)sources[idx].size();
+            }
+            
+        }
+        if (si < s.size()) {
+            for (int j = si; j < s.size(); j++) {
+                res += s[j];
+            }
+        }
+        return res;
+    }
+    
+    /// #1444. --23/08/17
+    int ways(vector<string>& pizza, int k) {
+        int col = (int)pizza.size();
+        int row = (int)pizza[0].size();
+        // pa[i][j]: 当前 pizza 上的苹果数量
+        vector<vector<int>> pa(col, vector<int>(row, 0));
+        for (int i = row-1; i >= 0; i--) {
+            int r = 0;
+            for (int j = col-1; j >= 0; j --) {
+                if (pizza[i][j] == 'A')
+                    r += 1;
+                pa[i][j] = r + (i == row-1 ? 0: pa[i+1][j]);
+            }
+        }
+        
+        int limit = (int)pow(10, 9) + 7;
+        vector<vector<vector<int>>> dp(col, vector<vector<int>>(row, vector<int>(k, 0)));
+        function<int(vector<string>& pizza, int i, int j, int k)> ways_dfs =
+        [&](vector<string>& pizza, int i, int j, int k) {
+            if (dp[i][j][k] != 0) return dp[i][j][k];
+            if (col + row - 2 - (i + j) < k)
+                return 0;
+            if (k == 0 && pa[i][j] > 0) {
+                dp[i][j][k] = 1;
+                return 1;
+            }
+            
+            if (i+1 < col && pa[i][j] - pa[i+1][j] > 0) {
+                dp[i][j][k] += ways_dfs(pizza, i+1, j, k-1);
+            }
+            if (j+1 < row && pa[i][j] - pa[i][j+1] > 0) {
+                dp[i][j][k] += ways_dfs(pizza, 1, j+1, k-1);
+            }
+            if (j+1 < row && i+1 < col)
+                dp[i][j][k] += ways_dfs(pizza, i+1, j+1, k);
+            return dp[i][j][k];
+        };
+        
+        ways_dfs(pizza, 0, 0, k-1);
+        int res = dp[0][0][k-1];
+        return 0;
+    }
+    
+    /// #71. 简化路径 --23/08/27
+    /// 给你一个字符串 path ，表示指向某一文件或目录的 Unix 风格 绝对路径 （以 '/' 开头），请你将其转化为更加简洁的规范路径。
+    string simplifyPath(string path) {
+        string res = "";
+        vector<string> parts = stringSplit(path, "/");
+        return res;
+    }
+    
+    vector<string> stringSplit(string path, string split) {
+        vector<string> res;
+        string::size_type pos = 0;
+        while (pos < path.size()) {
+            auto idx = path.find(split, pos);
+            if (idx > path.size())
+                idx = path.size();
+            if (idx > pos) {
+                res.push_back(path.substr(pos, idx-pos));
+            }
+            pos = idx + 1;
+        }
+        return res;
+    }
+    
+    /// #57. 插入区间
+    ///
+    /// 给你一个 无重叠的 ，按照区间起始端点排序的区间列表。
+    ///
+    /// 在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）
+    ///
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        /* 1. 寻找最左、最右匹配位置li、ri；
+         * 2. 合并 [li,ri] 所有区间，更新新区间；
+         * 3. li == ri == -1时，追加 newInterval，更新排序；
+         */
+        vector<vector<int>> res;
+        int li = -1, ri = -1;
+        for(int i = 0; i < intervals.size(); i++) {
+            auto& interval = intervals[i];
+            if (interval[1] < newInterval[0] || newInterval[1] < interval[0])
+                continue;
+            li = i;
+            break;
+        }
+        for(int i = (int)intervals.size() - 1; i >= 0; i--) {
+            auto& interval = intervals[i];
+            if (interval[1] < newInterval[0] || newInterval[1] < interval[0])
+                continue;
+            ri = i;
+            break;
+        }
+        
+        for(int i = 0; i < intervals.size(); i++) {
+            auto interval = intervals[i];
+            if (i < li || i > ri) {
+                res.push_back(interval);
+            }
+            else {
+                newInterval[0] = min(intervals[li][0], newInterval[0]);
+                newInterval[1] = max(intervals[ri][1], newInterval[1]);
+                res.push_back(newInterval);
+                i = ri;
+            }
+        }
+        if (li == -1) {
+            // debug #114
+            res.push_back(newInterval);
+            sort(res.begin(), res.end(),[](vector<int>& in1, vector<int>& in2){
+                return in1[0] < in2[0];
+            });
+        }
+        return res;
+    }
+    
+    int numFactoredBinaryTree(vector<int>& arr) {
+        sort(arr.begin(), arr.end());
+        int mod = 1e9 + 7;
+        int maxVal = arr.back();
+        long res = 0;
+        //        vector<int> dp(maxVal+1, 0);
+        //        for (int i = 0; i < arr.size(); i ++) {
+        //            auto& a = arr[i];
+        //            dp[a] += 1;
+        //            res += dp[a];
+        //            res %= mod;
+        //            for (int j = 0; j <= i; j++) {
+        //                int& b = arr[j];
+        //                if (a * b > maxVal)
+        //                    continue;
+        //                int v = dp[a] * dp[b];
+        //                if (a != arr[j])
+        //                    v *= 2;
+        //                v %= mod;
+        //                dp[a*b] += v;
+        //            }
+        //        }
+        
+        map<int, int> idx;
+        for (int i = 0; i < arr.size(); i++) {
+            idx[arr[i]] = i;
+        }
+        
+        vector<int> dp(arr.size(), 0);
+        for (int i = 0; i < arr.size(); i ++) {
+            auto& a = arr[i];
+            dp[idx[a]] += 1;
+            for (int j = 0; j < i; j++) {
+                int& b = arr[j];
+                if (a % b != 0)
+                    continue;
+                long v = idx.count(a/b) == 0 ? 0: dp[idx[a/b]] * dp[idx[b]];
+                v %= mod;
+                dp[idx[a]] += (int)v;
+            }
+            res += dp[idx[a]];
+            res %= mod;
+        }
+        
+        return (int)res;
+    }
 };
+
+#include <numeric>
 
 #endif /* Solution_hpp */

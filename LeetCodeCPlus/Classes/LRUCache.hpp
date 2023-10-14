@@ -62,19 +62,14 @@ public:
             _remove(mp[key]);
             _size --;
         }
+        else if (_size >= _capacity) {
+            _removeCacheForFirstElement();
+        }
         
         mp[key] = {value, {-1, -1}};
         _size ++;
         // 更新访问记录
         _append(key, mp[key]);
-        
-        if (_size > _capacity) {
-            key = mp[-1].second.second;
-            _remove(mp[key]);
-            
-            mp.erase(key);
-            _size --;
-        }
     }
     
     void _remove(pair<int, LinkPair> & item) {
@@ -88,6 +83,13 @@ public:
         mp[root.first].second.second = key;
         item.second = {root.first, -1};
         root.first = key;
+    }
+    
+    void _removeCacheForFirstElement() {
+        int firstKey = mp[-1].second.second;
+        _remove(mp[firstKey]);
+        mp.erase(firstKey);
+        _size --;
     }
 };
 

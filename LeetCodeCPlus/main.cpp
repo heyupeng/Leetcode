@@ -13,6 +13,8 @@
 
 //using namespace std;
 #include "Test.hpp"
+#include "WP363.hpp"
+#include "LFUCache.hpp"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -20,5 +22,10 @@ int main(int argc, const char * argv[]) {
     
     testmain();
     
+//    Solution_WCP_363* wcp363 = new Solution_WCP_363();
+//    vector<int> heights = {5,3,4,1,1};
+//    wcp363->maximumSumOfHeights(heights);
+    
+    testLFCache();
     return 0;
 }
