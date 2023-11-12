@@ -24,6 +24,10 @@
 		B8F1CC432ABEE9E2007307D4 /* LockingTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CC412ABEE9E2007307D4 /* LockingTree.cpp */; };
 		B8F1CC462AC0754C007307D4 /* LFUCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CC442AC0754C007307D4 /* LFUCache.cpp */; };
 		B8F1CC492ADAF4D0007307D4 /* DWP116.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CC472ADAF4D0007307D4 /* DWP116.cpp */; };
+		B8F1CD0C2AFCF825007307D4 /* Solution2311.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD0A2AFCF825007307D4 /* Solution2311.cpp */; };
+		B8F1CD0F2B00D570007307D4 /* RangeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD0D2B00D570007307D4 /* RangeModule.cpp */; };
+		B8F1CD122B00E6EA007307D4 /* WP371.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD102B00E6EA007307D4 /* WP371.cpp */; };
+		B8F1CD152B0127D1007307D4 /* DWP117.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD132B0127D1007307D4 /* DWP117.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +84,14 @@
 		B8F1CC452AC0754C007307D4 /* LFUCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LFUCache.hpp; sourceTree = "<group>"; };
 		B8F1CC472ADAF4D0007307D4 /* DWP116.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DWP116.cpp; sourceTree = "<group>"; };
 		B8F1CC482ADAF4D0007307D4 /* DWP116.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DWP116.hpp; sourceTree = "<group>"; };
+		B8F1CD0A2AFCF825007307D4 /* Solution2311.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Solution2311.cpp; sourceTree = "<group>"; };
+		B8F1CD0B2AFCF825007307D4 /* Solution2311.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Solution2311.hpp; sourceTree = "<group>"; };
+		B8F1CD0D2B00D570007307D4 /* RangeModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RangeModule.cpp; sourceTree = "<group>"; };
+		B8F1CD0E2B00D570007307D4 /* RangeModule.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RangeModule.hpp; sourceTree = "<group>"; };
+		B8F1CD102B00E6EA007307D4 /* WP371.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WP371.cpp; sourceTree = "<group>"; };
+		B8F1CD112B00E6EA007307D4 /* WP371.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WP371.hpp; sourceTree = "<group>"; };
+		B8F1CD132B0127D1007307D4 /* DWP117.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DWP117.cpp; sourceTree = "<group>"; };
+		B8F1CD142B0127D1007307D4 /* DWP117.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DWP117.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +129,8 @@
 				B863ADE02A52AA7D0008BD32 /* Solution.hpp */,
 				B8F1CC3A2ABD7B55007307D4 /* Solution2309.cpp */,
 				B8F1CC3B2ABD7B55007307D4 /* Solution2309.hpp */,
+				B8F1CD0A2AFCF825007307D4 /* Solution2311.cpp */,
+				B8F1CD0B2AFCF825007307D4 /* Solution2311.hpp */,
 				B89874132A63C22400663C25 /* Test.cpp */,
 				B89874142A63C22400663C25 /* Test.hpp */,
 				B89B09192A808535003A3BE5 /* string_to_any.cpp */,
@@ -150,6 +164,8 @@
 				B89B09EC2A9B9A90003A3BE5 /* codec.hpp */,
 				B8F1CC412ABEE9E2007307D4 /* LockingTree.cpp */,
 				B8F1CC422ABEE9E2007307D4 /* LockingTree.hpp */,
+				B8F1CD0D2B00D570007307D4 /* RangeModule.cpp */,
+				B8F1CD0E2B00D570007307D4 /* RangeModule.hpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -214,8 +230,12 @@
 			children = (
 				B8F1CC302AB9A17B007307D4 /* WP363.cpp */,
 				B8F1CC312AB9A17B007307D4 /* WP363.hpp */,
+				B8F1CD102B00E6EA007307D4 /* WP371.cpp */,
+				B8F1CD112B00E6EA007307D4 /* WP371.hpp */,
 				B8F1CC472ADAF4D0007307D4 /* DWP116.cpp */,
 				B8F1CC482ADAF4D0007307D4 /* DWP116.hpp */,
+				B8F1CD132B0127D1007307D4 /* DWP117.cpp */,
+				B8F1CD142B0127D1007307D4 /* DWP117.hpp */,
 			);
 			path = WP;
 			sourceTree = "<group>";
@@ -307,10 +327,12 @@
 			files = (
 				B863ADE12A52AA7D0008BD32 /* Solution.cpp in Sources */,
 				B89B091B2A808536003A3BE5 /* string_to_any.cpp in Sources */,
+				B8F1CD122B00E6EA007307D4 /* WP371.cpp in Sources */,
 				B89874152A63C22400663C25 /* Test.cpp in Sources */,
 				B8F1CC432ABEE9E2007307D4 /* LockingTree.cpp in Sources */,
 				B8F1CC462AC0754C007307D4 /* LFUCache.cpp in Sources */,
 				B89B09282A8473CC003A3BE5 /* Trie.cpp in Sources */,
+				B8F1CD152B0127D1007307D4 /* DWP117.cpp in Sources */,
 				B8F1CC3C2ABD7B55007307D4 /* Solution2309.cpp in Sources */,
 				B863ADD52A51904C0008BD32 /* main.cpp in Sources */,
 				B863ADDE2A51A4BB0008BD32 /* ListNode.cpp in Sources */,
@@ -318,8 +340,10 @@
 				B89B09ED2A9B9A90003A3BE5 /* codec.cpp in Sources */,
 				B8F1CC3F2ABECD1C007307D4 /* time.cpp in Sources */,
 				B89874122A572B9300663C25 /* LCSample.cpp in Sources */,
+				B8F1CD0F2B00D570007307D4 /* RangeModule.cpp in Sources */,
 				B89874202A6518C300663C25 /* LRUCache.cpp in Sources */,
 				B8F1CC492ADAF4D0007307D4 /* DWP116.cpp in Sources */,
+				B8F1CD0C2AFCF825007307D4 /* Solution2311.cpp in Sources */,
 				B8F1CC322AB9A17B007307D4 /* WP363.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
