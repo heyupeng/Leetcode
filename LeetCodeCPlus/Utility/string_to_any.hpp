@@ -10,8 +10,9 @@
 #include <vector>
 #include <string>
 
-template<class _ResTyp>
-std::vector<_ResTyp> string_split_regex_totyp(std::string::iterator begin, std::string::iterator end, std::string& split, std::function<_ResTyp(std::string)> totype);
+template<class _Typ>
+std::vector<_Typ> string_split_regex_totyp(std::string::iterator begin, std::string::iterator end, std::string& split, std::function<_Typ(std::string)> totype);
+
 std::vector<std::string> string_split_regex(std::string::iterator begin, std::string::iterator end, std::string& split);
 std::vector<std::string> string_split_regex(std::string& str, std::string& split);
 

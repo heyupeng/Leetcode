@@ -11,12 +11,12 @@
 using namespace std;
 
 #include <regex>
-template<class _ResTyp>
-vector<_ResTyp> string_split_regex_totyp(string::iterator begin, string::iterator end, string& split, function<_ResTyp(string)> totype) {
+template<class _Typ>
+vector<_Typ> string_split_regex_totyp(string::iterator begin, string::iterator end, string& split, function<_Typ(string)> totype) {
     regex re(split);
     auto token_it = sregex_token_iterator(begin, end, re, -1);
     
-    vector<_ResTyp> vec;
+    vector<_Typ> vec;
     decltype(token_it) It;
     for (auto it = token_it; it != sregex_token_iterator(); it++) {
         vec.push_back(totype(it->str()));

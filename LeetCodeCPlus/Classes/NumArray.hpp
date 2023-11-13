@@ -14,6 +14,8 @@
 #include <algorithm>
 #include <vector>
 
+#include "bit.hpp"
+
 using namespace std;
 
 /// MARK: #307. 区域和检索 - 数组可修改
@@ -43,20 +45,20 @@ public:
         vector<int>& ns = tns;
         int tn = n;
         int total = 0;
-        while (tn > 0) {
+        while (tn >> 1 > 0) {
+            tn = (tn + 1) >> 1;
             printf("%d,", tn);
             ns.push_back(tn);
             total += tn;
-            if (tn == 1) break;
-            tn = (tn + 1) >> 1;
         }
         
         tree = vector<int>(total, 0);
-        printf("t: %d, total: %d\n",ns.size(), total);
+        printf("t: %zi, total: %d\n",ns.size(), total);
 
         for (int i = 0; i < n; i++) {
             auto& val = nums[i];
             int s = 0; int ii = i;
+            ii = ii >> 1;
             for (int k = 0; k < ns.size(); s += ns[k],ii = ii >> 1, k++) {
                 tree[s+ii] += val;
             }
@@ -64,9 +66,11 @@ public:
     }
     
     void update(int index, int val) {
-        int diff = val - tree[index];
+        int diff = val - nums[index];
+        nums[index] += diff;
         
         int s = 0; int ii = index;
+        ii = ii >> 1;
         for (int k = 0; k < tns.size(); s += tns[k],ii = ii >> 1, k++) {
             tree[s+ii] += diff;
             // printf("<%d,%d,%d, %d>, ", k, ii, s+ii, tree[s+ii]);
@@ -81,8 +85,13 @@ public:
     int sumN(int index) {
         int res = 0;
         while (index >= 0) {
-            int len = lowBit(index+1);
-            int ti = getTreeIndex(index, len);
+            int len = lowbit(index+1);
+            if (len == 1) {
+                res += nums[index];
+                index -= 1;
+                continue;
+            }
+            int ti = getTreeIndex(index >> 1, len >> 1);
             res += tree[ti];
             index -= len;
         }
@@ -100,25 +109,6 @@ public:
         }
         ti += idx;
         return ti;
-    }
-
-    int lowBit(int val) {
-        // return 0xffffffff - val + 1;
-        return (val & -val);
-    }
-
-    int highBit(int val) {
-        int bit = 0;
-        int k = 16;
-        while (val > 0 && k > 0) {
-            int v = val >> k;
-            if (v > 0) {
-                bit += k;
-                val = v;
-            }
-            k /= 2;
-        }
-        return 1 << bit;
     }
 };
 

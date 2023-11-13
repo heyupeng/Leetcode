@@ -29,6 +29,7 @@
 		B8F1CD122B00E6EA007307D4 /* WP371.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD102B00E6EA007307D4 /* WP371.cpp */; };
 		B8F1CD152B0127D1007307D4 /* DWP117.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD132B0127D1007307D4 /* DWP117.cpp */; };
 		B8F1CD192B01F6C3007307D4 /* NumArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD172B01F6C3007307D4 /* NumArray.cpp */; };
+		B8F1CD1D2B021117007307D4 /* bit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD1B2B021117007307D4 /* bit.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,6 +96,8 @@
 		B8F1CD142B0127D1007307D4 /* DWP117.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DWP117.hpp; sourceTree = "<group>"; };
 		B8F1CD172B01F6C3007307D4 /* NumArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NumArray.cpp; sourceTree = "<group>"; };
 		B8F1CD182B01F6C3007307D4 /* NumArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NumArray.hpp; sourceTree = "<group>"; };
+		B8F1CD1B2B021117007307D4 /* bit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bit.cpp; sourceTree = "<group>"; };
+		B8F1CD1C2B021117007307D4 /* bit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bit.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,10 +139,7 @@
 				B8F1CD0B2AFCF825007307D4 /* Solution2311.hpp */,
 				B89874132A63C22400663C25 /* Test.cpp */,
 				B89874142A63C22400663C25 /* Test.hpp */,
-				B89B09192A808535003A3BE5 /* string_to_any.cpp */,
-				B89B091A2A808536003A3BE5 /* string_to_any.hpp */,
-				B8F1CC3D2ABECD1C007307D4 /* time.cpp */,
-				B8F1CC3E2ABECD1C007307D4 /* time.hpp */,
+				B8F1CD1A2B020E85007307D4 /* Utility */,
 				B8F1CC332AB9A315007307D4 /* WP */,
 				B8F1CD162B012A70007307D4 /* DWP */,
 				B89874212A65199700663C25 /* Classes */,
@@ -269,6 +269,19 @@
 			path = DWP;
 			sourceTree = "<group>";
 		};
+		B8F1CD1A2B020E85007307D4 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				B89B09192A808535003A3BE5 /* string_to_any.cpp */,
+				B89B091A2A808536003A3BE5 /* string_to_any.hpp */,
+				B8F1CC3D2ABECD1C007307D4 /* time.cpp */,
+				B8F1CC3E2ABECD1C007307D4 /* time.hpp */,
+				B8F1CD1B2B021117007307D4 /* bit.cpp */,
+				B8F1CD1C2B021117007307D4 /* bit.hpp */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -339,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B863ADE12A52AA7D0008BD32 /* Solution.cpp in Sources */,
+				B8F1CD1D2B021117007307D4 /* bit.cpp in Sources */,
 				B89B091B2A808536003A3BE5 /* string_to_any.cpp in Sources */,
 				B8F1CD122B00E6EA007307D4 /* WP371.cpp in Sources */,
 				B8F1CD192B01F6C3007307D4 /* NumArray.cpp in Sources */,
