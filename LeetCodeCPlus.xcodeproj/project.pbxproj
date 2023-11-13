@@ -28,6 +28,7 @@
 		B8F1CD0F2B00D570007307D4 /* RangeModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD0D2B00D570007307D4 /* RangeModule.cpp */; };
 		B8F1CD122B00E6EA007307D4 /* WP371.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD102B00E6EA007307D4 /* WP371.cpp */; };
 		B8F1CD152B0127D1007307D4 /* DWP117.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD132B0127D1007307D4 /* DWP117.cpp */; };
+		B8F1CD192B01F6C3007307D4 /* NumArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CD172B01F6C3007307D4 /* NumArray.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -92,6 +93,8 @@
 		B8F1CD112B00E6EA007307D4 /* WP371.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WP371.hpp; sourceTree = "<group>"; };
 		B8F1CD132B0127D1007307D4 /* DWP117.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DWP117.cpp; sourceTree = "<group>"; };
 		B8F1CD142B0127D1007307D4 /* DWP117.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DWP117.hpp; sourceTree = "<group>"; };
+		B8F1CD172B01F6C3007307D4 /* NumArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NumArray.cpp; sourceTree = "<group>"; };
+		B8F1CD182B01F6C3007307D4 /* NumArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NumArray.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,7 @@
 				B8F1CC3D2ABECD1C007307D4 /* time.cpp */,
 				B8F1CC3E2ABECD1C007307D4 /* time.hpp */,
 				B8F1CC332AB9A315007307D4 /* WP */,
+				B8F1CD162B012A70007307D4 /* DWP */,
 				B89874212A65199700663C25 /* Classes */,
 				B89B09092A66615B003A3BE5 /* TestSample */,
 				B89874112A572B9300663C25 /* LCSample.cpp */,
@@ -166,6 +170,8 @@
 				B8F1CC422ABEE9E2007307D4 /* LockingTree.hpp */,
 				B8F1CD0D2B00D570007307D4 /* RangeModule.cpp */,
 				B8F1CD0E2B00D570007307D4 /* RangeModule.hpp */,
+				B8F1CD172B01F6C3007307D4 /* NumArray.cpp */,
+				B8F1CD182B01F6C3007307D4 /* NumArray.hpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -232,10 +238,6 @@
 				B8F1CC312AB9A17B007307D4 /* WP363.hpp */,
 				B8F1CD102B00E6EA007307D4 /* WP371.cpp */,
 				B8F1CD112B00E6EA007307D4 /* WP371.hpp */,
-				B8F1CC472ADAF4D0007307D4 /* DWP116.cpp */,
-				B8F1CC482ADAF4D0007307D4 /* DWP116.hpp */,
-				B8F1CD132B0127D1007307D4 /* DWP117.cpp */,
-				B8F1CD142B0127D1007307D4 /* DWP117.hpp */,
 			);
 			path = WP;
 			sourceTree = "<group>";
@@ -254,6 +256,17 @@
 			children = (
 			);
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		B8F1CD162B012A70007307D4 /* DWP */ = {
+			isa = PBXGroup;
+			children = (
+				B8F1CC472ADAF4D0007307D4 /* DWP116.cpp */,
+				B8F1CC482ADAF4D0007307D4 /* DWP116.hpp */,
+				B8F1CD132B0127D1007307D4 /* DWP117.cpp */,
+				B8F1CD142B0127D1007307D4 /* DWP117.hpp */,
+			);
+			path = DWP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +341,7 @@
 				B863ADE12A52AA7D0008BD32 /* Solution.cpp in Sources */,
 				B89B091B2A808536003A3BE5 /* string_to_any.cpp in Sources */,
 				B8F1CD122B00E6EA007307D4 /* WP371.cpp in Sources */,
+				B8F1CD192B01F6C3007307D4 /* NumArray.cpp in Sources */,
 				B89874152A63C22400663C25 /* Test.cpp in Sources */,
 				B8F1CC432ABEE9E2007307D4 /* LockingTree.cpp in Sources */,
 				B8F1CC462AC0754C007307D4 /* LFUCache.cpp in Sources */,
