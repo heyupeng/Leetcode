@@ -307,6 +307,94 @@ extension LCSolution_399 {
         }
         return longestLen
     }
+    
+    /// #396. 旋转函数
+    ///
+    /// 难度：中等
+    ///
+    /// 给定一个长度为 n 的整数数组 nums 。
+    ///
+    /// 假设 arrk 是数组 nums 顺时针旋转 k 个位置后的数组，我们定义 nums 的 旋转函数  F 为：
+    /// - F(k) = 0 * arrk[0] + 1 * arrk[1] + ... + (n - 1) * arrk[n - 1]
+    ///
+    /// 返回 F(0), F(1), ..., F(n-1)中的最大值 。
+    ///
+    /// 生成的测试用例让答案符合 32 位 整数。
+    ///
+    ///     示例 1:
+    ///     输入: nums = [4,3,2,6]
+    ///     输出: 26
+    ///     解释:
+    ///     F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 0 + 3 + 4 + 18 = 25
+    ///     F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 0 + 4 + 6 + 6 = 16
+    ///     F(2) = (0 * 2) + (1 * 6) + (2 * 4) + (3 * 3) = 0 + 6 + 8 + 9 = 23
+    ///     F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
+    ///     所以 F(0), F(1), F(2), F(3) 中的最大值是 F(3) = 26 。
+    ///
+    ///     示例 2:
+    ///     输入: nums = [100]
+    ///     输出: 0
+    ///
+    /// 提示:
+    /// - n == nums.length
+    /// - 1 <= n <= 105
+    /// - -100 <= nums[i] <= 100
+    ///
+    /// 链接：https://leetcode-cn.com/problems/rotate-function
+    ///
+    /// 执行结果：通过
+    /// - 执行用时：744 ms, 在所有 Swift 提交中击败了100.00%的用户
+    /// - 内存消耗：18.1 MB, 在所有 Swift 提交中击败了100.00%的用户
+    /// - 通过测试用例：58 / 58
+    ///
+    func maxRotateFunction(_ nums: [Int]) -> Int {
+        // 00:06 - 12:17
+        if nums.count < 2 {
+            return 0
+        }
+        // 1
+//        func F(_ k: Int) -> Int {
+//            let cnt = nums.count
+//            var value = 0
+//            for idx in 0..<cnt {
+//                var kIdx = idx - k
+//                if kIdx < 0 {
+//                    kIdx += cnt
+//                }
+//                value += idx * nums[kIdx]
+//            }
+//            return value
+//        }
+//
+//        var maximum = F(0)
+//        for k in 1..<nums.count {
+//            maximum = max(maximum, F(k))
+//        }
+//
+//        return maximum
+        
+        /* 数学归纳
+          F(0) = i * nums[i]
+          F(k) = F(k-1) + sum - count * nums[count-k]
+               = F(0) + k * sum - count * sum(count-k, count - 1)
+               = F(0) + k * sum - count * (sum - sum(0, count-k-1)
+         */
+        var fk = 0, sum = 0
+        let count = nums.count
+        for idx in 0..<count {
+            fk += idx * nums[idx]
+            sum += nums[idx]
+        }
+        
+        var maxF = fk
+        for k in 1..<count {
+            fk += sum - count * nums[count - k]
+            maxF = max(maxF, fk)
+        }
+        
+        return maxF
+    }
+    
 }
 
 // MARK: #380. O(1) 时间插入、删除和获取随机元素

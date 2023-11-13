@@ -67,6 +67,18 @@ extension Int {
         return num
     }
     
+    /// [a, b]。x = 10 ^ a * b 。eg：30 = 10 ^ 1 * 3
+    public static func log10(_ x: Int) -> [Int] {
+        var tempX = x
+        var value = 0
+        let base = 10
+        while tempX > 0 && tempX % base == 0 {
+            tempX /= base
+            value += 1
+        }
+        return [value, tempX]
+    }
+    
     /// value。lft ≤ value ≤ rgt
     func clamp(_ lft: Self, _ rgt: Self) -> Int {
         var value = self

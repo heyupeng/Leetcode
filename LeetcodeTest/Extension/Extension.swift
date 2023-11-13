@@ -63,3 +63,31 @@ extension Int {
         #endif
     }
 }
+
+extension Int {
+    /// 向上取整
+    ///
+    ///     if a % b == 0 { return a / b } else { return a / b + 1 }
+    ///
+    /// - Parameters:
+    ///   - a: 被除数、分子。
+    ///   - b: 除数、分母。
+    /// - Returns: eg: 10 / 3 = 3.333... = 4。
+    static func ceil(_ a: Int, _ b: Int) -> Int {
+        if b == 0 { fatalError("divisor == 0") }
+        if b == 1 { return a }
+        
+        var value = a / b
+        if a % b != 0 {
+            value += 1
+        }
+        return value
+    }
+    
+    /// 向上取整
+    /// - Parameter divisor: 除数、分母。
+    /// - Returns: 商数向上取整。
+    func ceil(_ divisor: Int) -> Int {
+        return Int.ceil(self, divisor)
+    }
+}

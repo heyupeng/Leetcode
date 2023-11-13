@@ -73,6 +73,17 @@ class ViewController: UIViewController {
         let _ = solution.trap([0,1,0,2,1,0,1,3,2,1,2,1])
         
         let _ = solution.divideAdvance(10, 2)
+        
+        let path_1760 = Bundle.main.path(forResource: "LC1760", ofType: "txt")
+        
+        var s1760 = try! String(contentsOfFile: path_1760!)
+        var p1760 = s1760.components(separatedBy: "\n")
+        var p1760_0 = p1760.first?.trimmingCharacters(in: CharacterSet(charactersIn: "[]")).components(separatedBy: ",").map({ intString in Int(intString) ?? 0 })
+        var p1760_1 = Int(p1760[1]) ?? 1
+        
+        let _ = solution.minimumSize1(
+            p1760_0!, p1760_1
+        )
     }
     
     func testLCP() {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B810BD6F281294E600B30D40 /* LC1760_48.txt in Resources */ = {isa = PBXBuildFile; fileRef = B810BD6E281294E600B30D40 /* LC1760_48.txt */; };
 		B825BE9A2727F554001238E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BE992727F554001238E6 /* AppDelegate.swift */; };
 		B825BE9C2727F554001238E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BE9B2727F554001238E6 /* SceneDelegate.swift */; };
 		B825BE9E2727F554001238E6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B825BE9D2727F554001238E6 /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 		B8D30D42280C14730044313E /* LCSolution499.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D41280C14730044313E /* LCSolution499.swift */; };
 		B8D30D45280C2A660044313E /* LCCompetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D30D44280C2A660044313E /* LCCompetition.swift */; };
 		B8D9598328067CCF00153CEF /* LCSolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D9598228067CCF00153CEF /* LCSolution.swift */; };
+		B8E18A6428332F2A0026F7A2 /* LCSolution999.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E18A6328332F2A0026F7A2 /* LCSolution999.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B810BD6E281294E600B30D40 /* LC1760_48.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LC1760_48.txt; sourceTree = "<group>"; };
 		B825BE962727F554001238E6 /* LeetcodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeetcodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B825BE992727F554001238E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B825BE9B2727F554001238E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		B8D30D41280C14730044313E /* LCSolution499.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution499.swift; sourceTree = "<group>"; };
 		B8D30D44280C2A660044313E /* LCCompetition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCCompetition.swift; sourceTree = "<group>"; };
 		B8D9598228067CCF00153CEF /* LCSolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution.swift; sourceTree = "<group>"; };
+		B8E18A6328332F2A0026F7A2 /* LCSolution999.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSolution999.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B810BD702812C9D200B30D40 /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sample;
+			sourceTree = "<group>";
+		};
 		B825BE8D2727F554001238E6 = {
 			isa = PBXGroup;
 			children = (
@@ -189,8 +200,11 @@
 				B8D30D3A280977730044313E /* LCSolution399.swift */,
 				B8D30D41280C14730044313E /* LCSolution499.swift */,
 				B8D30D3828096C420044313E /* LCSolution899.swift */,
+				B8E18A6328332F2A0026F7A2 /* LCSolution999.swift */,
 				B8D30D3C2809793E0044313E /* LCSolution1099.swift */,
 				B8D30D3E280981DD0044313E /* LCSolution1899.swift */,
+				B810BD6E281294E600B30D40 /* LC1760_48.txt */,
+				B810BD702812C9D200B30D40 /* Sample */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -378,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B825BEA62727F556001238E6 /* LaunchScreen.storyboard in Resources */,
+				B810BD6F281294E600B30D40 /* LC1760_48.txt in Resources */,
 				B825BEA32727F556001238E6 /* Assets.xcassets in Resources */,
 				B825BEA12727F554001238E6 /* Main.storyboard in Resources */,
 			);
@@ -408,6 +423,7 @@
 				B8D30D3728093C8F0044313E /* LCBase.swift in Sources */,
 				B8BBD106272A8D8900E40C11 /* DataStructure.swift in Sources */,
 				B8BBD1032729404400E40C11 /* ContainsDuplicate.swift in Sources */,
+				B8E18A6428332F2A0026F7A2 /* LCSolution999.swift in Sources */,
 				B825BE9E2727F554001238E6 /* ViewController.swift in Sources */,
 				B88B4ED6275A1319007F8D63 /* LCP.swift in Sources */,
 				B8BBD109272A91F900E40C11 /* Algorithm.swift in Sources */,
