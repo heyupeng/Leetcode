@@ -168,7 +168,6 @@ public:
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
         vector<vector<int>> g(n);
         vector<vector<int>> wm(n, vector<int>(n, distanceThreshold*2));
-        vector<int> cnts(n);
         
         auto f2t = [&](int f, int t, int w) {
             bool add = 1;
@@ -176,10 +175,12 @@ public:
             wm[f][t] = w;
             wm[t][f] = w;
             if (!add) return;
-            cnts[f] ++;
-            cnts[t] ++;
+            wm[f][f] ++;
+            wm[t][t] ++;
         };
-
+        
+        // wm[i][i] 记录
+        for (int i = 0; i < n; i++) wm[i][i] = 0;
         for (auto& edge: edges) {
             if (edge[2] > distanceThreshold)
                 continue;
@@ -208,7 +209,7 @@ public:
         }
         int res = 0;
         for (int i = 0; i < n; i++)
-            if (cnts[i] <= cnts[res])
+            if (wm[i][i] <= wm[res][res])
                 res = i;
         
         return res;
@@ -248,17 +249,6 @@ public:
         
         int res = -1;
         int maxcnt = distanceThreshold*2;
-        for (int i = 0; i < n; ++i) {
-            int cnt = 0;
-            for (int j = 0; j < n; ++j) {
-                if (wm[i][j] <= distanceThreshold) {
-                    cnt++;
-                }
-            }
-            if (cnt <= maxcnt) {
-                res = i; maxcnt = cnt;
-            }
-        }
         for (int i = 0; i < n; i++) {
             if (cnts[i] <= maxcnt) {
                 res = i; maxcnt = cnts[i];
