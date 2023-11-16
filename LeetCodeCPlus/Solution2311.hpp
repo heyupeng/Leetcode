@@ -257,7 +257,8 @@ public:
         return res;
     }
     
-/// MARK: #30. 串联所有单词的子串
+// MARK: #30. 串联所有单词的子串
+    
     /// #30. 串联所有单词的子串
     /// (困难)
     ///
@@ -364,6 +365,109 @@ public:
             }
         }
         return res;
+    }
+    
+    // MARK: #59. 螺旋矩阵 II
+    
+    /// #59. 螺旋矩阵 II
+    /// (中等)
+    ///
+    /// 给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。
+    /// @code
+    /// 示例 1：
+    /// 输入：n = 3
+    /// 输出：[[1,2,3],[8,9,4],[7,6,5]]
+    ///
+    /// 示例 2：
+    /// 输入：n = 1
+    /// 输出：[[1]]
+    /// @endcode
+    ///
+    /// 提示：
+    /// - 1 <= n <= 20
+    ///
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> mat(n, vector<int>(n,0));
+        mat[n/2][n/2] = n*n;
+        int l = 0;
+        int v = 0;
+        while (l <= n/2) {
+            for (int i = 0; i < n-1-2*l; i++) {
+                mat[l][l+i] = ++v;
+            }
+            for (int i = 0; i < n-1-2*l; i++) {
+                mat[l+i][n-1-l] = ++v;
+            }
+            for (int i = 0; i < n-1-2*l; i++) {
+                mat[n-1-l][n-1-l-i] = ++v;
+            }
+            for (int i = 0; i < n-1-2*l; i++) {
+                mat[n-1-l-i][l] = ++v;
+            }
+            l++;
+        }
+         return mat;
+     }
+    
+    // MARK: #54. 螺旋矩阵
+    
+    /// #54. 螺旋矩阵
+    /// (中等)
+    ///
+    /// 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+    ///
+    /// @code
+    /// 示例 1：
+    /// 输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+    /// 输出：[1,2,3,6,9,8,7,4,5]
+    ///
+    /// 示例 2：
+    /// 输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+    /// 输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+    /// @endcode
+    ///
+    /// 提示：
+    ///
+    /// - m == matrix.length
+    /// - n == matrix[i].length
+    /// - 1 <= m, n <= 10
+    /// - -100 <= matrix[i][j] <= 100
+    ///
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int m = (int)matrix.size();
+        int n = (int)matrix[0].size();
+        vector<int> mat(m*n,0);
+        
+        int l = 0; int r = n - 1;
+        int t = 0; int b = m - 1;
+        int k = 0;
+        while (k < m*n) {
+            //printf("1-%d, ", k);
+            for (int i = l; i <= r; i++) {
+                mat[k] = matrix[l][i];
+                k++;
+            }
+            t ++;
+            //printf("2-%d, ", k);
+            for (int i = t; i <= b; i++) {
+                mat[k] = matrix[i][r];
+                k++;
+            }
+            r --;
+            //printf("3-%d, ", k);
+            for (int i = r; i >= l && k < m*n; i--) {
+                mat[k] = matrix[b][i];
+                k++;
+            }
+            b --;
+            //printf("4-%d, ", k);
+            for (int i = b; i >= t && k < m*n; i--) {
+                mat[k] = matrix[i][l];
+                k++;
+            }
+            l++;
+        }
+        return mat;
     }
 };
 
