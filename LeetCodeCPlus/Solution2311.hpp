@@ -469,6 +469,108 @@ public:
         }
         return mat;
     }
+
+    // MARK: #2736. 最大和查询
+    
+    /// #2736. 最大和查询
+    /// (困难)
+    ///
+    /// 给你两个长度为 n 、下标从 0 开始的整数数组 nums1 和 nums2 ，另给你一个下标从 1 开始的二维数组 queries ，其中 queries[i] = [xi, yi] 。
+    ///
+    /// 对于第 i 个查询，在所有满足 nums1[j] >= xi 且 nums2[j] >= yi 的下标 j (0 <= j < n) 中，找出 nums1[j] + nums2[j] 的 最大值 ，如果不存在满足条件的 j 则返回 -1 。
+    ///
+    /// 返回数组 answer ，其中 answer[i] 是第 i 个查询的答案。
+    vector<int> maximumSumQueries(vector<int>& nums1, vector<int>& nums2, vector<vector<int>>& queries) {
+        int n = (int)nums1.size();
+        int qn = (int)queries.size();
+        
+        vector<pair<int,int>> nums;
+        for (int i = 0; i < n; i++) {
+            nums.push_back({nums1[i], nums2[i]});
+        }
+        sort(nums.begin(), nums.end(), [](pair<int,int>& p1, pair<int,int>& p2){
+            return p1.first > p2.first || (p1.first == p2.first && p1.second > p2.second);
+        });
+        
+        for (int i = 0; i < qn; i++) {
+            queries[i].push_back(i);
+        }
+        sort(queries.begin(), queries.end(), [](vector<int>& a, vector<int>& b){
+            return a[0] > b[0] || ( a[0] == b[0] && a[1] > b[1]);
+        });
+        
+        vector<int> res(qn, -1);
+        vector<pair<int, int>> dp;
+        auto l = nums.begin();
+        int j = 0;
+        for (auto& q: queries) {
+            int &x = q[0], &y = q[1];
+            while (j < n && nums[j].first >= x) {
+                auto [a1, a2] = nums[j];
+                while (dp.size() > 0 && dp.back().second <= a1 + a2) {
+                    // 删减掉 a1[j-1] + a2[j-1] <= a1 + a2。
+                    dp.pop_back();
+                }
+                if (dp.size() == 0 || dp.back().first < a2) {
+                    // 保存 a2 > a2[j-1] 的情况，后方可能需要。
+                    dp.push_back({a2, a1+a2});
+                }
+                j++;
+            }
+            long k = lower_bound(dp.begin(), dp.end(), make_pair(y, 0)) - dp.begin();
+            if (k < dp.size()) {
+                res[q[2]] = dp[k].second;
+            }
+        }
+        return res;
+    }
+    
+    // MARK: #2342. 数位和相等数对的最大和
+    
+    /// #2342. 数位和相等数对的最大和
+    /// (中等)
+    ///
+    /// 给你一个下标从 0 开始的数组 nums ，数组中的元素都是 正 整数。请你选出两个下标 i 和 j（i != j），且 nums[i] 的数位和 与  nums[j] 的数位和相等。
+    ///
+    /// 请你找出所有满足条件的下标 i 和 j ，找出并返回 nums[i] + nums[j] 可以得到的 最大值 。
+    ///
+    /// 示例 1：
+    /// 输入：nums = [18,43,36,13,7]
+    /// 输出：54
+    /// 解释：满足条件的数对 (i, j) 为：
+    /// - (0, 2) ，两个数字的数位和都是 9 ，相加得到 18 + 36 = 54 。
+    /// - (1, 4) ，两个数字的数位和都是 7 ，相加得到 43 + 7 = 50 。
+    /// 所以可以获得的最大和是 54 。
+    ///
+    /// 示例 2：
+    /// 输入：nums = [10,12,19,14]
+    /// 输出：-1
+    /// 解释：不存在满足条件的数对，返回 -1 。
+    ///
+    /// 提示：
+    /// - 1 <= nums.length <= 1e5
+    /// - 1 <= nums[i] <= 1e9
+    ///
+    int maximumSum(vector<int>& nums) {
+        // 存储遍历最大位数和的数值。
+        vector<int> dp(100, 0);
+        int res = -1;
+        for (auto num: nums) {
+            int sum = 0;
+            int temp = num;
+            while (temp != 0) {
+                sum += temp%10;
+                temp /= 10;
+            }
+            if (dp[sum] > 0) {
+                res = max(res, dp[sum] + num);
+            }
+            if (dp[sum] < num) {
+                dp[sum] = num;
+            }
+        }
+        return res;
+    }
 };
 
 void test_s2311();

@@ -7,6 +7,8 @@
 
 #include "bit.hpp"
 
+#include <__bits>
+
 int lowbit(int a) {
     /*
      a:     0001 1000
