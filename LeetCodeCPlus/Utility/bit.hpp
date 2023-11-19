@@ -14,6 +14,4 @@ int lowbit(int a);
 
 int highbit(int a);
 
-int highBit_cb(int a);
-
 #endif /* bit_hpp */

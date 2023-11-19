@@ -18,6 +18,7 @@
 		B89B091B2A808536003A3BE5 /* string_to_any.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B89B09192A808535003A3BE5 /* string_to_any.cpp */; };
 		B89B09282A8473CC003A3BE5 /* Trie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B89B09262A8473CC003A3BE5 /* Trie.cpp */; };
 		B89B09ED2A9B9A90003A3BE5 /* codec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B89B09EB2A9B9A90003A3BE5 /* codec.cpp */; };
+		B8ACB7522B09F53300B82C61 /* WP372.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8ACB7502B09F53300B82C61 /* WP372.cpp */; };
 		B8F1CC322AB9A17B007307D4 /* WP363.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CC302AB9A17B007307D4 /* WP363.cpp */; };
 		B8F1CC3C2ABD7B55007307D4 /* Solution2309.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CC3A2ABD7B55007307D4 /* Solution2309.cpp */; };
 		B8F1CC3F2ABECD1C007307D4 /* time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B8F1CC3D2ABECD1C007307D4 /* time.cpp */; };
@@ -72,6 +73,9 @@
 		B89B092B2A872C30003A3BE5 /* 133.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 133.txt; sourceTree = "<group>"; };
 		B89B09EB2A9B9A90003A3BE5 /* codec.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = codec.cpp; sourceTree = "<group>"; };
 		B89B09EC2A9B9A90003A3BE5 /* codec.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = codec.hpp; sourceTree = "<group>"; };
+		B8ACB7502B09F53300B82C61 /* WP372.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WP372.cpp; sourceTree = "<group>"; };
+		B8ACB7512B09F53300B82C61 /* WP372.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WP372.hpp; sourceTree = "<group>"; };
+		B8ACB7542B0A589600B82C61 /* 942.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 942.txt; sourceTree = "<group>"; };
 		B8F1CC302AB9A17B007307D4 /* WP363.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WP363.cpp; sourceTree = "<group>"; };
 		B8F1CC312AB9A17B007307D4 /* WP363.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WP363.hpp; sourceTree = "<group>"; };
 		B8F1CC382ABC4E0E007307D4 /* 89.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 89.txt; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 		B89B09092A66615B003A3BE5 /* TestSample */ = {
 			isa = PBXGroup;
 			children = (
+				B8ACB7532B0A588200B82C61 /* #100110 */,
 				B8F1CC372ABC4E03007307D4 /* #84 */,
 				B89B09292A871CFC003A3BE5 /* #23 */,
 				B89B09152A6A1EC8003A3BE5 /* #148 */,
@@ -231,6 +236,14 @@
 			path = "#23";
 			sourceTree = "<group>";
 		};
+		B8ACB7532B0A588200B82C61 /* #100110 */ = {
+			isa = PBXGroup;
+			children = (
+				B8ACB7542B0A589600B82C61 /* 942.txt */,
+			);
+			path = "#100110";
+			sourceTree = "<group>";
+		};
 		B8F1CC332AB9A315007307D4 /* WP */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +251,8 @@
 				B8F1CC312AB9A17B007307D4 /* WP363.hpp */,
 				B8F1CD102B00E6EA007307D4 /* WP371.cpp */,
 				B8F1CD112B00E6EA007307D4 /* WP371.hpp */,
+				B8ACB7502B09F53300B82C61 /* WP372.cpp */,
+				B8ACB7512B09F53300B82C61 /* WP372.hpp */,
 			);
 			path = WP;
 			sourceTree = "<group>";
@@ -367,6 +382,7 @@
 				B89874182A64DB2E00663C25 /* MinStack.cpp in Sources */,
 				B89B09ED2A9B9A90003A3BE5 /* codec.cpp in Sources */,
 				B8F1CC3F2ABECD1C007307D4 /* time.cpp in Sources */,
+				B8ACB7522B09F53300B82C61 /* WP372.cpp in Sources */,
 				B89874122A572B9300663C25 /* LCSample.cpp in Sources */,
 				B8F1CD0F2B00D570007307D4 /* RangeModule.cpp in Sources */,
 				B89874202A6518C300663C25 /* LRUCache.cpp in Sources */,

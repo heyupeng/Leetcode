@@ -31,10 +31,11 @@ int highbit(int a) {
 //        }
 //        k >>= 1;
 //    }
+    
     return 1 << bit;
 }
 
-int highBit_cb(int a) {
+int highbit_cb(int a) {
     int b = 0;
     while (a) {
         // b = a^(a-1) + 1; b ^= (b >> 1);
@@ -42,4 +43,14 @@ int highBit_cb(int a) {
         a &= a - 1;
     }
     return b;
+}
+
+unsigned int highbit(unsigned int x){
+    //sizeof(unsigned int) = 32
+    x |= x >> 1;
+    x |= x >> 2;
+    x |= x >> 4;
+    x |= x >> 8;
+    x |= x >> 16;
+    return x - (x >> 1);
 }

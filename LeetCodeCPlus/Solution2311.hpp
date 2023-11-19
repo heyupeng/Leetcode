@@ -571,6 +571,75 @@ public:
         }
         return res;
     }
+    
+    // MARK: #689. 三个无重叠子数组的最大和
+    
+    /// #689. 三个无重叠子数组的最大和
+    /// (困难)
+    ///
+    /// 给你一个整数数组 nums 和一个整数 k ，找出三个长度为 k 、互不重叠、且全部数字和（3 * k /// 项）最大的子数组，并返回这三个子数组。
+    ///
+    /// 以下标的数组形式返回结果，数组中的每一项分别指示每个子数组的起始位置（下标从 0 /// 开始）。如果有多个结果，返回字典序最小的一个。
+    ///
+    /// @code
+    /// 示例 1：
+    /// 输入：nums = [1,2,1,2,6,7,5,1], k = 2
+    /// 输出：[0,3,5]
+    /// 解释：子数组 [1, 2], [2, 6], [7, 5] 对应的起始下标为 [0, 3, 5]。
+    /// 也可以取 [2, 1], 但是结果 [1, 3, 5] 在字典序上更大。
+    /// 示例 2：
+    /// 输入：nums = [1,2,1,2,1,2,1,2,1], k = 2
+    /// 输出：[0,2,4]
+    /// @endcode
+    ///
+    /// 提示：
+    /// - 1 <= nums.length <= 2 * 10^4
+    /// - 1 <= nums[i] < 2^16
+    /// - 1 <= k <= floor(nums.length / 3)
+    ///
+    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
+        int n = (int)nums.size();
+        int m = n - k + 1;
+        vector<long> sums(m+1, 0);
+        
+        long sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+        sums[0] = sum;
+        for (int i = k; i < n; i++) {
+            sum += nums[i] - nums[i-k];
+            sums[i-k+1] = sum;
+        }
+        // 左向最大值
+        vector<int> lmax(m, 0);
+        iota(lmax.begin(), lmax.end(), 0);
+        for (int i = 1; i < m; i++) {
+            if (sums[i] <= sums[lmax[i-1]]) {
+                lmax[i] = lmax[i-1];
+            }
+        }
+        // 右向最大值
+        vector<int> rmax(m+1, 0);
+        iota(rmax.begin(), rmax.end(), 0);
+        for (int i = m - 1  ; i >= 0; i--) {
+            if (sums[i] < sums[rmax[i+1]]) {
+                rmax[i] = rmax[i+1];
+            }
+        }
+        
+        sum = 0;
+        vector<int> res;
+        for (int i = k; i < m-k; i++) {
+            int l = lmax[i-k], r = rmax[i+k];
+            long v = sums[l] + sums[i] + sums[r];
+            if (sum < v) {
+                sum = v;
+                res = {l, i, r};
+            }
+        }
+        return res;
+    }
 };
 
 void test_s2311();
