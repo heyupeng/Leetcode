@@ -151,16 +151,16 @@ public:
         long long maximumX = 1; maximumX <<= n;
         
         /*
-        // v1 * v2 溢出
-        long long maximumval = 0;
-        for (int i = 0; i < nn; i++) {
-            long long v1 = (a ^ i), v2 = (b ^ i);
-            if (maximumval < v1 * v2) {
-                maximumval = v1 * v2;
-            }
-        }
-        maximumval %= limit;
-        return maximumval;
+         // v1 * v2 溢出
+         long long maximumval = 0;
+         for (int i = 0; i < nn; i++) {
+         long long v1 = (a ^ i), v2 = (b ^ i);
+         if (maximumval < v1 * v2) {
+         maximumval = v1 * v2;
+         }
+         }
+         maximumval %= limit;
+         return maximumval;
          */
         
         /*
@@ -176,27 +176,27 @@ public:
         printf("x < 2 ^ %d = %lld \n", n, maximumX);
         
         /* 2. 分片存储计算。（maximumX 引发超时）
-        long long mc1 = 0, mc2 = 0;
-        long long seg = 0xffffffff;
-        for (long i = 0; i < maximumX; i++) {
-            long long v1 = (a ^ i);
-            long long v2 = (b ^ i);
-            // high | low
-            long long h = 0, l = 0;
-            h += (v1 >> 32) * (v2 >> 32);
-            h += (v1 >> 32) * (v2 & seg);
-            h += (v2 >> 32) * (v1 & seg);
-            l += (v2 & seg) * (v1 & seg);
-            if (mc1 < h || (mc1 == h && mc2 < l)) {
-                m1 = v1; m2 = v2;
-                mc1 = h; mc2 = l;
-                x = i;
-            }
+         long long mc1 = 0, mc2 = 0;
+         long long seg = 0xffffffff;
+         for (long i = 0; i < maximumX; i++) {
+         long long v1 = (a ^ i);
+         long long v2 = (b ^ i);
+         // high | low
+         long long h = 0, l = 0;
+         h += (v1 >> 32) * (v2 >> 32);
+         h += (v1 >> 32) * (v2 & seg);
+         h += (v2 >> 32) * (v1 & seg);
+         l += (v2 & seg) * (v1 & seg);
+         if (mc1 < h || (mc1 == h && mc2 < l)) {
+         m1 = v1; m2 = v2;
+         mc1 = h; mc2 = l;
+         x = i;
+         }
          printf("x = %lld \n", x);
          m1 %= limit;
          m2 %= limit;
          return m1*m2%limit;
-        }
+         }
          */
         
         /* 3. 位运算。way 2 升级。*/
@@ -281,12 +281,12 @@ public:
             for (int j = i-1; j >= 0; j--) {
                 if (heights[j] < heights[i]) {
                     dp[i][j] = i;
-//                    dp[j][i] = i; // 超时
+                    //                    dp[j][i] = i; // 超时
                     mp[j] = i;
                     continue;
                 }
                 dp[i][j] = mp[j];
-//                dp[j][i] = mp[j];
+                //                dp[j][i] = mp[j];
             }
         }
         
@@ -296,6 +296,216 @@ public:
             res.push_back(dp[y][x]);
         }
         return res;
+    }
+};
+
+class Solution_WP_373 {
+// MARK: #100139. 循环移位后的矩阵相似检查  
+    
+    /// #100139. 循环移位后的矩阵相似检查
+    /// 题目难度 Easy
+    
+    /// 给你一个大小为 m x n 的整数矩阵 mat 和一个整数 k 。请你将矩阵中的 奇数 行循环 右 移 k 次，偶数 行循环 左 移 k 次。
+
+    /// 如果初始矩阵和最终矩阵完全相同，则返回 true ，否则返回 false 。
+    
+    /// 示例 1：
+    /// 输入：mat = [[1,2,1,2],[5,5,5,5],[6,3,6,3]], k = 2
+    /// 输出：true
+    /// 解释：
+    /// 初始矩阵如图一所示。
+    /// 图二表示对奇数行右移一次且对偶数行左移一次后的矩阵状态。
+    /// 图三是经过两次循环移位后的最终矩阵状态，与初始矩阵相同。
+    /// 因此，返回 true 。
+    /// 示例 2：
+    /// 输入：mat = [[2,2],[2,2]], k = 3
+    /// 输出：true
+    /// 解释：由于矩阵中的所有值都相等，即使进行循环移位，矩阵仍然保持不变。因此，返回 true 。
+    /// 示例 3：
+    /// 输入：mat = [[1,2]], k = 1
+    /// 输出：false
+    /// 解释：循环移位一次后，mat = [[2,1]]，与初始矩阵不相等。因此，返回 false 。
+
+    /// 提示：
+
+    /// 1 <= mat.length <= 25
+    /// 1 <= mat[i].length <= 25
+    /// 1 <= mat[i][j] <= 25
+    /// 1 <= k <= 50
+    bool areSimilar(vector<vector<int>>& mat, int k) {
+        int m = (int)mat.size();
+        int n = (int)mat[0].size();
+        k %= n;
+        // >>
+        for (int i = 0; i < m; i += 2) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] != mat[i][(j+k)%n]) {
+                    return false;
+                }
+            }
+        }
+        // <<
+        for (int i = 1; i < m; i += 2) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] != mat[i][(j-k+n)%n]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    // MARK: #100134. 统计美丽子字符串 I
+    
+    /// #100134. 统计美丽子字符串 I
+    /// 题目难度 Medium
+    ///
+    /// 给你一个字符串 s 和一个正整数 k 。
+    ///
+    /// 用 vowels 和 consonants 分别表示字符串中元音字母和辅音字母的数量。
+    ///
+    /// 如果某个字符串满足以下条件，则称其为 美丽字符串 ：
+    ///
+    /// - vowels == consonants，即元音字母和辅音字母的数量相等。
+    /// - (vowels * consonants) % k == 0，即元音字母和辅音字母的数量的乘积能被 k 整除。
+    /// - 返回字符串 s 中 非空美丽子字符串 的数量。
+    ///
+    /// 子字符串是字符串中的一个连续字符序列。
+    ///
+    /// 英语中的 元音字母 为 'a'、'e'、'i'、'o' 和 'u' 。
+    ///
+    /// 英语中的 辅音字母 为除了元音字母之外的所有字母。
+    ///
+    /// 示例 1：
+    /// 输入：s = "baeyh", k = 2
+    /// 输出：2
+    /// 解释：字符串 s 中有 2 个美丽子字符串。
+    /// - 子字符串 "baeyh"，vowels = 2（["a","e"]），consonants = 2（["y","h"]）。
+    /// 可以看出字符串 "aeyh" 是美丽字符串，因为 vowels == consonants 且 vowels * consonants % k == 0 。
+    /// - 子字符串 "baeyh"，vowels = 2（["a","e"]），consonants = 2（["b","y"]）。
+    /// 可以看出字符串 "baey" 是美丽字符串，因为 vowels == consonants 且 vowels * consonants % k == 0 。
+    /// 可以证明字符串 s 中只有 2 个美丽子字符串。
+    /// 示例 2：
+    ///
+    /// 输入：s = "abba", k = 1
+    /// 输出：3
+    /// 解释：字符串 s 中有 3 个美丽子字符串。
+    /// - 子字符串 "abba"，vowels = 1（["a"]），consonants = 1（["b"]）。
+    /// - 子字符串 "abba"，vowels = 1（["a"]），consonants = 1（["b"]）。
+    /// - 子字符串 "abba"，vowels = 2（["a","a"]），consonants = 2（["b","b"]）。
+    /// 可以证明字符串 s 中只有 3 个美丽子字符串。
+    /// 示例 3：
+    /// 输入：s = "bcdf", k = 1
+    /// 输出：0
+    /// 解释：字符串 s 中没有美丽子字符串。
+    ///
+    /// 提示：
+    /// 1 <= s.length <= 1000
+    /// 1 <= k <= 1000
+    /// s 仅由小写英文字母组成。
+    int beautifulSubstrings(string s, int k) {
+        int n = (int)s.size();
+        
+        auto check = [](char ch) {
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')  {
+                return true;
+            }
+            return false;
+        };
+        
+        vector<vector<int>> dp(2, vector(n+1,0));
+        for (int i = 0; i < n; i++) {
+            bool flag = check(s[i]);
+            dp[flag][i+1] = dp[flag][i] + 1;
+            dp[1-flag][i+1] = dp[1-flag][i];
+        }
+        
+        int count = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = i - 1; j > 0; j -= 2) {
+                int vow = dp[1][i] - dp[1][j-1];
+                int con = dp[0][i] - dp[0][j-1];
+                if (vow == con && (vow * con) % k == 0) {
+                    count ++;
+                }
+            }
+        }
+        return count;
+    }
+    
+    // MARK: #100142. 交换得到字典序最小的数组
+    
+    /// #100142. 交换得到字典序最小的数组
+    /// 题目难度 Medium
+    ///
+    /// 给你一个下标从 0 开始的 正整数 数组 nums 和一个 正整数 limit 。
+    ///
+    /// 在一次操作中，你可以选择任意两个下标 i 和 j，如果 满足 |nums[i] - nums[j]| <= limit ，则交换 nums[i] 和 nums[j] 。
+    ///
+    /// 返回执行任意次操作后能得到的 字典序最小的数组 。
+    ///
+    /// 如果在数组 a 和数组 b 第一个不同的位置上，数组 a 中的对应字符比数组 b 中的对应字符的字典序更小，则认为数组 a 就比数组 b /// 字典序更小。例如，数组 [2,10,3] 比数组 [10,2,3] 字典序更小，下标 0 处是两个数组第一个不同的位置，且 2 < 10 。
+    ///
+    /// 示例 1：
+    /// 输入：nums = [1,5,3,9,8], limit = 2
+    /// 输出：[1,3,5,8,9]
+    /// 解释：执行 2 次操作：
+    /// - 交换 nums[1] 和 nums[2] 。数组变为 [1,3,5,9,8] 。
+    /// - 交换 nums[3] 和 nums[4] 。数组变为 [1,3,5,8,9] 。
+    /// 即便执行更多次操作，也无法得到字典序更小的数组。
+    /// 注意，执行不同的操作也可能会得到相同的结果。
+    /// 示例 2：
+
+    /// 输入：nums = [1,7,6,18,2,1], limit = 3
+    /// 输出：[1,6,7,18,1,2]
+    /// 解释：执行 3 次操作：
+    /// - 交换 nums[1] 和 nums[2] 。数组变为 [1,6,7,18,2,1] 。
+    /// - 交换 nums[0] 和 nums[4] 。数组变为 [2,6,7,18,1,1] 。
+    /// - 交换 nums[0] 和 nums[5] 。数组变为 [1,6,7,18,1,2] 。
+    /// 即便执行更多次操作，也无法得到字典序更小的数组。
+    /// 示例 3：
+
+    /// 输入：nums = [1,7,28,19,10], limit = 3
+    /// 输出：[1,7,28,19,10]
+    /// 解释：[1,7,28,19,10] 是字典序最小的数组，因为不管怎么选择下标都无法执行操作。
+    ///
+
+    /// 提示：
+
+    /// 1 <= nums.length <= 10^5
+    /// 1 <= nums[i] <= 10^9
+    /// 1 <= limit <= 10^9
+    vector<int> lexicographicallySmallestArray(vector<int>& nums, int limit) {
+        int n = (int)nums.size();
+        vector<int> resNums = nums;
+                
+        vector<pair<int, int>> vp(n);
+        for (int i = 0; i < n; i++) {
+            vp[i] = {nums[i], i};
+        }
+        sort(vp.begin(), vp.end(), [](pair<int, int> a, pair<int, int> b) {
+            return a.first < b.first;
+        });
+        
+        for (int i = 0; i < n; i++) {
+            auto it = find(vp.begin(), vp.end(), pair<int,int>(resNums[i], i));
+            
+            bool isSwap = false;
+            auto cnt = it - vp.begin();
+            // Todo: 这里应该持续向前交换. 数量大时超时，换二分法向前查找。
+            for (int j = (int)cnt - 1; j >= 0; j--) {
+                if (resNums[i] - vp[j].first <= limit) {
+                    swap(resNums[i], resNums[vp[j].second]);
+                    isSwap = true;
+                    (*it).second = vp[j].second;
+                    it = vp.begin() + j;
+                } else {
+                    break;
+                }
+            }
+            vp.erase(it);
+        }
+        return resNums;
     }
 };
 
